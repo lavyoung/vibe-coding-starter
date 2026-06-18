@@ -4,6 +4,21 @@
 
 如果你是通过模板创建了一个新项目，请先把本文件标题、首段简介和仓库描述替换成你自己的项目信息；`vibe-coding-starter` 只是上游模板名。
 
+## 第一次使用就按这 5 步
+
+如果你想先快速试起来，不用先通读整个仓库，直接按这个顺序：
+
+1. 复制模板到新项目
+2. 运行 `python scripts/init_starter.py`
+3. 补 4 份核心文档
+4. 运行检查脚本
+5. 看一份完整需求演示
+
+对应入口按这条链路继续看：
+
+- 第 1 到 4 步： [QUICKSTART.md](QUICKSTART.md)
+- 第 5 步： [DEMO.md](DEMO.md)
+
 ## 这套模板要解决什么问题
 
 很多 AI 协作项目最后都会卡在同几个地方：
@@ -81,79 +96,13 @@ vibe-coding-starter/
 
 ## 快速开始
 
-### 1. 复制骨架到新项目
+首页只保留第一次采用最短路径，详细操作统一看 [QUICKSTART.md](QUICKSTART.md)：
 
-至少复制这些内容：
-
-```text
-.github/
-.doc-sync.json
-AGENTS.md
-AGENTS.template.md
-docs/
-prompts/
-scripts/
-tools/skills/
-```
-
-如果你是通过 GitHub 的 `Use this template` 创建新仓库，`AGENTS.md` 会随仓库一起生成，不需要再额外改名。
-
-### 2. 运行初始化脚本
-
-推荐先执行：
-
-```bash
-python scripts/init_starter.py \
-  --project-name your-project \
-  --tech-stack "Java 17 + Spring Boot 3.3" \
-  --build-command "mvn clean package" \
-  --test-command "mvn test" \
-  --main-modules "module-user,module-order" \
-  --business-domains "用户,订单"
-```
-
-如果当前项目暂时没有界面层文档，还可以附加：
-
-```bash
-python scripts/init_starter.py \
-  --project-name your-project \
-  --tech-stack "Java 17 + Spring Boot 3.3" \
-  --build-command "mvn clean package" \
-  --test-command "mvn test" \
-  --main-modules "module-user,module-order" \
-  --business-domains "用户,订单" \
-  --disable-ui
-```
-
-### 3. 手工补齐剩余项目事实
-
-开始使用前，至少替换 `AGENTS.md`、`README.md` 和相关文档里的这些占位信息：
-
-- `项目简介`
-- `部署形态`
-- `模块职责`
-- `核心依赖`
-- 其他尚未落到模板占位符中的项目事实
-
-### 4. 先补齐 4 份核心事实文档
-
-在真正开始实现前，先补齐：
-
-1. `AGENTS.md`
-2. `docs/governance/document-sync-map.md`
-3. `docs/architecture/current-architecture.md`
-4. `docs/evolution/INDEX.md`
-
-如果项目存在 Web 前端、管理端、商家端或控制台界面，建议同时启用 `docs/ui/`。
-
-### 5. 用内置提示词启动工作
-
-直接使用：
-
-- [prompts/new-session.txt](prompts/new-session.txt)
-- [prompts/design-task.txt](prompts/design-task.txt)
-- [prompts/code-change.txt](prompts/code-change.txt)
-- [prompts/small-change.txt](prompts/small-change.txt)
+1. 复制模板到新项目
+2. 运行 `python scripts/init_starter.py`
+3. 补 4 份核心文档
+4. 运行检查脚本
+5. 看 [DEMO.md](DEMO.md) 里的完整需求演示
 
 ## 4 条标准会话提示词
 
@@ -170,27 +119,36 @@ python scripts/init_starter.py \
 
 ## 5 分钟上手
 
-- [QUICKSTART.md](QUICKSTART.md)
+- [QUICKSTART.md](QUICKSTART.md)：第一次采用模板时的唯一详细入口
 
 ## doc-sync 与 CI 校验
 
 - [.doc-sync.json](.doc-sync.json)：维护机器可校验的代码 -> 文档映射规则
-- [scripts/doc_sync_check.py](scripts/doc_sync_check.py)：本地和 CI 复用同一条检查命令
+- [scripts/doc_sync_check.py](scripts/doc_sync_check.py)：`doc-sync` 的 Python 主实现
+- [scripts/doc_sync_check.ps1](scripts/doc_sync_check.ps1)：Windows PowerShell 入口
+- [scripts/doc_sync_check.sh](scripts/doc_sync_check.sh)：macOS / Linux shell 入口
 - [.github/workflows/doc-sync.yml](.github/workflows/doc-sync.yml)：默认接入 PR 与 `main` 分支校验
 
 ## 本地统一检查入口
 
-- [scripts/check_all.py](scripts/check_all.py)：统一执行 `doc-sync`、Markdown 相对链接检查和示例项目自检
+- [scripts/check_all.py](scripts/check_all.py)：统一检查的 Python 主实现
+- [scripts/check_all.ps1](scripts/check_all.ps1)：Windows PowerShell 入口
+- [scripts/check_all.sh](scripts/check_all.sh)：macOS / Linux shell 入口
 
 示例：
 
 ```bash
 python scripts/check_all.py
+bash scripts/check_all.sh
+```
+
+```powershell
+./scripts/check_all.ps1
 ```
 
 ## 一次完整需求演示
 
-- [DEMO.md](DEMO.md)
+- [DEMO.md](DEMO.md)：完成初始化后的下一步入口
 - [examples/minimal-task-board/README.md](examples/minimal-task-board/README.md)
 - [examples/spring-boot-device-center/README.md](examples/spring-boot-device-center/README.md)
 

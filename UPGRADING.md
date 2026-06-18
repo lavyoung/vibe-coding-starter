@@ -74,6 +74,11 @@
 
 ```bash
 python scripts/check_all.py
+bash scripts/check_all.sh
+```
+
+```powershell
+./scripts/check_all.ps1
 ```
 
 6. 人工重点 review：
