@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "docsRoot": "docs",
+  "docGlobs": [
+    "docs/*.md",
+    "docs/**/*.md"
+  ],
+  "ignore": [
+    "examples/**"
+  ],
+  "rules": [
+    {
+      "name": "api-surface",
+      "code": [
+        "src/controllers/**",
+        "src/routes/**",
+        "src/api/**",
+        "app/controllers/**",
+        "app/routes/**",
+        "app/api/**",
+        "packages/*/src/controllers/**",
+        "packages/*/src/routes/**"
+      ],
+      "docs": [
+        "docs/api/**",
+        "docs/design/**"
+      ]
+    },
+    {
+      "name": "application-logic",
+      "code": [
+        "src/services/**",
+        "src/usecases/**",
+        "src/domain/**",
+        "app/services/**",
+        "app/usecases/**",
+        "packages/*/src/services/**",
+        "packages/*/src/domain/**"
+      ],
+      "docs": [
+        "docs/design/**",
+        "docs/tasks/**"
+      ]
+    },
+    {
+      "name": "data-and-schema",
+      "code": [
+        "src/repositories/**",
+        "src/entities/**",
+        "src/models/**",
+        "db/**",
+        "migrations/**",
+        "packages/*/src/repositories/**"
+      ],
+      "docs": [
+        "docs/sql/**",
+        "docs/upgrade/**",
+        "docs/design/**"
+      ]
+    },
+    {
+      "name": "ui-and-interaction",
+      "code": [
+        "src/pages/**",
+        "src/views/**",
+        "src/components/**",
+        "src/hooks/**",
+        "app/ui/**",
+        "packages/*/src/pages/**",
+        "packages/*/src/components/**"
+      ],
+      "docs": [
+        "docs/ui/**",
+        "docs/design/**"
+      ]
+    }
+  ]
+}

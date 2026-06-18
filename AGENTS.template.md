@@ -67,5 +67,12 @@
 
 1. 文档同步检查
 2. 状态闸门检查
-3. 编译 / 测试 / 构建验证
-4. 未验证项说明
+3. 若仓库已配置 `.doc-sync.json` 与 `scripts/doc_sync_check.py`，先运行一轮 `doc-sync` 校验
+4. 编译 / 测试 / 构建验证
+5. 未验证项说明
+
+## 8. 自动化校验入口
+
+- 若仓库存在 `.doc-sync.json`，它是“代码 -> 文档同步矩阵”的机器可校验补充，不替代 `docs/governance/document-sync-map.md`
+- 若仓库存在 `scripts/doc_sync_check.py`，本地改动收口和 CI 应优先复用该脚本
+- 若仓库存在 `.github/workflows/doc-sync.yml`，提交前应确保相关文档改动能通过这条检查
