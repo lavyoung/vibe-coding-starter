@@ -31,7 +31,7 @@
 - `.doc-sync.json`
   一份可直接定制的机器校验规则文件
 - `prompts/`
-  新会话、设计阶段、代码改动阶段可直接复用的提示词
+  新会话、设计阶段、代码改动阶段、小功能点修改时可直接复用的提示词
 - `scripts/`
   可在本地和 CI 复用的 `doc-sync` 校验脚本
 - `tools/skills/`
@@ -127,6 +127,7 @@ tools/skills/
 - [prompts/new-session.txt](prompts/new-session.txt)
 - [prompts/design-task.txt](prompts/design-task.txt)
 - [prompts/code-change.txt](prompts/code-change.txt)
+- [prompts/small-change.txt](prompts/small-change.txt)
 
 ## 5 分钟上手
 
