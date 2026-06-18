@@ -14,7 +14,7 @@
 ## 文档元数据
 
 - 文档类型：adr
-- 当前状态：Proposed / Accepted / Deprecated / Superseded
+- 当前状态：草案 / 已接受 / 已废弃 / 已替代
 - 所属业务域：
 - 决策日期：YYYY-MM-DD
 - 最近更新：YYYY-MM-DD

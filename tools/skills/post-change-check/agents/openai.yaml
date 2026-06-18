@@ -1,4 +1,4 @@
 interface:
-  display_name: "Post Change Check"
-  short_description: "Run a final sync and verification pass before stopping."
-  default_prompt: "Use this skill after code or docs changes to verify doc sync, status gates, and project verification commands before ending the turn."
+  display_name: "改动后收口检查"
+  short_description: "在结束当前回合前补做最后一轮同步与验证检查。"
+  default_prompt: "在代码或文档改动后使用此 skill，核对文档同步、状态闸门以及项目约定的验证命令，然后再结束当前回合。"

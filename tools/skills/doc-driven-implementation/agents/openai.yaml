@@ -1,4 +1,4 @@
 interface:
-  display_name: "Doc Driven Implementation"
-  short_description: "Start and execute work from effective docs first."
-  default_prompt: "Use this skill when a repo follows docs-first delivery and you need to recover context, verify doc status, and implement from accepted documents."
+  display_name: "文档驱动实现"
+  short_description: "先从有效文档恢复上下文，再推进实现。"
+  default_prompt: "当仓库采用文档优先交付时，使用此 skill 先恢复上下文、核对文档状态，并基于已接受或已生效的文档推进实现。"

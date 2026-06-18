@@ -1,7 +1,8 @@
-# <PROJECT_NAME> 项目专属约束模板
+# <PROJECT_NAME> 项目专属约束
 
-> 此文件用于二次抽取或对照修改。
-> 在实际项目中，以同目录下的 `AGENTS.md` 作为生效文件。
+> 这是一个可直接生效的项目级 `AGENTS.md` 起始版本。
+> 将模板用于新项目后，优先替换下列占位信息：
+> `<PROJECT_NAME>`、`<TECH_STACK>`、`<MAIN_MODULES>`、`<BUSINESS_DOMAINS>`、`<BUILD_COMMAND>`、`<TEST_COMMAND>`。
 
 ## 0. Skill 扫描规则
 

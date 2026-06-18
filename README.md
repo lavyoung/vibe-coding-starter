@@ -1,6 +1,8 @@
 # vibe-coding-starter
 
-一个面向“人类 + AI 协同交付”的文档优先模板仓库，内含 `AGENTS`、文档治理骨架、状态闸门规则和可复用的 Codex skills。
+一个面向“人类 + AI 协同交付”的文档优先模板仓库，内含可直接生效的 `AGENTS.md`、文档治理骨架、状态闸门规则和可复用的 Codex skills。
+
+如果你是通过模板创建了一个新项目，请先把本文件标题、首段简介和仓库描述替换成你自己的项目信息；`vibe-coding-starter` 只是上游模板名。
 
 ## 这套模板要解决什么问题
 
@@ -11,7 +13,7 @@
 - 设计草稿被直接当成实现依据
 - 代码改了，但文档没有同步
 
-`vibe-coding-starter` 不是某个具体业务模板，而是一套“仓库内协作操作系统”：
+这套模板不是某个具体业务模板，而是一套“仓库内协作操作系统”：
 
 - 文档先行
 - 代码后行
@@ -20,8 +22,10 @@
 
 ## 你会得到什么
 
+- `AGENTS.md`
+  新仓库创建后即可生效的项目级协作约束起始版
 - `AGENTS.template.md`
-  项目级协作约束模板
+  便于二次抽取或对照修改的模板副本
 - `docs/`
   一套完整的文档优先目录骨架
 - `prompts/`
@@ -43,6 +47,7 @@
 
 ```text
 vibe-coding-starter/
+├── AGENTS.md
 ├── AGENTS.template.md
 ├── docs/
 │   ├── index.md
@@ -69,15 +74,18 @@ vibe-coding-starter/
 至少复制这些内容：
 
 ```text
-AGENTS.template.md  -> AGENTS.md
+AGENTS.md
+AGENTS.template.md
 docs/
 prompts/
 tools/skills/
 ```
 
+如果你是通过 GitHub 的 `Use this template` 创建新仓库，`AGENTS.md` 会随仓库一起生成，不需要再额外改名。
+
 ### 2. 替换占位信息
 
-开始使用前，至少替换：
+开始使用前，至少替换 `AGENTS.md`、`README.md` 和相关文档里的这些占位信息：
 
 - `<PROJECT_NAME>`
 - `<TECH_STACK>`

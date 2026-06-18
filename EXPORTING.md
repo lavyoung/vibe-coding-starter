@@ -13,6 +13,7 @@
 ```text
 vibe-coding-starter/
 ├── .github/
+├── AGENTS.md
 ├── AGENTS.template.md
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
@@ -28,7 +29,7 @@ vibe-coding-starter/
 
 - social preview 图片
 - 示例项目
-- release notes
+- 发布说明
 
 ## 2. 内容检查清单
 
@@ -47,17 +48,21 @@ vibe-coding-starter/
 
 在当前仓库外新建一个干净目录，再把 starter 整体复制过去。
 
-推荐使用 `robocopy`，因为它会连 `.github` 这类点目录一起带上：
+推荐使用变量 + `robocopy`，因为它会连 `.github` 这类点目录一起带上：
 
 ```powershell
-New-Item -ItemType Directory -Force -Path D:\open-source\vibe-coding-starter | Out-Null
-robocopy D:\PM\shared_print_saas\templates\vibe-coding-starter D:\open-source\vibe-coding-starter /E /NFL /NDL /NJH /NJS /NP
+$SourceRepo = "<你的源仓库根目录>"
+$TemplatePath = Join-Path $SourceRepo "templates\vibe-coding-starter"
+$TargetRepo = "<导出的目标目录>"
+
+New-Item -ItemType Directory -Force -Path $TargetRepo | Out-Null
+robocopy $TemplatePath $TargetRepo /E /NFL /NDL /NJH /NJS /NP
 ```
 
 然后初始化新的 git 仓库：
 
 ```powershell
-Set-Location D:\open-source\vibe-coding-starter
+Set-Location $TargetRepo
 git init -b main
 git add .
 git commit -m "chore: initial public template release"
