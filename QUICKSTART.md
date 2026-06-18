@@ -2,7 +2,7 @@
 
 ## 目标
 
-这份文档用于让你在 5 分钟内把模板变成“可以开始协作”的仓库，而不是只停留在复制文件。
+这份文档用于让你在 5 分钟内完成模板初始化，并进入可协作状态。
 
 ## 1. 创建仓库或复制模板
 
@@ -23,18 +23,43 @@ scripts/
 tools/skills/
 ```
 
-## 2. 替换 6 个占位项
+## 2. 先运行初始化脚本
 
-先在 `AGENTS.md`、`README.md`、`.doc-sync.json` 里替换：
+推荐执行：
 
-- `<PROJECT_NAME>`
-- `<TECH_STACK>`
-- `<BUILD_COMMAND>`
-- `<TEST_COMMAND>`
-- `<MAIN_MODULES>`
-- `<BUSINESS_DOMAINS>`
+```bash
+python scripts/init_starter.py \
+  --project-name your-project \
+  --tech-stack "Java 17 + Spring Boot 3.3" \
+  --build-command "mvn clean package" \
+  --test-command "mvn test" \
+  --main-modules "module-user,module-order" \
+  --business-domains "用户,订单"
+```
 
-## 3. 先补 4 份事实文档
+如果当前项目暂时没有界面层文档，可以改为：
+
+```bash
+python scripts/init_starter.py \
+  --project-name your-project \
+  --tech-stack "Java 17 + Spring Boot 3.3" \
+  --build-command "mvn clean package" \
+  --test-command "mvn test" \
+  --main-modules "module-user,module-order" \
+  --business-domains "用户,订单" \
+  --disable-ui
+```
+
+## 3. 再补手工事实项
+
+脚本会优先替换模板中的主要占位符。执行后，再检查并补齐这些事实：
+
+- 项目简介
+- 部署形态
+- 模块职责
+- 核心依赖
+
+## 4. 先补 4 份事实文档
 
 至少先补齐：
 
@@ -45,7 +70,7 @@ tools/skills/
 
 如果项目有前端或管理端界面，再启用 `docs/ui/`。
 
-## 4. 定制 `.doc-sync.json`
+## 5. 定制 `.doc-sync.json`
 
 把默认规则改成你项目自己的目录模式，例如：
 
@@ -60,7 +85,7 @@ tools/skills/
 - `.doc-sync.json` 只负责机器校验
 - `docs/governance/document-sync-map.md` 仍保留给人和 AI 阅读
 
-## 5. 本地跑一轮 `doc-sync`
+## 6. 本地跑一轮 `doc-sync`
 
 示例命令：
 
@@ -74,15 +99,15 @@ python scripts/doc_sync_check.py --changed-file src/routes/tasks.js --changed-fi
 python scripts/doc_sync_check.py
 ```
 
-## 6. 开启 CI
+## 7. 开启 CI
 
 模板自带：
 
 - `.github/workflows/doc-sync.yml`
 
-只要仓库用了 GitHub Actions，这条检查就会在 PR 和 `main` 分支 push 时执行。
+仓库启用 GitHub Actions 后，这条检查会在 PR 和 `main` 分支 push 时执行。
 
-## 7. 看一份完整演示
+## 8. 看一份完整演示
 
 接着看：
 
@@ -91,6 +116,7 @@ python scripts/doc_sync_check.py
 
 ## 关联代码
 
+- [scripts/init_starter.py](scripts/init_starter.py)
 - [.doc-sync.json](.doc-sync.json)
 - [scripts/doc_sync_check.py](scripts/doc_sync_check.py)
 - [.github/workflows/doc-sync.yml](.github/workflows/doc-sync.yml)

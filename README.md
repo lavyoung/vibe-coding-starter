@@ -13,7 +13,7 @@
 - 设计草稿被直接当成实现依据
 - 代码改了，但文档没有同步
 
-这套模板不是某个具体业务模板，而是一套“仓库内协作操作系统”：
+这套模板不是某个具体业务模板，而是一套面向仓库协作的基础约束与目录骨架：
 
 - 文档先行
 - 代码后行
@@ -33,7 +33,7 @@
 - `prompts/`
   新会话、设计阶段、代码改动阶段、小功能点修改时可直接复用的提示词
 - `scripts/`
-  可在本地和 CI 复用的 `doc-sync` 校验脚本
+  可在本地和 CI 复用的 `doc-sync` 校验脚本，以及模板初始化脚本
 - `tools/skills/`
   三个通用 Codex skill：
   - `doc-driven-implementation`
@@ -98,18 +98,44 @@ tools/skills/
 
 如果你是通过 GitHub 的 `Use this template` 创建新仓库，`AGENTS.md` 会随仓库一起生成，不需要再额外改名。
 
-### 2. 替换占位信息
+### 2. 运行初始化脚本
+
+推荐先执行：
+
+```bash
+python scripts/init_starter.py \
+  --project-name your-project \
+  --tech-stack "Java 17 + Spring Boot 3.3" \
+  --build-command "mvn clean package" \
+  --test-command "mvn test" \
+  --main-modules "module-user,module-order" \
+  --business-domains "用户,订单"
+```
+
+如果当前项目暂时没有界面层文档，还可以附加：
+
+```bash
+python scripts/init_starter.py \
+  --project-name your-project \
+  --tech-stack "Java 17 + Spring Boot 3.3" \
+  --build-command "mvn clean package" \
+  --test-command "mvn test" \
+  --main-modules "module-user,module-order" \
+  --business-domains "用户,订单" \
+  --disable-ui
+```
+
+### 3. 手工补齐剩余项目事实
 
 开始使用前，至少替换 `AGENTS.md`、`README.md` 和相关文档里的这些占位信息：
 
-- `<PROJECT_NAME>`
-- `<TECH_STACK>`
-- `<BUILD_COMMAND>`
-- `<TEST_COMMAND>`
-- `<MAIN_MODULES>`
-- `<BUSINESS_DOMAINS>`
+- `项目简介`
+- `部署形态`
+- `模块职责`
+- `核心依赖`
+- 其他尚未落到模板占位符中的项目事实
 
-### 3. 先补齐 4 份核心事实文档
+### 4. 先补齐 4 份核心事实文档
 
 在真正开始实现前，先补齐：
 
@@ -120,7 +146,7 @@ tools/skills/
 
 如果项目存在 Web 前端、管理端、商家端或控制台界面，建议同时启用 `docs/ui/`。
 
-### 4. 用内置提示词启动工作
+### 5. 用内置提示词启动工作
 
 直接使用：
 
@@ -141,12 +167,13 @@ tools/skills/
 对应的方法论说明见：
 
 - [docs/governance/ai-collaboration-best-practices.md](docs/governance/ai-collaboration-best-practices.md)
+- [docs/governance/template-roadmap.md](docs/governance/template-roadmap.md)
 
 ## 5 分钟上手
 
 - [QUICKSTART.md](QUICKSTART.md)
 
-## 真正可用的 doc-sync + CI
+## doc-sync 与 CI 校验
 
 - [.doc-sync.json](.doc-sync.json)：维护机器可校验的代码 -> 文档映射规则
 - [scripts/doc_sync_check.py](scripts/doc_sync_check.py)：本地和 CI 复用同一条检查命令
@@ -184,7 +211,7 @@ tools/skills/
 适用于以下场景：
 
 - 提交前做一轮 reviewer 视角冷审
-- AI 改完代码后再找 bug、回归风险和测试缺口
+- 变更完成后再检查 bug、回归风险和测试缺口
 - 需要对照文档和实现检查是否失真
 
 详见 [tools/skills/code-review/SKILL.md](tools/skills/code-review/SKILL.md)。
