@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [v0.2.0] - 2026-06-18
+
 ### Added
 
 - 增加 `scripts/init_starter.py`，用于批量替换模板占位符，并支持关闭 `docs/ui` 可选模块。
