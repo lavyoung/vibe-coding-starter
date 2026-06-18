@@ -21,8 +21,9 @@
 1. 先看 [docs/evolution/INDEX.md](evolution/INDEX.md)
 2. 再看 [docs/architecture/current-architecture.md](architecture/current-architecture.md)
 3. 再看 [docs/onboarding.md](onboarding.md) 和 [docs/governance/document-sync-map.md](governance/document-sync-map.md)
-4. 若涉及页面或交互，再看 [docs/ui/README.md](ui/README.md)
-5. 再按业务域跳到 `requirements/`、`design/`、`tasks/`
+4. 若需要确认协作方式和会话节奏，再看 [docs/governance/ai-collaboration-best-practices.md](governance/ai-collaboration-best-practices.md)
+5. 若涉及页面或交互，再看 [docs/ui/README.md](ui/README.md)
+6. 再按业务域跳到 `requirements/`、`design/`、`tasks/`
 
 ## 3. 文档分层
 
@@ -38,6 +39,7 @@
 | `api/` / `sql/` | 稳定事实是什么 | 契约和结构事实 |
 | `ui/` | 页面、弹窗和交互规则是什么 | 项目存在前端 / 管理端界面时 |
 | `governance/` | 文档规则、同步矩阵、状态闸门是什么 | 需要治理和同步时 |
+| `governance/ai-collaboration-best-practices.md` | 人类 + AI 协作节奏怎么走 | 需要统一会话与 review 方式时 |
 | `evolution/` | 当前演进主线是什么 | 需要维护阶段总览时 |
 
 ## 4. 统一状态口径

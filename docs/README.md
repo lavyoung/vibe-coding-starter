@@ -49,6 +49,7 @@ docs/
 - `sql/`：表结构和脚本
 - `ui/`：页面、弹窗、上传和交互事实源；仅在项目存在稳定界面时启用
 - `governance/`：文档治理规则、同步矩阵、状态闸门
+- `governance/ai-collaboration-best-practices.md`：推荐的人类 + AI 协作节奏与标准会话提示词
 - `evolution/`：当前主线入口
 
 ## 关联代码

@@ -129,6 +129,19 @@ tools/skills/
 - [prompts/code-change.txt](prompts/code-change.txt)
 - [prompts/small-change.txt](prompts/small-change.txt)
 
+## 4 条标准会话提示词
+
+如果你希望按固定节奏和 AI 协作，可以直接顺序使用：
+
+1. [prompts/standard-01-understand-current-state.txt](prompts/standard-01-understand-current-state.txt)
+2. [prompts/standard-02-minimal-implementation.txt](prompts/standard-02-minimal-implementation.txt)
+3. [prompts/standard-03-findings-first-review.txt](prompts/standard-03-findings-first-review.txt)
+4. [prompts/standard-04-human-review-focus.txt](prompts/standard-04-human-review-focus.txt)
+
+对应的方法论说明见：
+
+- [docs/governance/ai-collaboration-best-practices.md](docs/governance/ai-collaboration-best-practices.md)
+
 ## 5 分钟上手
 
 - [QUICKSTART.md](QUICKSTART.md)

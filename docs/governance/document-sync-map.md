@@ -42,6 +42,7 @@
 | `docs/onboarding.md` | 新人和新会话接手指南 | 新成员接手、AI 新会话 |
 | `docs/evolution/INDEX.md` | 当前项目演进总览 | 恢复当前主线时 |
 | `docs/architecture/current-architecture.md` | 当前系统整体架构基线 | 做跨域设计时 |
+| `docs/governance/ai-collaboration-best-practices.md` | AI 协作节奏与标准提示词 | 统一会话方式和 review 节奏时 |
 | `docs/rfcs/README.md` / `RFC_TEMPLATE.md` | 提案规则与模板 | 新技术方案设计时 |
 | `docs/explanation/adr/README.md` / `ADR_TEMPLATE.md` | 决策记录规则与模板 | 方案已接受时 |
 | `docs/ui/README.md` / `page-map.md` / `interaction-patterns.md` / `screens/*.md` | 页面、弹窗和交互事实源 | 项目存在前端 / 管理端界面时 |
