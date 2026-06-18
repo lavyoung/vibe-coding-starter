@@ -99,6 +99,12 @@ python scripts/doc_sync_check.py --changed-file src/routes/tasks.js --changed-fi
 python scripts/doc_sync_check.py
 ```
 
+如果你希望一次完成本地基础检查，可以直接运行：
+
+```bash
+python scripts/check_all.py
+```
+
 ## 7. 开启 CI
 
 模板自带：
@@ -116,6 +122,7 @@ python scripts/doc_sync_check.py
 
 ## 关联代码
 
+- [scripts/check_all.py](scripts/check_all.py)
 - [scripts/init_starter.py](scripts/init_starter.py)
 - [.doc-sync.json](.doc-sync.json)
 - [scripts/doc_sync_check.py](scripts/doc_sync_check.py)

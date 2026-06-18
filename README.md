@@ -33,7 +33,7 @@
 - `prompts/`
   新会话、设计阶段、代码改动阶段、小功能点修改时可直接复用的提示词
 - `scripts/`
-  可在本地和 CI 复用的 `doc-sync` 校验脚本，以及模板初始化脚本
+  可在本地和 CI 复用的 `doc-sync` 校验脚本、模板初始化脚本和统一自检入口
 - `tools/skills/`
   三个通用 Codex skill：
   - `doc-driven-implementation`
@@ -167,7 +167,6 @@ python scripts/init_starter.py \
 对应的方法论说明见：
 
 - [docs/governance/ai-collaboration-best-practices.md](docs/governance/ai-collaboration-best-practices.md)
-- [docs/governance/template-roadmap.md](docs/governance/template-roadmap.md)
 
 ## 5 分钟上手
 
@@ -178,6 +177,16 @@ python scripts/init_starter.py \
 - [.doc-sync.json](.doc-sync.json)：维护机器可校验的代码 -> 文档映射规则
 - [scripts/doc_sync_check.py](scripts/doc_sync_check.py)：本地和 CI 复用同一条检查命令
 - [.github/workflows/doc-sync.yml](.github/workflows/doc-sync.yml)：默认接入 PR 与 `main` 分支校验
+
+## 本地统一检查入口
+
+- [scripts/check_all.py](scripts/check_all.py)：统一执行 `doc-sync`、Markdown 相对链接检查和示例项目自检
+
+示例：
+
+```bash
+python scripts/check_all.py
+```
 
 ## 一次完整需求演示
 
