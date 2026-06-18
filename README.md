@@ -28,13 +28,19 @@
   便于二次抽取或对照修改的模板副本
 - `docs/`
   一套完整的文档优先目录骨架
+- `.doc-sync.json`
+  一份可直接定制的机器校验规则文件
 - `prompts/`
   新会话、设计阶段、代码改动阶段可直接复用的提示词
+- `scripts/`
+  可在本地和 CI 复用的 `doc-sync` 校验脚本
 - `tools/skills/`
   三个通用 Codex skill：
   - `doc-driven-implementation`
   - `post-change-check`
   - `code-review`
+- `examples/`
+  一个最小但完整的示例项目
 
 ## 核心原则
 
@@ -48,6 +54,8 @@
 
 ```text
 vibe-coding-starter/
+├── .github/workflows/
+├── .doc-sync.json
 ├── AGENTS.md
 ├── AGENTS.template.md
 ├── docs/
@@ -65,7 +73,9 @@ vibe-coding-starter/
 │   ├── api/
 │   ├── sql/
 │   └── ui/              (可选：有界面项目时启用)
+├── examples/
 ├── prompts/
+├── scripts/
 └── tools/skills/
 ```
 
@@ -76,10 +86,13 @@ vibe-coding-starter/
 至少复制这些内容：
 
 ```text
+.github/
+.doc-sync.json
 AGENTS.md
 AGENTS.template.md
 docs/
 prompts/
+scripts/
 tools/skills/
 ```
 
@@ -114,6 +127,21 @@ tools/skills/
 - [prompts/new-session.txt](prompts/new-session.txt)
 - [prompts/design-task.txt](prompts/design-task.txt)
 - [prompts/code-change.txt](prompts/code-change.txt)
+
+## 5 分钟上手
+
+- [QUICKSTART.md](QUICKSTART.md)
+
+## 真正可用的 doc-sync + CI
+
+- [.doc-sync.json](.doc-sync.json)：维护机器可校验的代码 -> 文档映射规则
+- [scripts/doc_sync_check.py](scripts/doc_sync_check.py)：本地和 CI 复用同一条检查命令
+- [.github/workflows/doc-sync.yml](.github/workflows/doc-sync.yml)：默认接入 PR 与 `main` 分支校验
+
+## 一次完整需求演示
+
+- [DEMO.md](DEMO.md)
+- [examples/minimal-task-board/README.md](examples/minimal-task-board/README.md)
 
 ## 内置 skills
 

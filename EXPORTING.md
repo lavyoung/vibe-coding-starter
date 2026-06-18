@@ -13,6 +13,7 @@
 ```text
 vibe-coding-starter/
 ├── .github/
+├── .doc-sync.json
 ├── AGENTS.md
 ├── AGENTS.template.md
 ├── CODE_OF_CONDUCT.md
@@ -21,7 +22,9 @@ vibe-coding-starter/
 ├── PUBLISHING.md
 ├── README.md
 ├── docs/
+├── examples/
 ├── prompts/
+├── scripts/
 └── tools/skills/
 ```
 
