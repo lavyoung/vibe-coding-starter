@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "docsRoot": "docs",
+  "docGlobs": [
+    "docs/*.md",
+    "docs/**/*.md"
+  ],
+  "rules": [
+    {
+      "name": "api-surface",
+      "code": [
+        "src/server.js"
+      ],
+      "docs": [
+        "docs/api/**",
+        "docs/design/**"
+      ]
+    },
+    {
+      "name": "domain-logic",
+      "code": [
+        "src/task-store.js"
+      ],
+      "docs": [
+        "docs/design/**",
+        "docs/tasks/**"
+      ]
+    }
+  ]
+}
