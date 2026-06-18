@@ -15,6 +15,7 @@
 | 接手入口 | [docs/onboarding.md](../onboarding.md) | 新人和 AI 新会话恢复上下文 |
 | 文档治理 | [docs/governance/document-sync-map.md](../governance/document-sync-map.md) | 查状态闸门、同步矩阵和反向索引 |
 | 当前架构基线 | [docs/architecture/current-architecture.md](../architecture/current-architecture.md) | 当前系统分层和边界 |
+| UI 交互入口 | [docs/ui/README.md](../ui/README.md) | 项目存在页面 / 弹窗 / 上传交互时启用 |
 | 当前需求主线 | `<docs/requirements/...>` | 当前最新需求入口 |
 | 当前设计主线 | `<docs/design/...>` | 当前已接受方案入口 |
 | 当前任务主线 | `<docs/tasks/...>` | 当前实施拆分入口 |

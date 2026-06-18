@@ -62,7 +62,8 @@ vibe-coding-starter/
 │   ├── tasks/
 │   ├── upgrade/
 │   ├── api/
-│   └── sql/
+│   ├── sql/
+│   └── ui/              (可选：有界面项目时启用)
 ├── prompts/
 └── tools/skills/
 ```
@@ -102,6 +103,8 @@ tools/skills/
 2. `docs/governance/document-sync-map.md`
 3. `docs/architecture/current-architecture.md`
 4. `docs/evolution/INDEX.md`
+
+如果项目存在 Web 前端、管理端、商家端或控制台界面，建议同时启用 `docs/ui/`。
 
 ### 4. 用内置提示词启动工作
 

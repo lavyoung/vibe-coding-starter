@@ -21,7 +21,8 @@
 1. 先看 [docs/evolution/INDEX.md](evolution/INDEX.md)
 2. 再看 [docs/architecture/current-architecture.md](architecture/current-architecture.md)
 3. 再看 [docs/onboarding.md](onboarding.md) 和 [docs/governance/document-sync-map.md](governance/document-sync-map.md)
-4. 再按业务域跳到 `requirements/`、`design/`、`tasks/`
+4. 若涉及页面或交互，再看 [docs/ui/README.md](ui/README.md)
+5. 再按业务域跳到 `requirements/`、`design/`、`tasks/`
 
 ## 3. 文档分层
 
@@ -35,6 +36,7 @@
 | `architecture/` | 当前系统整体长什么样 | 跨域基线变化 |
 | `upgrade/` | 上线或升级需要做什么 | 配置、DDL、脚本变化 |
 | `api/` / `sql/` | 稳定事实是什么 | 契约和结构事实 |
+| `ui/` | 页面、弹窗和交互规则是什么 | 项目存在前端 / 管理端界面时 |
 | `governance/` | 文档规则、同步矩阵、状态闸门是什么 | 需要治理和同步时 |
 | `evolution/` | 当前演进主线是什么 | 需要维护阶段总览时 |
 

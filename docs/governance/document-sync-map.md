@@ -37,6 +37,7 @@
 | `docs/architecture/current-architecture.md` | 当前系统整体架构基线 | 做跨域设计时 |
 | `docs/rfcs/README.md` / `RFC_TEMPLATE.md` | 提案规则与模板 | 新技术方案设计时 |
 | `docs/explanation/adr/README.md` / `ADR_TEMPLATE.md` | 决策记录规则与模板 | 方案已接受时 |
+| `docs/ui/README.md` / `page-map.md` / `interaction-patterns.md` / `screens/*.md` | 页面、弹窗和交互事实源 | 项目存在前端 / 管理端界面时 |
 | `<docs/design/...>` | 已接受的领域设计 | 改对应领域代码时 |
 | `<docs/tasks/...>` | 领域任务拆分和进度 | 实施推进和交接时 |
 | `<docs/upgrade/...>` | 升级说明和脚本 | 上线和发布时 |
@@ -54,6 +55,8 @@
 | `<dataobject / entity / schema>` | `<docs/sql/...>` + `<docs/upgrade/...>` + `<docs/design/...>` | 字段 / 索引 / DDL / 升级说明同步 |
 | `<config / properties / env>` | `<docs/upgrade/...>` + `<docs/architecture/...>` | 配置项和基线变化同步 |
 | `<job / worker / scheduler>` | `<docs/upgrade/...>` + `<docs/design/...>` | 任务入口和执行约束同步 |
+| `<frontend/pages / routes / views>` | `<docs/ui/screens/...>` + `<docs/ui/page-map.md>` + `<docs/design/...>` | 页面结构、交互规则、导航入口同步 |
+| `<frontend/components / hooks>` | `<docs/ui/interaction-patterns.md>` + `<docs/ui/screens/...>` | 通用交互和单页特例同步 |
 | 跨域架构调整 | `docs/architecture/current-architecture.md` + `docs/rfcs/*.md` / `docs/explanation/adr/*.md` | 先更新架构基线，再补提案或决策 |
 
 ## 4. 文档 -> 代码反向索引模板
@@ -64,6 +67,8 @@
 | `<docs/api/...>` | 必须基于当前接口生成 | 禁止保留无效路径 |
 | `<docs/sql/...>` | 必须与实体 / DO / schema 一致 | 禁止写不存在的字段 |
 | `<docs/upgrade/...>` | 必须基于当前代码和脚本生成 | 禁止把未落地能力写成已完成 |
+| `<docs/ui/screens/...>` | 必须先确认当前页面、组件、接口约束 | 禁止把草图或未实现交互写成现状 |
+| `<docs/ui/interaction-patterns.md>` | 必须先确认通用组件和现有交互 | 禁止把单页特例误写成全局规则 |
 | `docs/architecture/current-architecture.md` | 必须基于实际模块、依赖和分层生成 | 禁止凭空描述系统边界 |
 
 ## 5. 文档同步工作流

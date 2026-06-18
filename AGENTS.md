@@ -48,12 +48,13 @@
 2. [docs/onboarding.md](docs/onboarding.md)
 3. [docs/evolution/INDEX.md](docs/evolution/INDEX.md)
 4. [docs/governance/document-sync-map.md](docs/governance/document-sync-map.md)
+5. 若涉及页面、弹窗、上传交互、前端文案或空态 / 错误态，再补查 `docs/ui/`
 
 ## 5. 代码 -> 文档同步要求
 
 - 改代码前，必须先查 `docs/governance/document-sync-map.md` 的“代码 -> 文档同步矩阵”。
 - 若本次改动命中矩阵中的模块，必须同步对应文档。
-- 若本次改动虽然未命中矩阵，但显然改变了需求、设计、接口、表结构、配置、任务状态，也必须主动补文档。
+- 若本次改动虽然未命中矩阵，但显然改变了需求、设计、接口、表结构、配置、任务状态，或页面 / 交互规则，也必须主动补文档。
 
 ## 6. 文档 -> 代码校验要求
 
