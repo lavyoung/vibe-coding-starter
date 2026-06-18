@@ -33,6 +33,7 @@ vibe-coding-starter/
 - social preview 图片
 - 示例项目
 - 发布说明
+- 版本记录与升级说明
 
 ## 2. 内容检查清单
 
@@ -103,6 +104,8 @@ git push -u origin main
 ## 6. 首版发布检查清单
 
 - [ ] README 已按陌生访问者视角审过
+- [ ] CHANGELOG 已存在
+- [ ] UPGRADING 已存在
 - [ ] LICENSE 已存在且版权主体正确
 - [ ] CONTRIBUTING 已存在
 - [ ] CODE_OF_CONDUCT 已存在

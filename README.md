@@ -262,6 +262,8 @@ python scripts/check_all.py
 
 如果你准备把它发布成 GitHub 模板仓库，请先看：
 
+- [CHANGELOG.md](CHANGELOG.md)
+- [UPGRADING.md](UPGRADING.md)
 - [PUBLISHING.md](PUBLISHING.md)
 - [EXPORTING.md](EXPORTING.md)
 - [CONTRIBUTING.md](CONTRIBUTING.md)

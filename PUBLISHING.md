@@ -32,6 +32,11 @@
 - `v0.1.0`
   表示第一版公开可用的 starter kit
 
+后续准备发布新版本前，先更新：
+
+- [CHANGELOG.md](CHANGELOG.md)
+- [UPGRADING.md](UPGRADING.md)
+
 ## 建议首版 Release 文案
 
 ```text
@@ -54,6 +59,8 @@ vibe-coding-starter 首次公开发布。
 ## 发布前检查清单
 
 - [ ] README 已按陌生访问者视角审过
+- [ ] CHANGELOG 已更新到本次准备发布的版本
+- [ ] 升级说明已同步到当前模板能力
 - [ ] LICENSE 已存在且版权主体正确
 - [ ] CONTRIBUTING 已存在
 - [ ] Issue / PR 模板已存在
