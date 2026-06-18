@@ -1,0 +1,4 @@
+interface:
+  display_name: "Post Change Check"
+  short_description: "Run a final sync and verification pass before stopping."
+  default_prompt: "Use this skill after code or docs changes to verify doc sync, status gates, and project verification commands before ending the turn."

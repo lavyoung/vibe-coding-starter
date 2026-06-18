@@ -1,0 +1,4 @@
+interface:
+  display_name: "Doc Driven Implementation"
+  short_description: "Start and execute work from effective docs first."
+  default_prompt: "Use this skill when a repo follows docs-first delivery and you need to recover context, verify doc status, and implement from accepted documents."
