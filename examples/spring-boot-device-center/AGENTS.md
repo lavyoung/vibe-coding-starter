@@ -16,7 +16,7 @@
 1. [docs/index.md](docs/index.md)
 2. [docs/evolution/INDEX.md](docs/evolution/INDEX.md)
 3. [docs/governance/document-sync-map.md](docs/governance/document-sync-map.md)
-4. 与当前任务最相关的 `requirements / design / api / tasks / architecture`
+4. 与当前任务最相关的 `requirements / design / api / sql / upgrade / tasks / architecture`
 
 ## 3. 文档状态闸门
 

@@ -19,14 +19,17 @@
 - `service`：落地业务规则
 - `repository`：屏蔽数据访问细节
 - `model`：承载请求、响应和领域对象
+- `db/migration`：承载示例的 schema 迁移脚本
 
 ## 当前说明
 
 - 为了保持示例最小可运行，仓储层使用内存实现
-- 示例重点是文档驱动实现和常见后端分层，不是数据库集成
+- 示例额外补齐了 `docs/sql`、`docs/upgrade` 和 `db/migration`，用来说明真实团队常见的 schema 资产组织方式
+- 示例重点是文档驱动实现和常见后端分层，不是完整数据库集成
 
 ## 关联代码
 
 - [../../src/main/java/com/example/devicecenter/controller/DeviceAdminController.java](../../src/main/java/com/example/devicecenter/controller/DeviceAdminController.java)
 - [../../src/main/java/com/example/devicecenter/service/DefaultDeviceService.java](../../src/main/java/com/example/devicecenter/service/DefaultDeviceService.java)
 - [../../src/main/java/com/example/devicecenter/repository/InMemoryDeviceRepository.java](../../src/main/java/com/example/devicecenter/repository/InMemoryDeviceRepository.java)
+- [../../src/main/resources/db/migration/V1__create_devices_table.sql](../../src/main/resources/db/migration/V1__create_devices_table.sql)

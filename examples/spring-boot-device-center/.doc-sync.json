@@ -36,6 +36,17 @@
         "docs/design/**",
         "docs/architecture/**"
       ]
+    },
+    {
+      "name": "schema-and-migration",
+      "code": [
+        "src/main/resources/db/migration/**"
+      ],
+      "docs": [
+        "docs/sql/**",
+        "docs/upgrade/**",
+        "docs/design/**"
+      ]
     }
   ]
 }

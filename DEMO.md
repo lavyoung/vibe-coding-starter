@@ -55,18 +55,26 @@
 3. API 事实  
    [docs/api/device-admin-api.md](examples/spring-boot-device-center/docs/api/device-admin-api.md)
 
-4. 任务推进记录  
+4. 表结构事实
+   [docs/sql/device-schema.md](examples/spring-boot-device-center/docs/sql/device-schema.md)
+
+5. 升级说明
+   [docs/upgrade/V1.2.0-device-image-upload.md](examples/spring-boot-device-center/docs/upgrade/V1.2.0-device-image-upload.md)
+
+6. 任务推进记录
    [docs/tasks/V1.2.0-device-image-upload.md](examples/spring-boot-device-center/docs/tasks/V1.2.0-device-image-upload.md)
 
-5. 代码实现  
+7. 代码实现
    [src/main/java/com/example/devicecenter/controller/DeviceAdminController.java](examples/spring-boot-device-center/src/main/java/com/example/devicecenter/controller/DeviceAdminController.java)  
    [src/main/java/com/example/devicecenter/service/DefaultDeviceService.java](examples/spring-boot-device-center/src/main/java/com/example/devicecenter/service/DefaultDeviceService.java)  
    [src/main/java/com/example/devicecenter/repository/InMemoryDeviceRepository.java](examples/spring-boot-device-center/src/main/java/com/example/devicecenter/repository/InMemoryDeviceRepository.java)
+   [src/main/resources/db/migration/V1__create_devices_table.sql](examples/spring-boot-device-center/src/main/resources/db/migration/V1__create_devices_table.sql)
+   [src/main/resources/db/migration/V2__create_device_images_table.sql](examples/spring-boot-device-center/src/main/resources/db/migration/V2__create_device_images_table.sql)
 
-6. 测试验证  
+8. 测试验证
    [src/test/java/com/example/devicecenter/controller/DeviceAdminControllerTest.java](examples/spring-boot-device-center/src/test/java/com/example/devicecenter/controller/DeviceAdminControllerTest.java)
 
-7. 自动化同步规则  
+9. 自动化同步规则
    [.doc-sync.json](examples/spring-boot-device-center/.doc-sync.json)
 
 ## 你应该重点看什么

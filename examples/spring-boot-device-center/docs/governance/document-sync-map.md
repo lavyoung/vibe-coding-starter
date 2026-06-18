@@ -14,6 +14,7 @@
 | `src/main/java/**/controller/**` | `docs/api/device-admin-api.md` + `docs/design/V1.2.0-device-image-upload.md` | 接口行为变化时同步 API 和设计 |
 | `src/main/java/**/service/**` | `docs/design/V1.2.0-device-image-upload.md` + `docs/tasks/V1.2.0-device-image-upload.md` | 业务规则变化时同步设计和任务状态 |
 | `src/main/java/**/repository/**` + `src/main/java/**/model/**` | `docs/architecture/current-architecture.md` + `docs/design/V1.2.0-device-image-upload.md` | 分层边界或领域结构变化时同步架构和设计 |
+| `src/main/resources/db/migration/**` | `docs/sql/device-schema.md` + `docs/upgrade/V1.2.0-device-image-upload.md` + `docs/design/V1.2.0-device-image-upload.md` | schema 或迁移步骤变化时同步表结构、升级说明和设计 |
 
 ## 自动化补充
 
@@ -24,3 +25,4 @@
 
 - [../../src/main/java/com/example/devicecenter/controller/DeviceAdminController.java](../../src/main/java/com/example/devicecenter/controller/DeviceAdminController.java)
 - [../../src/main/java/com/example/devicecenter/service/DefaultDeviceService.java](../../src/main/java/com/example/devicecenter/service/DefaultDeviceService.java)
+- [../../src/main/resources/db/migration/V1__create_devices_table.sql](../../src/main/resources/db/migration/V1__create_devices_table.sql)

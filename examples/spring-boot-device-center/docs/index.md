@@ -15,7 +15,9 @@
 4. [docs/requirements/V1.2.0-device-image-upload.md](requirements/V1.2.0-device-image-upload.md)
 5. [docs/design/V1.2.0-device-image-upload.md](design/V1.2.0-device-image-upload.md)
 6. [docs/api/device-admin-api.md](api/device-admin-api.md)
-7. [docs/tasks/V1.2.0-device-image-upload.md](tasks/V1.2.0-device-image-upload.md)
+7. [docs/sql/device-schema.md](sql/device-schema.md)
+8. [docs/upgrade/V1.2.0-device-image-upload.md](upgrade/V1.2.0-device-image-upload.md)
+9. [docs/tasks/V1.2.0-device-image-upload.md](tasks/V1.2.0-device-image-upload.md)
 
 ## 关联代码
 

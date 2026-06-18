@@ -13,7 +13,7 @@
 2. [docs/index.md](index.md)
 3. [docs/evolution/INDEX.md](evolution/INDEX.md)
 4. [docs/governance/document-sync-map.md](governance/document-sync-map.md)
-5. 需求、设计、API、任务文档
+5. 需求、设计、API、SQL、upgrade、任务文档
 
 ## 关联代码
 
