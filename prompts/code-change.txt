@@ -1,5 +1,11 @@
 这次任务要改代码。
 
+本次任务说明：
+- 改动目标：
+- 涉及功能点：
+- 已知限制：
+- 如果已有相关需求 / 设计 / API / UI / tasks 文档，请写明路径：
+
 开始前请先：
 1. 阅读 AGENTS.md 和 docs/governance/document-sync-map.md
 2. 找出本次改动关联的 docs 文档
@@ -9,6 +15,7 @@
 6. 如果仓库存在 `.doc-sync.json` 和 `scripts/doc_sync_check.py`，收尾前运行一轮 `doc-sync` 检查
 
 请先输出：
+- 你理解的本次改动目标
 - 涉及代码
 - 涉及文档
 - 文档状态
