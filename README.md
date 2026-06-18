@@ -31,9 +31,10 @@
 - `prompts/`
   新会话、设计阶段、代码改动阶段可直接复用的提示词
 - `tools/skills/`
-  两个通用 Codex skill：
+  三个通用 Codex skill：
   - `doc-driven-implementation`
   - `post-change-check`
+  - `code-review`
 
 ## 核心原则
 
@@ -135,6 +136,16 @@ tools/skills/
 - 在结束当前回合前输出变更范围和残余风险
 
 详见 [tools/skills/post-change-check/SKILL.md](tools/skills/post-change-check/SKILL.md)。
+
+### `code-review`
+
+适用于以下场景：
+
+- 提交前做一轮 reviewer 视角冷审
+- AI 改完代码后再找 bug、回归风险和测试缺口
+- 需要对照文档和实现检查是否失真
+
+详见 [tools/skills/code-review/SKILL.md](tools/skills/code-review/SKILL.md)。
 
 ## 推荐工作流
 
