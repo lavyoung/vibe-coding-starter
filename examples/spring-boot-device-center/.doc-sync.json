@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "docsRoot": "docs",
+  "docGlobs": [
+    "docs/*.md",
+    "docs/**/*.md"
+  ],
+  "rules": [
+    {
+      "name": "api-surface",
+      "code": [
+        "src/main/java/**/controller/**"
+      ],
+      "docs": [
+        "docs/api/**",
+        "docs/design/**"
+      ]
+    },
+    {
+      "name": "application-logic",
+      "code": [
+        "src/main/java/**/service/**"
+      ],
+      "docs": [
+        "docs/design/**",
+        "docs/tasks/**"
+      ]
+    },
+    {
+      "name": "repository-and-model",
+      "code": [
+        "src/main/java/**/repository/**",
+        "src/main/java/**/model/**"
+      ],
+      "docs": [
+        "docs/design/**",
+        "docs/architecture/**"
+      ]
+    }
+  ]
+}

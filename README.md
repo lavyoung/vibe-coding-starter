@@ -40,7 +40,7 @@
   - `post-change-check`
   - `code-review`
 - `examples/`
-  一个最小但完整的示例项目
+  两个可直接参考的示例项目
 
 ## 核心原则
 
@@ -183,6 +183,7 @@ python scripts/init_starter.py \
 
 - [DEMO.md](DEMO.md)
 - [examples/minimal-task-board/README.md](examples/minimal-task-board/README.md)
+- [examples/spring-boot-device-center/README.md](examples/spring-boot-device-center/README.md)
 
 ## 内置 skills
 

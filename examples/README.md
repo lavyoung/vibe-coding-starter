@@ -4,6 +4,8 @@
 
 - [minimal-task-board](minimal-task-board/README.md)
   一个最小但完整的文档优先示例项目，演示“需求 -> 设计 -> UI -> API -> 代码 -> doc-sync”的完整链路。
+- [spring-boot-device-center](spring-boot-device-center/README.md)
+  一个更贴近企业后端结构的 Spring Boot 示例项目，演示“需求 -> 设计 -> API -> controller / service / repository -> test -> doc-sync”的完整链路。
 
 ## 使用方式
 
