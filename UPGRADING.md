@@ -106,3 +106,36 @@ bash scripts/check_all.sh
 ## 8. 最小判断原则
 
 如果某项更新不能直接提升“初始化效率、文档同步可靠性、示例参考价值、本地验证能力”，可以不急着第一时间升级。
+
+## 9. 从 v0.2.0 升级到 v0.3.0 时重点看什么
+
+如果你当前使用的是 `v0.2.0`，升级到 `v0.3.0` 时建议重点吸收下面几类变化：
+
+1. 首次采用路径更短了
+   `README.md`、`QUICKSTART.md`、`DEMO.md` 已经被收口成更明确的入口链路，适合直接按 diff 合并到你的项目入口文档。
+
+2. 检查脚本补齐了跨平台入口
+   新增：
+   - `scripts/check_all.ps1`
+   - `scripts/check_all.sh`
+   - `scripts/doc_sync_check.ps1`
+   - `scripts/doc_sync_check.sh`
+
+   如果你的团队同时使用 Windows 和 macOS / Linux，这部分通常值得直接覆盖同步。
+
+3. 本地与 CI 的统一检查入口更完整了
+   `scripts/check_all.py` 现在支持更清晰的分组输出与 `--base / --head`，`.github/workflows/doc-sync.yml` 也改成了通过统一入口覆盖：
+   - `doc-sync`
+   - Markdown 链接检查
+   - 示例自检
+
+4. Review 与 PR 流程约束更明确了
+   如果你希望团队 review 时固定按“文档状态 -> diff -> 测试”的顺序检查，建议同步这些文件：
+   - `.github/PULL_REQUEST_TEMPLATE.md`
+   - `tools/skills/code-review/`
+   - `prompts/standard-03-findings-first-review.txt`
+   - `docs/governance/ai-collaboration-best-practices.md`
+   - `docs/governance/document-sync-map.md`
+
+5. Spring Boot 示例更贴近真实团队
+   `examples/spring-boot-device-center/` 新增了 `docs/sql`、`docs/upgrade` 和 `db/migration`，如果你希望示例更容易映射到真实后端项目，这部分值得同步参考。

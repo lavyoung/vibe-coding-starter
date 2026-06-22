@@ -4,6 +4,21 @@
 
 ## [Unreleased]
 
+## [v0.3.0] - 2026-06-22
+
+### Added
+
+- 增加 `scripts/check_all.ps1`、`scripts/check_all.sh`、`scripts/doc_sync_check.ps1`、`scripts/doc_sync_check.sh`，提供跨平台检查脚本入口。
+- 扩展示例 `examples/spring-boot-device-center/`，补齐 `docs/sql`、`docs/upgrade` 与 `src/main/resources/db/migration/` 资产，覆盖更贴近真实团队的 schema / upgrade 场景。
+
+### Changed
+
+- `README.md`、`QUICKSTART.md`、`DEMO.md` 收紧首次采用路径，明确 `README -> QUICKSTART -> DEMO` 的入口链路。
+- `.github/PULL_REQUEST_TEMPLATE.md`、`tools/skills/code-review/`、`prompts/standard-03-findings-first-review.txt`、治理文档统一为“先文档状态、再 diff、再测试”的 review 顺序。
+- `scripts/check_all.py` 改为更清晰的分组式收口输出，并支持 `--base / --head`，可同时服务本地与 CI。
+- `.github/workflows/doc-sync.yml` 收口为统一检查入口，在 CI 中通过 `check_all` 覆盖 `doc-sync`、链接检查与示例自检。
+- 根级 `.gitignore` 补充 `.idea/`、`__pycache__/`、`target/`，减少常见本地产物噪音。
+
 ## [v0.2.0] - 2026-06-18
 
 ### Added
