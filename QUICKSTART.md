@@ -76,6 +76,26 @@ python scripts/init_starter.py \
 
 如果项目有前端或管理端界面，再启用 `docs/ui/`。
 
+### 3.1 第一次实现前先确认现有复用点
+
+不要一补完文档就立刻让 AI 开始写代码。第一次真正进入实现前，至少先让它回答：
+
+- 当前仓库里有哪些模块、组件、脚本、配置或约束可以直接复用
+- 这次需求应该扩展现有边界，还是确实需要新增抽象
+- 如果它打算新增公共能力，为什么现有实现不能承载
+
+推荐直接从这些入口开始：
+
+- [prompts/new-session.txt](prompts/new-session.txt)
+- [prompts/code-change.txt](prompts/code-change.txt)
+- [prompts/standard-01-understand-current-state.txt](prompts/standard-01-understand-current-state.txt)
+
+这样做的价值很直接：
+
+- 更容易让第一次改动贴着现有项目演进
+- 更不容易把小需求写成新框架
+- 更适合后续换人或换电脑继续接手
+
 ## 4. 运行 `check_all.py`
 
 检查脚本底层仍由 Python 实现，但已提供跨环境入口。推荐按你的环境直接运行：

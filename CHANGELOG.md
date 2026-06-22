@@ -9,6 +9,8 @@
 - `AGENTS.md`、`docs/onboarding.md`、`docs/governance/*.md`、`prompts/*.txt`、`.github/PULL_REQUEST_TEMPLATE.md` 补充“优先复用现有实现、避免重复造轮子、控制架构漂移”的协作约束。
 - `tools/skills/code-review/references/review-checklist.md` 增加对重复实现、不必要抽象和边界漂移的审查项。
 - `scripts/check_all.ps1`、`scripts/doc_sync_check.ps1` 改为复用 `scripts/resolve_python_runtime.ps1` 探测真实 Python 运行时，避免命中 Windows Store alias 后静默失败。
+- `tools/skills/doc-driven-implementation/SKILL.md`、`tools/skills/post-change-check/SKILL.md` 补充复用优先与防架构腐化的执行 / 收口要求。
+- `README.md`、`QUICKSTART.md`、`CONTRIBUTING.md` 补充模板价值表达和维护者评审口径，明确“先找复用点，再做最小实现”。
 
 ## [v0.3.0] - 2026-06-22
 
