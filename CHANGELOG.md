@@ -4,6 +4,8 @@
 
 ## [Unreleased]
 
+## [v0.3.1] - 2026-06-22
+
 ### Changed
 
 - `AGENTS.md`、`docs/onboarding.md`、`docs/governance/*.md`、`prompts/*.txt`、`.github/PULL_REQUEST_TEMPLATE.md` 补充“优先复用现有实现、避免重复造轮子、控制架构漂移”的协作约束。

@@ -139,3 +139,56 @@ bash scripts/check_all.sh
 
 5. Spring Boot 示例更贴近真实团队
    `examples/spring-boot-device-center/` 新增了 `docs/sql`、`docs/upgrade` 和 `db/migration`，如果你希望示例更容易映射到真实后端项目，这部分值得同步参考。
+
+## 10. 从 v0.3.0 升级到 v0.3.1 时重点看什么
+
+如果你当前使用的是 `v0.3.0`，升级到 `v0.3.1` 时建议重点吸收下面几类变化：
+
+1. 统一任务入口已经补齐
+   新增：
+   - `prompts/task-entry.txt`
+
+   如果你希望用户不用先自己判断该走设计、实现、小改动还是 review，这个统一入口通常值得直接同步。
+
+2. 新会话和跨人接力现在有了单点快照与交接模板
+   新增：
+   - `docs/evolution/current-snapshot.md`
+   - `docs/governance/project-handoff-checklist.md`
+
+   这两份文档都属于通用模板能力，适合合并进你的项目后，再替换成项目自己的当前事实。
+
+3. 多 agent 协作有了基础结构化约束
+   新增：
+   - `contracts/task-entry.schema.json`
+   - `contracts/handoff-summary.schema.json`
+
+   如果你的项目会同时使用 Codex、Claude 或其他 agent，这两份 schema 值得同步参考；若你暂时只靠自然语言协作，也可以先不启用。
+
+4. 统一检查入口补了 starter 关键资产检查
+   `scripts/check_all.py` 现在除了 `doc-sync`、链接检查和示例自检，还会检查：
+   - `task-entry`
+   - `current-snapshot`
+   - `project-handoff-checklist`
+   - `contracts/*.schema.json`
+
+   如果你的项目不准备引入这些能力，需要同时评估是否调整本地 `check_all.py`，不要直接覆盖后再手工删除文件。
+
+5. 文档入口和治理说明已经同步到新闭环
+   建议按 diff 合并这些入口文档：
+   - `README.md`
+   - `QUICKSTART.md`
+   - `docs/index.md`
+   - `docs/README.md`
+   - `docs/onboarding.md`
+   - `docs/evolution/INDEX.md`
+   - `docs/governance/ai-collaboration-best-practices.md`
+   - `docs/governance/document-sync-map.md`
+   - `EXPORTING.md`
+
+6. 升级时的最小建议
+   如果你只想吸收最有价值的模板能力，优先顺序建议是：
+   1. `prompts/task-entry.txt`
+   2. `docs/evolution/current-snapshot.md`
+   3. `docs/governance/project-handoff-checklist.md`
+   4. `contracts/*.schema.json`
+   5. `scripts/check_all.py` 与相关入口文档
