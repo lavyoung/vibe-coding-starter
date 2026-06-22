@@ -1,4 +1,4 @@
-name: doc-sync
+name: starter-checks
 
 on:
   pull_request:
@@ -11,7 +11,7 @@ permissions:
   contents: read
 
 jobs:
-  doc-sync:
+  starter-checks:
     runs-on: ubuntu-latest
     env:
       BASE_SHA: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.event.before }}
@@ -27,11 +27,23 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Run doc-sync check
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+          cache: "maven"
+
+      - name: Run unified starter checks
         shell: bash
         run: |
           if [ -z "$BASE_SHA" ] || [ "$BASE_SHA" = "0000000000000000000000000000000000000000" ]; then
-            python scripts/doc_sync_check.py
+            python scripts/check_all.py --head "$HEAD_SHA"
           else
-            python scripts/doc_sync_check.py --base "$BASE_SHA" --head "$HEAD_SHA"
+            python scripts/check_all.py --base "$BASE_SHA" --head "$HEAD_SHA"
           fi

@@ -10,6 +10,7 @@ import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Sequence
 
 
 MARKDOWN_LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
@@ -59,6 +60,14 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="跳过示例项目自检。",
     )
+    parser.add_argument(
+        "--base",
+        help="用于 git diff 的 base revision，常用于 CI。",
+    )
+    parser.add_argument(
+        "--head",
+        help="用于 git diff 的 head revision，常用于 CI。",
+    )
     return parser.parse_args()
 
 
@@ -76,7 +85,11 @@ def run_command(command: list[str], cwd: Path, group: str, title: str) -> CheckR
     return CheckResult(group=group, title=title, status="passed")
 
 
-def list_changed_files(repo_root: Path) -> list[str]:
+def normalize_path(path: str) -> str:
+    return path.replace("\\", "/").strip("/")
+
+
+def run_git_status(repo_root: Path) -> list[str]:
     result = subprocess.run(
         ["git", "status", "--porcelain", "--", "."],
         cwd=repo_root,
@@ -94,13 +107,72 @@ def list_changed_files(repo_root: Path) -> list[str]:
         path = line[3:]
         if "->" in path:
             path = path.split("->", 1)[1].strip()
-        normalized = path.replace("\\", "/")
+        normalized = normalize_path(path)
         if normalized:
             changed_files.append(normalized)
     return changed_files
 
 
-def run_doc_sync(repo_root: Path, changed_files: list[str]) -> CheckResult:
+def run_git_diff(repo_root: Path, base: str | None, head: str | None) -> list[str]:
+    if base and head:
+        revision_range = f"{base}...{head}"
+    elif not base and head:
+        revision_range = f"HEAD~1...{head}"
+    elif not base and not head:
+        raise ValueError("run_git_diff requires at least --head or both --base/--head.")
+    else:
+        raise ValueError("--base and --head must be provided together.")
+
+    result = subprocess.run(
+        [
+            "git",
+            "diff",
+            "--name-only",
+            "--diff-filter=ACMR",
+            revision_range,
+        ],
+        cwd=repo_root,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    if result.returncode != 0:
+        raise RuntimeError(result.stderr.strip() or "git diff failed")
+
+    return [
+        normalize_path(line)
+        for line in result.stdout.splitlines()
+        if line.strip()
+    ]
+
+
+def list_changed_files(
+    repo_root: Path,
+    base: str | None,
+    head: str | None,
+) -> tuple[list[str], str]:
+    if base or head:
+        changed_files = run_git_diff(repo_root, base, head)
+        if base and head:
+            return changed_files, f"git diff {base}...{head}"
+        return changed_files, f"git diff HEAD~1...{head}"
+    return run_git_status(repo_root), "git status --porcelain"
+
+
+def run_doc_sync(
+    repo_root: Path,
+    changed_files: Sequence[str],
+    base: str | None,
+    head: str | None,
+) -> CheckResult:
+    if not changed_files:
+        return CheckResult(
+            group="doc-sync",
+            title="doc-sync",
+            status="skipped",
+            detail="no changed files detected",
+        )
+
     command = [
         sys.executable,
         "scripts/doc_sync_check.py",
@@ -109,8 +181,14 @@ def run_doc_sync(repo_root: Path, changed_files: list[str]) -> CheckResult:
         "--config",
         ".doc-sync.json",
     ]
-    for path in changed_files:
-        command.extend(["--changed-file", path])
+    if base or head:
+        if base:
+            command.extend(["--base", base])
+        if head:
+            command.extend(["--head", head])
+    else:
+        for path in changed_files:
+            command.extend(["--changed-file", path])
     return run_command(command, repo_root, "doc-sync", "doc-sync")
 
 
@@ -235,7 +313,7 @@ def main() -> int:
     results: list[CheckResult] = []
     requested_skips: list[str] = []
 
-    changed_files = list_changed_files(repo_root)
+    changed_files, changed_source = list_changed_files(repo_root, args.base, args.head)
 
     if args.skip_doc_sync:
         requested_skips.append("doc-sync")
@@ -248,7 +326,7 @@ def main() -> int:
             )
         )
     else:
-        results.append(run_doc_sync(repo_root, changed_files))
+        results.append(run_doc_sync(repo_root, changed_files, args.base, args.head))
 
     if args.skip_links:
         requested_skips.append("markdown-links")
@@ -278,6 +356,7 @@ def main() -> int:
 
     print("starter local checks")
     print(f"- repo: {repo_root}")
+    print(f"- changed source: {changed_source}")
     print(f"- changed files: {len(changed_files)}")
     if requested_skips:
         print(f"- requested skips: {', '.join(requested_skips)}")

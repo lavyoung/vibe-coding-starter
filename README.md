@@ -127,7 +127,7 @@ vibe-coding-starter/
 - [scripts/doc_sync_check.py](scripts/doc_sync_check.py)：`doc-sync` 的 Python 主实现
 - [scripts/doc_sync_check.ps1](scripts/doc_sync_check.ps1)：Windows PowerShell 入口
 - [scripts/doc_sync_check.sh](scripts/doc_sync_check.sh)：macOS / Linux shell 入口
-- [.github/workflows/doc-sync.yml](.github/workflows/doc-sync.yml)：默认接入 PR 与 `main` 分支校验
+- [.github/workflows/doc-sync.yml](.github/workflows/doc-sync.yml)：默认接入 PR 与 `main` 分支校验，在 CI 中通过统一入口运行 `doc-sync`、链接检查和示例自检
 
 ## 本地统一检查入口
 

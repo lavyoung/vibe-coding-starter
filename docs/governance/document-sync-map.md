@@ -32,7 +32,7 @@
 - `docs/governance/document-sync-map.md` 仍是人工可读的主矩阵
 - `.doc-sync.json` 是机器可校验的补充规则文件
 - `scripts/doc_sync_check.py` 用于在本地和 CI 中检查“代码改了但文档没跟上”的问题
-- 若仓库已启用 `.github/workflows/doc-sync.yml`，PR 默认应通过这条检查
+- 若仓库已启用 `.github/workflows/doc-sync.yml`，PR 默认应通过这条统一 CI 校验，其中包含 `doc-sync`、链接检查和示例自检
 
 ## 2. 文档清单模板
 

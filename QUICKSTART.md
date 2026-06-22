@@ -142,7 +142,10 @@ bash scripts/doc_sync_check.sh
 
 - `.github/workflows/doc-sync.yml`
 
-仓库启用 GitHub Actions 后，这条检查会在 PR 和 `main` 分支 push 时执行。
+仓库启用 GitHub Actions 后，这条检查会在 PR 和 `main` 分支 push 时执行，并通过统一入口：
+
+- 按变更范围运行 `doc-sync`
+- 同时补充链接检查和示例自检
 
 ## 5. 看一份完整需求演示
 
