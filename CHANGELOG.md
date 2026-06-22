@@ -4,6 +4,12 @@
 
 ## [Unreleased]
 
+### Changed
+
+- `AGENTS.md`、`docs/onboarding.md`、`docs/governance/*.md`、`prompts/*.txt`、`.github/PULL_REQUEST_TEMPLATE.md` 补充“优先复用现有实现、避免重复造轮子、控制架构漂移”的协作约束。
+- `tools/skills/code-review/references/review-checklist.md` 增加对重复实现、不必要抽象和边界漂移的审查项。
+- `scripts/check_all.ps1`、`scripts/doc_sync_check.ps1` 改为复用 `scripts/resolve_python_runtime.ps1` 探测真实 Python 运行时，避免命中 Windows Store alias 后静默失败。
+
 ## [v0.3.0] - 2026-06-22
 
 ### Added

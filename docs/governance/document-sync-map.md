@@ -33,6 +33,7 @@
 - `.doc-sync.json` 是机器可校验的补充规则文件
 - `scripts/doc_sync_check.py` 用于在本地和 CI 中检查“代码改了但文档没跟上”的问题
 - 若仓库已启用 `.github/workflows/doc-sync.yml`，PR 默认应通过这条统一 CI 校验，其中包含 `doc-sync`、链接检查和示例自检
+- 若修改 `AGENTS.md`、`prompts/`、`tools/skills/`、PR 模板里的协作规则，需同步检查本文件和 `docs/governance/ai-collaboration-best-practices.md` 是否仍然一致
 
 ## 2. 文档清单模板
 
