@@ -51,6 +51,8 @@
   便于二次抽取或对照修改的模板副本
 - `docs/`
   一套完整的文档优先目录骨架，包含用于新会话和交接的单点快照入口
+- `contracts/`
+  可供不同 agent 共用的结构化输入 / 输出 schema
 - `.doc-sync.json`
   一份可直接定制的机器校验规则文件
 - `prompts/`
@@ -79,6 +81,7 @@
 ```text
 vibe-coding-starter/
 ├── .github/workflows/
+├── contracts/
 ├── .doc-sync.json
 ├── AGENTS.md
 ├── AGENTS.template.md
@@ -150,6 +153,13 @@ vibe-coding-starter/
 - [scripts/doc_sync_check.ps1](scripts/doc_sync_check.ps1)：Windows PowerShell 入口
 - [scripts/doc_sync_check.sh](scripts/doc_sync_check.sh)：macOS / Linux shell 入口
 - [.github/workflows/doc-sync.yml](.github/workflows/doc-sync.yml)：默认接入 PR 与 `main` 分支校验，在 CI 中通过统一入口运行 `doc-sync`、链接检查和示例自检
+
+`check_all` 现在还会顺带检查 starter 关键资产是否齐全，例如：
+
+- `prompts/task-entry.txt`
+- `docs/evolution/current-snapshot.md`
+- `docs/governance/project-handoff-checklist.md`
+- `contracts/*.schema.json`
 
 ## 本地统一检查入口
 

@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Handoff Summary",
+  "description": "阶段交接或回合收口时的结构化摘要模板，用于不同 agent 或不同维护者接力。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "done",
+    "not_done",
+    "next_steps",
+    "risks",
+    "changed_docs",
+    "changed_code",
+    "validation_run"
+  ],
+  "properties": {
+    "done": {
+      "type": "array",
+      "description": "本轮已完成事项。",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "not_done": {
+      "type": "array",
+      "description": "本轮明确未完成或暂缓的事项。",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "next_steps": {
+      "type": "array",
+      "description": "建议接手者继续推进的下一步。",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "risks": {
+      "type": "array",
+      "description": "风险、待确认点和未验证项。",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "changed_docs": {
+      "type": "array",
+      "description": "本轮改动涉及的文档路径。",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "changed_code": {
+      "type": "array",
+      "description": "本轮改动涉及的代码、脚本或配置路径。",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "validation_run": {
+      "type": "array",
+      "description": "本轮实际执行过的验证命令或检查项。",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}

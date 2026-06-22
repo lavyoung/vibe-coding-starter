@@ -51,6 +51,10 @@
 - [prompts/design-task.txt](../prompts/design-task.txt)
 - [prompts/code-change.txt](../prompts/code-change.txt)
 
+如果是从别人手里接着往下做，也补看：
+
+- [docs/governance/project-handoff-checklist.md](governance/project-handoff-checklist.md)
+
 ## 关联代码
 
 - 无直接业务代码；治理规则入口见 [AGENTS.md](../AGENTS.md)

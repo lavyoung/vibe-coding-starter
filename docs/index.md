@@ -41,6 +41,7 @@
 | `ui/` | 页面、弹窗和交互规则是什么 | 项目存在前端 / 管理端界面时 |
 | `governance/` | 文档规则、同步矩阵、状态闸门是什么 | 需要治理和同步时 |
 | `governance/ai-collaboration-best-practices.md` | 人类 + AI 协作节奏怎么走 | 需要统一会话与 review 方式时 |
+| `governance/project-handoff-checklist.md` | 一次工作结束后要交接什么 | 跨人接力、阶段收口、新会话续做 |
 | `evolution/current-snapshot.md` | 当前阶段最值得先看的单点快照 | 新会话、新人接手、阶段交接 |
 | `evolution/` | 当前演进主线是什么 | 需要维护阶段总览时 |
 

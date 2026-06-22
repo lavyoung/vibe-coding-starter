@@ -93,6 +93,20 @@ AI 自审时，不要先让它总结优点，优先让它列：
 - 哪几个文件最值得人工 review
 - 它复用了哪些现有实现，或者为什么没有复用
 
+### 3.6 结束前补一份可交接摘要
+
+如果这轮工作不会在当前会话里完全结束，建议在收口时固定补一份 handoff 摘要，至少写清：
+
+- 已完成
+- 未完成
+- 下一步
+- 风险与未验证项
+- 本轮改了哪些代码和文档
+
+推荐直接参考：
+
+- [project-handoff-checklist.md](project-handoff-checklist.md)
+
 ## 4. 在 docs-first 仓库里的额外要求
 
 如果仓库采用本 starter，不要照搬“只读代码”的流程，还要加上：
@@ -105,6 +119,11 @@ AI 自审时，不要先让它总结优点，优先让它列：
 - 先确认这次实现是否能复用已有模块、组件、脚本或约束
 
 如果仓库启用了 `.doc-sync.json` 和 `scripts/doc_sync_check.py`，收尾时还要跑一轮 `doc-sync`。
+
+如果仓库已经维护了 `docs/evolution/current-snapshot.md` 和 `docs/governance/project-handoff-checklist.md`，收尾时还应确认：
+
+- 当前阶段快照是否仍然准确
+- 本轮是否需要补一份 handoff 摘要
 
 如果是在 PR 或提交前做 review，建议同时在 PR 模板里写清：
 

@@ -22,6 +22,7 @@
 
 ```text
 .github/
+contracts/
 .doc-sync.json
 AGENTS.md
 AGENTS.template.md
@@ -76,6 +77,16 @@ python scripts/init_starter.py \
 
 如果项目有前端或管理端界面，再启用 `docs/ui/`。
 
+当项目开始进入持续迭代后，建议尽早启用这两份补充文档：
+
+- `docs/evolution/current-snapshot.md`
+- `docs/governance/project-handoff-checklist.md`
+
+如果你预计会同时使用多个 agent 或跨人交接，也建议尽早看一眼：
+
+- `contracts/task-entry.schema.json`
+- `contracts/handoff-summary.schema.json`
+
 ### 3.1 第一次实现前先确认现有复用点
 
 不要一补完文档就立刻让 AI 开始写代码。第一次真正进入实现前，至少先让它回答：
@@ -117,6 +128,7 @@ bash scripts/check_all.sh
 - `doc-sync`
 - Markdown 相对链接检查
 - 示例项目自检
+- starter 关键资产检查
 
 如果你希望先理解或定制 `doc-sync` 规则，再看下面这部分。
 

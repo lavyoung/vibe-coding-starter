@@ -34,6 +34,7 @@
 - `scripts/doc_sync_check.py` 用于在本地和 CI 中检查“代码改了但文档没跟上”的问题
 - 若仓库已启用 `.github/workflows/doc-sync.yml`，PR 默认应通过这条统一 CI 校验，其中包含 `doc-sync`、链接检查和示例自检
 - 若修改 `AGENTS.md`、`prompts/`、`tools/skills/`、PR 模板里的协作规则，需同步检查本文件和 `docs/governance/ai-collaboration-best-practices.md` 是否仍然一致
+- 若仓库已启用 `docs/evolution/current-snapshot.md`、`docs/governance/project-handoff-checklist.md` 与 `contracts/*.schema.json`，修改统一入口、治理规则或交接流程时，也应回查这些资产是否仍然成立
 
 ## 2. 文档清单模板
 
@@ -45,6 +46,7 @@
 | `docs/evolution/INDEX.md` | 当前项目演进总览 | 恢复当前主线时 |
 | `docs/architecture/current-architecture.md` | 当前系统整体架构基线 | 做跨域设计时 |
 | `docs/governance/ai-collaboration-best-practices.md` | AI 协作节奏与标准提示词 | 统一会话方式和 review 节奏时 |
+| `docs/governance/project-handoff-checklist.md` | 阶段交接和回合收口模板 | 跨人接力、AI 新会话、提交前收口时 |
 | `docs/rfcs/README.md` / `RFC_TEMPLATE.md` | 提案规则与模板 | 新技术方案设计时 |
 | `docs/explanation/adr/README.md` / `ADR_TEMPLATE.md` | 决策记录规则与模板 | 方案已接受时 |
 | `docs/ui/README.md` / `page-map.md` / `interaction-patterns.md` / `screens/*.md` | 页面、弹窗和交互事实源 | 项目存在前端 / 管理端界面时 |

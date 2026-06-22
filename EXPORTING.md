@@ -13,6 +13,7 @@
 ```text
 vibe-coding-starter/
 ├── .github/
+├── contracts/
 ├── .doc-sync.json
 ├── AGENTS.md
 ├── AGENTS.template.md
@@ -45,6 +46,7 @@ vibe-coding-starter/
 - 通用 starter 中不再保留仓库私有构建命令
 - 所有提示词脱离当前会话后仍然能看懂
 - 所有 skills 对多个项目都仍然成立
+- `contracts/` 中的 schema 仍然是通用模板，而不是某个项目的私有字段约定
 
 ## 3. 导出方式
 

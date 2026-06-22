@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import re
 import shutil
 import subprocess
@@ -15,6 +16,25 @@ from typing import Sequence
 
 MARKDOWN_LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 SKIP_DIRS = {".git", ".idea", ".vscode", "node_modules", "__pycache__", "target"}
+REQUIRED_STARTER_FILES = {
+    "prompts/task-entry.txt": "统一任务入口 prompt",
+    "docs/evolution/current-snapshot.md": "单点快照模板",
+    "docs/governance/project-handoff-checklist.md": "交接清单模板",
+    "contracts/task-entry.schema.json": "任务入口 schema",
+    "contracts/handoff-summary.schema.json": "交接摘要 schema",
+}
+SCHEMA_TOP_LEVEL_KEYS = ("$schema", "title", "type", "properties")
+SYNC_REVIEW_TRIGGER_PREFIXES = (
+    "prompts/",
+    "tools/skills/",
+    "docs/governance/",
+)
+SYNC_REVIEW_COMPANION_FILES = {
+    "docs/evolution/current-snapshot.md",
+    "docs/governance/project-handoff-checklist.md",
+    "contracts/task-entry.schema.json",
+    "contracts/handoff-summary.schema.json",
+}
 
 
 @dataclass(frozen=True)
@@ -240,6 +260,99 @@ def validate_links(repo_root: Path) -> CheckResult:
     return CheckResult(group="markdown-links", title="markdown-links", status="passed")
 
 
+def validate_starter_assets(
+    repo_root: Path,
+    changed_files: Sequence[str],
+) -> list[CheckResult]:
+    results: list[CheckResult] = []
+    missing_assets: list[str] = []
+
+    for relative_path, label in REQUIRED_STARTER_FILES.items():
+        if not (repo_root / relative_path).exists():
+            missing_assets.append(f"- {relative_path} ({label})")
+
+    if missing_assets:
+        results.append(
+            CheckResult(
+                group="starter-assets",
+                title="required starter assets",
+                status="failed",
+                detail="\n".join(missing_assets),
+            )
+        )
+    else:
+        results.append(
+            CheckResult(
+                group="starter-assets",
+                title="required starter assets",
+                status="passed",
+            )
+        )
+
+    schema_issues: list[str] = []
+    for schema_path in (
+        "contracts/task-entry.schema.json",
+        "contracts/handoff-summary.schema.json",
+    ):
+        absolute_path = repo_root / schema_path
+        if not absolute_path.exists():
+            continue
+        try:
+            payload = json.loads(absolute_path.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            schema_issues.append(f"- {schema_path}: invalid JSON ({exc.msg})")
+            continue
+
+        missing_keys = [key for key in SCHEMA_TOP_LEVEL_KEYS if key not in payload]
+        if missing_keys:
+            schema_issues.append(
+                f"- {schema_path}: missing top-level keys {', '.join(missing_keys)}"
+            )
+
+    if schema_issues:
+        results.append(
+            CheckResult(
+                group="starter-assets",
+                title="starter schema shape",
+                status="failed",
+                detail="\n".join(schema_issues),
+            )
+        )
+    else:
+        results.append(
+            CheckResult(
+                group="starter-assets",
+                title="starter schema shape",
+                status="passed",
+            )
+        )
+
+    trigger_hit = any(
+        path == "AGENTS.md"
+        or any(path.startswith(prefix) for prefix in SYNC_REVIEW_TRIGGER_PREFIXES)
+        for path in changed_files
+    )
+    companion_changed = any(
+        path in SYNC_REVIEW_COMPANION_FILES for path in changed_files
+    )
+
+    if trigger_hit and not companion_changed:
+        results.append(
+            CheckResult(
+                group="starter-assets",
+                title="snapshot / handoff / contracts review",
+                status="skipped",
+                detail=(
+                    "changed prompts / governance / skills / AGENTS without touching "
+                    "current-snapshot, project-handoff-checklist, or contracts; "
+                    "manually confirm these assets still match the new rules"
+                ),
+            )
+        )
+
+    return results
+
+
 def run_example_checks(repo_root: Path) -> list[CheckResult]:
     checks: list[CheckResult] = []
 
@@ -341,6 +454,8 @@ def main() -> int:
     else:
         results.append(validate_links(repo_root))
 
+    results.extend(validate_starter_assets(repo_root, changed_files))
+
     if args.skip_examples:
         requested_skips.append("examples")
         results.append(
@@ -362,7 +477,7 @@ def main() -> int:
         print(f"- requested skips: {', '.join(requested_skips)}")
 
     failed = False
-    grouped_names = ["doc-sync", "markdown-links", "examples"]
+    grouped_names = ["doc-sync", "markdown-links", "starter-assets", "examples"]
     for group_name in grouped_names:
         group_results = [result for result in results if result.group == group_name]
         if not group_results:

@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Task Entry",
+  "description": "统一任务入口的结构化描述模板，用于不同 agent 在进入具体流程前共享任务上下文。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "task_type",
+    "goal",
+    "scope",
+    "constraints",
+    "related_docs",
+    "expected_output",
+    "validation"
+  ],
+  "properties": {
+    "task_type": {
+      "type": "string",
+      "enum": [
+        "new_requirement",
+        "design",
+        "code_change",
+        "small_change",
+        "upgrade",
+        "review",
+        "docs_only"
+      ],
+      "description": "当前任务的路由类型。"
+    },
+    "goal": {
+      "type": "string",
+      "minLength": 1,
+      "description": "这次工作的核心目标。"
+    },
+    "scope": {
+      "type": "array",
+      "description": "本次预计影响的功能点、模块或目录。",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "description": "已知限制、边界条件或必须遵守的约束。",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "related_docs": {
+      "type": "array",
+      "description": "当前任务关联的需求、设计、任务、升级或治理文档路径。",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "expected_output": {
+      "type": "array",
+      "description": "期望产物，例如代码改动、设计草案、review findings、升级说明等。",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "validation": {
+      "type": "array",
+      "description": "建议或要求的验证方式。",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  }
+}
