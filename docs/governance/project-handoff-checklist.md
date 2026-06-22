@@ -66,6 +66,11 @@
 - `check_all` 是否执行
 - 哪些检查没跑，以及原因
 
+若需要稳定交给其他 agent，优先再把以上内容收敛成：
+
+- [../../contracts/handoff-summary.schema.json](../../contracts/handoff-summary.schema.json)
+- [../../contracts/examples/handoff-summary.example.json](../../contracts/examples/handoff-summary.example.json)
+
 ## 4. 推荐输出模板
 
 ```md

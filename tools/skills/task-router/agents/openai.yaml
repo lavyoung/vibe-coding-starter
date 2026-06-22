@@ -1,0 +1,4 @@
+interface:
+  display_name: "任务路由"
+  short_description: "先判断任务类型、文档依据与复用路径，再决定后续进入哪条 prompt 或协作协议。"
+  default_prompt: "Use $task-router to classify the current request, confirm valid docs, identify reuse paths, and choose the next workflow."

@@ -106,12 +106,14 @@ AI 自审时，不要先让它总结优点，优先让它列：
 推荐直接参考：
 
 - [project-handoff-checklist.md](project-handoff-checklist.md)
+- [agent-collaboration-protocol.md](agent-collaboration-protocol.md)
 
 ## 4. 在 docs-first 仓库里的额外要求
 
 如果仓库采用本 starter，不要照搬“只读代码”的流程，还要加上：
 
 - 先读 `AGENTS.md`
+- 若当前 agent 会自动读取 `CLAUDE.md`，同步确认它与 `AGENTS.md` 一致
 - 先读 `docs/index.md`
 - 先读 `docs/evolution/INDEX.md`
 - 先读 `docs/governance/document-sync-map.md`
@@ -137,18 +139,20 @@ AI 自审时，不要先让它总结优点，优先让它列：
 对应文件见：
 
 1. [../../prompts/task-entry.txt](../../prompts/task-entry.txt)
-2. [../../prompts/standard-01-understand-current-state.txt](../../prompts/standard-01-understand-current-state.txt)
-3. [../../prompts/standard-02-minimal-implementation.txt](../../prompts/standard-02-minimal-implementation.txt)
-4. [../../prompts/standard-03-findings-first-review.txt](../../prompts/standard-03-findings-first-review.txt)
-5. [../../prompts/standard-04-human-review-focus.txt](../../prompts/standard-04-human-review-focus.txt)
+2. [agent-collaboration-protocol.md](agent-collaboration-protocol.md)
+3. [../../prompts/standard-01-understand-current-state.txt](../../prompts/standard-01-understand-current-state.txt)
+4. [../../prompts/standard-02-minimal-implementation.txt](../../prompts/standard-02-minimal-implementation.txt)
+5. [../../prompts/standard-03-findings-first-review.txt](../../prompts/standard-03-findings-first-review.txt)
+6. [../../prompts/standard-04-human-review-focus.txt](../../prompts/standard-04-human-review-focus.txt)
 
 推荐使用顺序：
 
 1. 先用 `task-entry` 判断任务类型和后续路径
-2. 若信息还不够，先理解现状
-3. 再最小改动实现或进入设计流程
-4. 再 findings-first review
-5. 最后聚焦人工检查点
+2. 若仓库已提供 `task-router` skill，也可以先用它做同样的路由动作
+3. 若信息还不够，先理解现状
+4. 再最小改动实现或进入设计流程
+5. 再 findings-first review
+6. 最后聚焦人工检查点
 
 ## 6. 前端 / UI 场景补充
 

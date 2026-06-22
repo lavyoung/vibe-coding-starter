@@ -1,0 +1,28 @@
+{
+  "task_type": "code_change",
+  "goal": "补一个更清晰的首次采用入口，并同步相关治理文档。",
+  "scope": [
+    "README.md",
+    "QUICKSTART.md",
+    "docs/governance/document-sync-map.md"
+  ],
+  "constraints": [
+    "保持中文表达一致",
+    "优先最小改动",
+    "不要引入某个公司内部项目事实"
+  ],
+  "related_docs": [
+    "AGENTS.md",
+    "docs/index.md",
+    "docs/governance/document-sync-map.md"
+  ],
+  "expected_output": [
+    "模板入口文档更新",
+    "相关治理文档同步",
+    "本地验证结果"
+  ],
+  "validation": [
+    "python scripts/check_all.py",
+    "./scripts/check_all.ps1"
+  ]
+}

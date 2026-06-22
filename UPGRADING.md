@@ -35,12 +35,14 @@
 - `README.md`
 - `QUICKSTART.md`
 - `AGENTS.md`
+- `CLAUDE.md`
 - `AGENTS.template.md`
 - `docs/index.md`
 - `docs/README.md`
 - `docs/onboarding.md`
 - `docs/evolution/INDEX.md`
 - `docs/governance/document-sync-map.md`
+- `docs/governance/agent-collaboration-protocol.md`
 
 建议做法：
 
@@ -61,6 +63,7 @@
 - `docs/ui/**`
 - 项目自身代码目录
 - 项目自己的 `.doc-sync.json`
+- 项目自己已经沉淀为事实源的 `contracts/examples/*.json`
 
 如果模板升级涉及这些目录，通常应按“新规则参考 + 本地手工合并”的方式处理。
 
@@ -83,6 +86,7 @@ bash scripts/check_all.sh
 
 6. 人工重点 review：
    - `AGENTS.md`
+   - `CLAUDE.md`
    - `README.md`
    - `QUICKSTART.md`
    - `docs/governance/document-sync-map.md`

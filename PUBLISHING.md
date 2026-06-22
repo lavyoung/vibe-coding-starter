@@ -5,7 +5,7 @@
 - 推荐仓库名：
   `vibe-coding-starter`
 - 推荐描述：
-  `一个面向人类 + AI 协同交付的文档优先模板仓库，内含 AGENTS、文档治理规则、状态闸门和可复用 Codex skills。`
+  `一个面向人类 + AI 协同交付的文档优先模板仓库，内含 AGENTS / CLAUDE 入口、文档治理规则、状态闸门和可复用 Codex skills。`
 
 ## 推荐 GitHub Topics
 
@@ -43,7 +43,7 @@
 vibe-coding-starter 首次公开发布。
 
 包含内容：
-- AGENTS 模板
+- AGENTS / CLAUDE 协作入口
 - 文档优先目录骨架
 - 文档治理与状态闸门规则
 - 新会话与代码改动阶段提示词

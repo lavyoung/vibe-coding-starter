@@ -1,0 +1,30 @@
+{
+  "done": [
+    "补齐统一任务入口说明",
+    "同步治理文档与检查脚本"
+  ],
+  "not_done": [
+    "尚未新增更复杂的 agent 路由自动化"
+  ],
+  "next_steps": [
+    "检查是否还需要补 agent-neutral 协议说明",
+    "确认示例与 schema 是否仍然一致"
+  ],
+  "risks": [
+    "若后续修改协作规则但不同步 schema/example，容易出现口径漂移",
+    "部分 shell 入口尚未在当前机器逐一验证"
+  ],
+  "changed_docs": [
+    "README.md",
+    "docs/governance/document-sync-map.md",
+    "contracts/README.md"
+  ],
+  "changed_code": [
+    "scripts/check_all.py"
+  ],
+  "validation_run": [
+    "python scripts/check_all.py",
+    "./scripts/check_all.ps1",
+    "git diff --check"
+  ]
+}

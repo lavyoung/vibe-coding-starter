@@ -1,6 +1,6 @@
 # vibe-coding-starter
 
-一个面向“人类 + AI 协同交付”的文档优先模板仓库，内含可直接生效的 `AGENTS.md`、文档治理骨架、状态闸门规则、复用优先协作约束和可复用的 Codex skills。
+一个面向“人类 + AI 协同交付”的文档优先模板仓库，内含可直接生效的 `AGENTS.md`、`CLAUDE.md` 兼容入口、文档治理骨架、状态闸门规则、复用优先协作约束和可复用的 Codex skills。
 
 如果你是通过模板创建了一个新项目，请先把本文件标题、首段简介和仓库描述替换成你自己的项目信息；`vibe-coding-starter` 只是上游模板名。
 
@@ -47,12 +47,14 @@
 
 - `AGENTS.md`
   新仓库创建后即可生效的项目级协作约束起始版
+- `CLAUDE.md`
+  给会自动读取 `CLAUDE.md` 的 agent 使用的兼容入口；权威规则仍以 `AGENTS.md` 为准
 - `AGENTS.template.md`
   便于二次抽取或对照修改的模板副本
 - `docs/`
   一套完整的文档优先目录骨架，包含用于新会话和交接的单点快照入口
 - `contracts/`
-  可供不同 agent 共用的结构化输入 / 输出 schema
+  可供不同 agent 共用的结构化输入 / 输出 schema、协议说明和 JSON 示例
 - `.doc-sync.json`
   一份可直接定制的机器校验规则文件
 - `prompts/`
@@ -60,7 +62,8 @@
 - `scripts/`
   可在本地和 CI 复用的 `doc-sync` 校验脚本、模板初始化脚本和统一自检入口
 - `tools/skills/`
-  三个通用 Codex skill：
+  四个通用 Codex skill：
+  - `task-router`
   - `doc-driven-implementation`
   - `post-change-check`
   - `code-review`
@@ -84,6 +87,7 @@ vibe-coding-starter/
 ├── contracts/
 ├── .doc-sync.json
 ├── AGENTS.md
+├── CLAUDE.md
 ├── AGENTS.template.md
 ├── docs/
 │   ├── index.md
@@ -125,6 +129,11 @@ vibe-coding-starter/
 - [prompts/task-entry.txt](prompts/task-entry.txt)
   先让 agent 判断这是需求、设计、代码改动、小修复、升级还是 review，再路由到后续流程
 
+如果你更希望把这一步沉淀成仓库内可复用 skill，也可以直接用：
+
+- [tools/skills/task-router/SKILL.md](tools/skills/task-router/SKILL.md)
+  先做任务分流、文档状态检查和复用点识别，再决定进入哪个 prompt 或协作协议
+
 如果你已经知道当前要走哪条路径，再直接顺序使用下面 4 条标准提示词：
 
 1. [prompts/standard-01-understand-current-state.txt](prompts/standard-01-understand-current-state.txt)
@@ -141,6 +150,7 @@ vibe-coding-starter/
 对应的方法论说明见：
 
 - [docs/governance/ai-collaboration-best-practices.md](docs/governance/ai-collaboration-best-practices.md)
+- [docs/governance/agent-collaboration-protocol.md](docs/governance/agent-collaboration-protocol.md)
 
 ## 5 分钟上手
 
@@ -156,10 +166,13 @@ vibe-coding-starter/
 
 `check_all` 现在还会顺带检查 starter 关键资产是否齐全，例如：
 
+- `CLAUDE.md`
 - `prompts/task-entry.txt`
 - `docs/evolution/current-snapshot.md`
 - `docs/governance/project-handoff-checklist.md`
+- `docs/governance/agent-collaboration-protocol.md`
 - `contracts/*.schema.json`
+- `contracts/examples/*.json`
 
 ## 本地统一检查入口
 
@@ -196,6 +209,16 @@ bash scripts/check_all.sh
 - 需要先验文档状态再决定能不能落代码
 
 详见 [tools/skills/doc-driven-implementation/SKILL.md](tools/skills/doc-driven-implementation/SKILL.md)。
+
+### `task-router`
+
+适用于以下场景：
+
+- 任务刚进入仓库，还没明确该走设计、实现、升级还是 review
+- 需要先确认有效文档依据，再决定后续路径
+- 需要先识别可复用的 prompt、skill、脚本和边界，再决定如何推进
+
+详见 [tools/skills/task-router/SKILL.md](tools/skills/task-router/SKILL.md)。
 
 ### `post-change-check`
 

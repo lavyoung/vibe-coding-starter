@@ -17,13 +17,24 @@ from typing import Sequence
 MARKDOWN_LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 SKIP_DIRS = {".git", ".idea", ".vscode", "node_modules", "__pycache__", "target"}
 REQUIRED_STARTER_FILES = {
+    "CLAUDE.md": "Claude 兼容入口",
     "prompts/task-entry.txt": "统一任务入口 prompt",
+    "tools/skills/task-router/SKILL.md": "任务路由 skill",
+    "tools/skills/task-router/agents/openai.yaml": "任务路由 skill UI 元数据",
     "docs/evolution/current-snapshot.md": "单点快照模板",
     "docs/governance/project-handoff-checklist.md": "交接清单模板",
+    "docs/governance/agent-collaboration-protocol.md": "多 agent 协作协议",
+    "contracts/README.md": "contracts 使用说明",
     "contracts/task-entry.schema.json": "任务入口 schema",
     "contracts/handoff-summary.schema.json": "交接摘要 schema",
+    "contracts/examples/task-entry.example.json": "任务入口示例",
+    "contracts/examples/handoff-summary.example.json": "交接摘要示例",
 }
 SCHEMA_TOP_LEVEL_KEYS = ("$schema", "title", "type", "properties")
+SCHEMA_EXAMPLE_MAP = {
+    "contracts/task-entry.schema.json": "contracts/examples/task-entry.example.json",
+    "contracts/handoff-summary.schema.json": "contracts/examples/handoff-summary.example.json",
+}
 SYNC_REVIEW_TRIGGER_PREFIXES = (
     "prompts/",
     "tools/skills/",
@@ -32,8 +43,14 @@ SYNC_REVIEW_TRIGGER_PREFIXES = (
 SYNC_REVIEW_COMPANION_FILES = {
     "docs/evolution/current-snapshot.md",
     "docs/governance/project-handoff-checklist.md",
+    "docs/governance/agent-collaboration-protocol.md",
+    "contracts/README.md",
     "contracts/task-entry.schema.json",
     "contracts/handoff-summary.schema.json",
+    "contracts/examples/task-entry.example.json",
+    "contracts/examples/handoff-summary.example.json",
+    "tools/skills/task-router/SKILL.md",
+    "tools/skills/task-router/agents/openai.yaml",
 }
 
 
@@ -327,8 +344,80 @@ def validate_starter_assets(
             )
         )
 
+    example_issues: list[str] = []
+    for schema_path, example_path in SCHEMA_EXAMPLE_MAP.items():
+        schema_file = repo_root / schema_path
+        example_file = repo_root / example_path
+        if not schema_file.exists() or not example_file.exists():
+            continue
+
+        try:
+            schema_payload = json.loads(schema_file.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            example_issues.append(f"- {schema_path}: invalid JSON ({exc.msg})")
+            continue
+
+        try:
+            example_payload = json.loads(example_file.read_text(encoding="utf-8"))
+        except json.JSONDecodeError as exc:
+            example_issues.append(f"- {example_path}: invalid JSON ({exc.msg})")
+            continue
+
+        schema_properties = schema_payload.get("properties", {})
+        required_keys = set(schema_payload.get("required", []))
+        example_keys = set(example_payload.keys())
+
+        missing_keys = sorted(required_keys - example_keys)
+        extra_keys = sorted(example_keys - set(schema_properties.keys()))
+        if missing_keys:
+            example_issues.append(
+                f"- {example_path}: missing required keys {', '.join(missing_keys)}"
+            )
+        if extra_keys:
+            example_issues.append(
+                f"- {example_path}: unknown keys {', '.join(extra_keys)}"
+            )
+
+        for key in sorted(required_keys & example_keys):
+            property_schema = schema_properties.get(key, {})
+            expected_type = property_schema.get("type")
+            value = example_payload[key]
+
+            if expected_type == "array" and not isinstance(value, list):
+                example_issues.append(
+                    f"- {example_path}: key {key} should be an array"
+                )
+            elif expected_type == "string" and not isinstance(value, str):
+                example_issues.append(
+                    f"- {example_path}: key {key} should be a string"
+                )
+
+            allowed_values = property_schema.get("enum")
+            if allowed_values and value not in allowed_values:
+                example_issues.append(
+                    f"- {example_path}: key {key} should be one of {', '.join(allowed_values)}"
+                )
+
+    if example_issues:
+        results.append(
+            CheckResult(
+                group="starter-assets",
+                title="contract examples",
+                status="failed",
+                detail="\n".join(example_issues),
+            )
+        )
+    else:
+        results.append(
+            CheckResult(
+                group="starter-assets",
+                title="contract examples",
+                status="passed",
+            )
+        )
+
     trigger_hit = any(
-        path == "AGENTS.md"
+        path in {"AGENTS.md", "CLAUDE.md"}
         or any(path.startswith(prefix) for prefix in SYNC_REVIEW_TRIGGER_PREFIXES)
         for path in changed_files
     )
@@ -343,8 +432,8 @@ def validate_starter_assets(
                 title="snapshot / handoff / contracts review",
                 status="skipped",
                 detail=(
-                    "changed prompts / governance / skills / AGENTS without touching "
-                    "current-snapshot, project-handoff-checklist, or contracts; "
+                    "changed prompts / governance / skills / AGENTS / CLAUDE without touching "
+                    "current-snapshot, project-handoff-checklist, agent-collaboration-protocol, or contracts; "
                     "manually confirm these assets still match the new rules"
                 ),
             )

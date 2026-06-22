@@ -4,6 +4,18 @@
 
 ## [Unreleased]
 
+### Added
+
+- 新增根级 `CLAUDE.md` 兼容入口，方便会自动读取该文件的 agent 直接按与 `AGENTS.md` 同口径的规则协作。
+- 新增 `docs/governance/agent-collaboration-protocol.md`、`contracts/README.md` 与 `contracts/examples/*.json`，补齐跨 Codex / Claude / 其他 agent 的最小协作协议和可直接复用示例。
+- 新增 `tools/skills/task-router/`，把“先路由任务、再决定实现路径”的入口沉淀为仓库内可复用 skill。
+
+### Changed
+
+- `README.md`、`QUICKSTART.md`、`EXPORTING.md`、`docs/index.md`、`docs/onboarding.md`、`docs/README.md`、`docs/governance/*.md` 与 `scripts/check_all.py` 同步补齐 `CLAUDE.md` 入口和一致性检查说明。
+- `README.md`、`QUICKSTART.md`、`docs/index.md`、`docs/onboarding.md`、`docs/governance/*.md`、`EXPORTING.md`、`UPGRADING.md` 同步补齐多 agent 协作协议入口。
+- `README.md`、`QUICKSTART.md`、`docs/governance/*.md` 与 `scripts/check_all.py` 同步补齐 `task-router` skill 入口和检查约束。
+
 ## [v0.3.1] - 2026-06-22
 
 ### Changed

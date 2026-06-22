@@ -25,6 +25,7 @@
 contracts/
 .doc-sync.json
 AGENTS.md
+CLAUDE.md
 AGENTS.template.md
 docs/
 prompts/
@@ -68,6 +69,8 @@ python scripts/init_starter.py \
 3. `docs/architecture/current-architecture.md`
 4. `docs/evolution/INDEX.md`
 
+如果团队会使用会自动读取 `CLAUDE.md` 的 agent，也顺手确认 `CLAUDE.md` 与 `AGENTS.md` 保持同口径。
+
 然后再补这些常见项目事实：
 
 - 项目简介
@@ -84,8 +87,11 @@ python scripts/init_starter.py \
 
 如果你预计会同时使用多个 agent 或跨人交接，也建议尽早看一眼：
 
+- `contracts/README.md`
 - `contracts/task-entry.schema.json`
 - `contracts/handoff-summary.schema.json`
+- `contracts/examples/task-entry.example.json`
+- `contracts/examples/handoff-summary.example.json`
 
 ### 3.1 第一次实现前先确认现有复用点
 
@@ -98,17 +104,21 @@ python scripts/init_starter.py \
 推荐直接从这些入口开始：
 
 - [prompts/task-entry.txt](prompts/task-entry.txt)
+- [tools/skills/task-router/SKILL.md](tools/skills/task-router/SKILL.md)
 - [prompts/new-session.txt](prompts/new-session.txt)
 - [prompts/code-change.txt](prompts/code-change.txt)
 - [prompts/standard-01-understand-current-state.txt](prompts/standard-01-understand-current-state.txt)
 
 如果你不想先自己判断该走设计、实现、升级还是 review，优先用 `task-entry.txt` 作为统一入口。
+如果你希望把这一步沉淀成仓库内 skill，优先用 `task-router` 做同样的分流动作。
+如果你准备把这份任务再交给另一个 agent，优先把结果补成 `contracts/task-entry.schema.json` 对应结构。
 
 这样做的价值很直接：
 
 - 更容易让第一次改动贴着现有项目演进
 - 更不容易把小需求写成新框架
 - 更适合后续换人或换电脑继续接手
+- 更容易让 Codex、Claude 或其他 agent 共享同一份任务口径
 
 ## 4. 运行 `check_all.py`
 

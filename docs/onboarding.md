@@ -10,12 +10,14 @@
 ## 1. 标准接手顺序
 
 1. [AGENTS.md](../AGENTS.md)
-2. [docs/index.md](index.md)
-3. [docs/evolution/current-snapshot.md](evolution/current-snapshot.md)
-4. [docs/evolution/INDEX.md](evolution/INDEX.md)
-5. [docs/governance/document-sync-map.md](governance/document-sync-map.md)
-6. [docs/governance/ai-collaboration-best-practices.md](governance/ai-collaboration-best-practices.md)
-7. 与当前任务最相关的 `requirements / design / tasks / upgrade / api / ui` 文档
+2. 若当前 agent 会自动读取根目录 [CLAUDE.md](../CLAUDE.md)，同步确认它与 `AGENTS.md` 一致
+3. [docs/index.md](index.md)
+4. [docs/evolution/current-snapshot.md](evolution/current-snapshot.md)
+5. [docs/evolution/INDEX.md](evolution/INDEX.md)
+6. [docs/governance/document-sync-map.md](governance/document-sync-map.md)
+7. [docs/governance/ai-collaboration-best-practices.md](governance/ai-collaboration-best-practices.md)
+8. 若需要跨 agent 结构化接力，再看 [docs/governance/agent-collaboration-protocol.md](governance/agent-collaboration-protocol.md)
+9. 与当前任务最相关的 `requirements / design / tasks / upgrade / api / ui` 文档
 
 ## 2. 项目文档工作流
 
@@ -39,7 +41,7 @@
 
 1. 不要把草案文档写成已实现事实。
 2. 不要在相关文档仍是 `草案`、`评审中` 时直接落代码。
-3. 不要只看会话上下文，必须回到 `docs/` 和 `AGENTS.md` 恢复事实。
+3. 不要只看会话上下文，必须回到 `docs/`、`AGENTS.md`，以及需要时的 `CLAUDE.md` 恢复事实。
 4. 不要绕开现有模块边界重复造轮子，先查复用点，再决定是否新增抽象。
 
 ## 4. 给 AI 的开场提示词
@@ -54,7 +56,8 @@
 如果是从别人手里接着往下做，也补看：
 
 - [docs/governance/project-handoff-checklist.md](governance/project-handoff-checklist.md)
+- [docs/governance/agent-collaboration-protocol.md](governance/agent-collaboration-protocol.md)
 
 ## 关联代码
 
-- 无直接业务代码；治理规则入口见 [AGENTS.md](../AGENTS.md)
+- 无直接业务代码；治理规则入口见 [AGENTS.md](../AGENTS.md) 与 [CLAUDE.md](../CLAUDE.md)

@@ -23,8 +23,9 @@
 3. 再看 [docs/architecture/current-architecture.md](architecture/current-architecture.md)
 4. 再看 [docs/onboarding.md](onboarding.md) 和 [docs/governance/document-sync-map.md](governance/document-sync-map.md)
 5. 若需要确认协作方式和会话节奏，再看 [docs/governance/ai-collaboration-best-practices.md](governance/ai-collaboration-best-practices.md)
-6. 若涉及页面或交互，再看 [docs/ui/README.md](ui/README.md)
-7. 再按业务域跳到 `requirements/`、`design/`、`tasks/`
+6. 若需要跨 Codex / Claude / 其他 agent 协作，再看 [docs/governance/agent-collaboration-protocol.md](governance/agent-collaboration-protocol.md)
+7. 若涉及页面或交互，再看 [docs/ui/README.md](ui/README.md)
+8. 再按业务域跳到 `requirements/`、`design/`、`tasks/`
 
 ## 3. 文档分层
 
@@ -41,6 +42,7 @@
 | `ui/` | 页面、弹窗和交互规则是什么 | 项目存在前端 / 管理端界面时 |
 | `governance/` | 文档规则、同步矩阵、状态闸门是什么 | 需要治理和同步时 |
 | `governance/ai-collaboration-best-practices.md` | 人类 + AI 协作节奏怎么走 | 需要统一会话与 review 方式时 |
+| `governance/agent-collaboration-protocol.md` | 多 agent 之间的输入 / 输出协作协议 | 跨 agent 接力、新会话续做、结构化交接时 |
 | `governance/project-handoff-checklist.md` | 一次工作结束后要交接什么 | 跨人接力、阶段收口、新会话续做 |
 | `evolution/current-snapshot.md` | 当前阶段最值得先看的单点快照 | 新会话、新人接手、阶段交接 |
 | `evolution/` | 当前演进主线是什么 | 需要维护阶段总览时 |
@@ -65,7 +67,7 @@
 
 ## 5. AI 协作约束
 
-- AI 在改代码前，优先读取本文件和 [AGENTS.md](../AGENTS.md)
+- AI 在改代码前，优先读取本文件和 [AGENTS.md](../AGENTS.md)；若当前 agent 会自动读取根目录 [CLAUDE.md](../CLAUDE.md)，也要确认两者口径一致
 - AI 在恢复上下文或准备改代码前，优先读取 [docs/evolution/current-snapshot.md](evolution/current-snapshot.md)、[docs/onboarding.md](onboarding.md) 和 [docs/governance/document-sync-map.md](governance/document-sync-map.md)
 - AI 在实现前，先确认现有模块、组件、脚本和文档里是否已有可复用路径，再决定是否新增抽象
 - AI 在落代码前，必须先确认相关文档状态已达到 `已接受`、`已生效` 或 `已落地`
@@ -73,4 +75,4 @@
 
 ## 关联代码
 
-- 无直接业务代码；治理规则入口见 [AGENTS.md](../AGENTS.md)
+- 无直接业务代码；治理规则入口见 [AGENTS.md](../AGENTS.md) 与 [CLAUDE.md](../CLAUDE.md)

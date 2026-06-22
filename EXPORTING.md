@@ -16,6 +16,7 @@ vibe-coding-starter/
 ├── contracts/
 ├── .doc-sync.json
 ├── AGENTS.md
+├── CLAUDE.md
 ├── AGENTS.template.md
 ├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
@@ -46,6 +47,8 @@ vibe-coding-starter/
 - 通用 starter 中不再保留仓库私有构建命令
 - 所有提示词脱离当前会话后仍然能看懂
 - 所有 skills 对多个项目都仍然成立
+- `CLAUDE.md` 与 `AGENTS.md` 的协作规则仍然一致
+- `contracts/examples/*.json` 与 `docs/governance/agent-collaboration-protocol.md` 仍然只表达通用协作协议
 - `contracts/` 中的 schema 仍然是通用模板，而不是某个项目的私有字段约定
 
 ## 3. 导出方式
@@ -84,7 +87,7 @@ git commit -m "chore: initial public template release"
 
 - 名称：`vibe-coding-starter`
 - 描述：
-  `一个面向人类 + AI 协同交付的文档优先模板仓库，内含 AGENTS、文档治理规则、状态闸门和可复用 Codex skills。`
+  `一个面向人类 + AI 协同交付的文档优先模板仓库，内含 AGENTS / CLAUDE 入口、协作协议、文档治理规则、状态闸门和可复用 Codex skills。`
 
 仓库创建好后执行：
 

@@ -14,6 +14,8 @@
 - 人类与 AI 的统一入口是 [docs/index.md](index.md)
 - 当前阶段单点快照入口是 [docs/evolution/current-snapshot.md](evolution/current-snapshot.md)
 - 当前阶段主线入口是 [docs/evolution/INDEX.md](evolution/INDEX.md)
+- 若当前 agent 会自动读取根目录 `CLAUDE.md`，也要与 `AGENTS.md` 保持同口径
+- 若需要跨 agent 结构化交接，再看 [governance/agent-collaboration-protocol.md](governance/agent-collaboration-protocol.md)
 
 ## 目标结构
 
@@ -51,8 +53,9 @@ docs/
 - `ui/`：页面、弹窗、上传和交互事实源；仅在项目存在稳定界面时启用
 - `governance/`：文档治理规则、同步矩阵、状态闸门
 - `governance/ai-collaboration-best-practices.md`：推荐的人类 + AI 协作节奏与标准会话提示词
+- `governance/agent-collaboration-protocol.md`：多 agent 之间共享任务入口与交接摘要时的最小协作协议
 - `evolution/`：当前主线入口与单点快照
 
 ## 关联代码
 
-- 无直接业务代码；治理规则入口见 [AGENTS.md](../AGENTS.md)
+- 无直接业务代码；治理规则入口见 [AGENTS.md](../AGENTS.md) 与 [CLAUDE.md](../CLAUDE.md)
