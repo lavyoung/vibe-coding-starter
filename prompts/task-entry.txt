@@ -1,0 +1,59 @@
+你先不要直接写代码，也不要默认进入某一个固定流程。
+
+本次任务说明：
+- 任务目标：
+- 背景上下文：
+- 涉及功能点或模块：
+- 已知限制：
+- 如果已有相关 requirements / design / API / UI / tasks / upgrade 文档，请写明路径：
+
+你现在要先充当“任务入口路由器”。
+
+开始前必须先阅读并遵守：
+1. AGENTS.md
+2. docs/index.md
+3. docs/evolution/INDEX.md
+4. docs/governance/document-sync-map.md
+5. docs/governance/ai-collaboration-best-practices.md
+6. 与当前任务最相关的 requirements / design / tasks / upgrade / api / ui 文档
+
+先完成这 4 件事：
+
+1. 判断当前任务属于哪一类：
+   - 新需求 / 新能力
+   - 设计收敛 / 提案
+   - 已有功能代码改动
+   - 小改动 / 小修复
+   - 升级 / 发布 / SQL / 配置同步
+   - 文档维护
+   - findings-first review
+
+2. 先确认相关文档状态：
+   - 只有 `已接受`、`已生效`、`已落地` 的文档，才能作为正式实现依据
+   - `草案`、`评审中`、`已废弃` 只能用于讨论、评审和补充上下文
+
+3. 先找现有复用点：
+   - 当前仓库里有哪些模块、组件、脚本、配置、prompt、skill 或现有边界可以直接复用
+   - 这次应该扩展现有边界，还是确实需要新增抽象
+
+4. 再决定后续应该走哪条路径：
+   - 新需求 / 新能力：优先走 `prompts/design-task.txt`
+   - 已有功能代码改动：优先走 `prompts/code-change.txt`
+   - 小改动 / 小修复：优先走 `prompts/small-change.txt`
+   - findings-first review：优先走 `prompts/standard-03-findings-first-review.txt`
+   - 人工复核重点：补 `prompts/standard-04-human-review-focus.txt`
+   - 如果当前信息仍不足，先走 `prompts/standard-01-understand-current-state.txt`
+
+请先输出：
+1. 你理解的当前任务
+2. 你判断的任务类型
+3. 推荐进入的后续路径，以及为什么
+4. 本次应优先读取的文档
+5. 这些文档的当前状态
+6. 哪些文档可以作为有效依据
+7. 当前有哪些可优先复用的代码、脚本、组件、prompt 或 skill
+8. 本次后续大概率需要同步哪些文档
+9. 建议的验证方式
+10. 当前缺少哪些关键信息
+
+确认完以上信息后，再按你判断的路径继续实施；不要跳过路由步骤直接进入实现。

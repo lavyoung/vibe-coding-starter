@@ -86,9 +86,12 @@ python scripts/init_starter.py \
 
 推荐直接从这些入口开始：
 
+- [prompts/task-entry.txt](prompts/task-entry.txt)
 - [prompts/new-session.txt](prompts/new-session.txt)
 - [prompts/code-change.txt](prompts/code-change.txt)
 - [prompts/standard-01-understand-current-state.txt](prompts/standard-01-understand-current-state.txt)
+
+如果你不想先自己判断该走设计、实现、升级还是 review，优先用 `task-entry.txt` 作为统一入口。
 
 这样做的价值很直接：
 

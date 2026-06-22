@@ -113,21 +113,23 @@ AI 自审时，不要先让它总结优点，优先让它列：
 - 哪些文档已同步更新
 - 哪些验证已经跑过
 
-## 5. 推荐的 4 条标准会话提示词
+## 5. 推荐的统一入口和标准会话提示词
 
 对应文件见：
 
-1. [../../prompts/standard-01-understand-current-state.txt](../../prompts/standard-01-understand-current-state.txt)
-2. [../../prompts/standard-02-minimal-implementation.txt](../../prompts/standard-02-minimal-implementation.txt)
-3. [../../prompts/standard-03-findings-first-review.txt](../../prompts/standard-03-findings-first-review.txt)
-4. [../../prompts/standard-04-human-review-focus.txt](../../prompts/standard-04-human-review-focus.txt)
+1. [../../prompts/task-entry.txt](../../prompts/task-entry.txt)
+2. [../../prompts/standard-01-understand-current-state.txt](../../prompts/standard-01-understand-current-state.txt)
+3. [../../prompts/standard-02-minimal-implementation.txt](../../prompts/standard-02-minimal-implementation.txt)
+4. [../../prompts/standard-03-findings-first-review.txt](../../prompts/standard-03-findings-first-review.txt)
+5. [../../prompts/standard-04-human-review-focus.txt](../../prompts/standard-04-human-review-focus.txt)
 
 推荐使用顺序：
 
-1. 先理解现状
-2. 再最小改动实现
-3. 再 findings-first review
-4. 最后聚焦人工检查点
+1. 先用 `task-entry` 判断任务类型和后续路径
+2. 若信息还不够，先理解现状
+3. 再最小改动实现或进入设计流程
+4. 再 findings-first review
+5. 最后聚焦人工检查点
 
 ## 6. 前端 / UI 场景补充
 
@@ -143,6 +145,7 @@ AI 自审时，不要先让它总结优点，优先让它列：
 - [../../prompts/design-task.txt](../../prompts/design-task.txt)
 - [../../prompts/code-change.txt](../../prompts/code-change.txt)
 - [../../prompts/small-change.txt](../../prompts/small-change.txt)
+- [../../prompts/task-entry.txt](../../prompts/task-entry.txt)
 - [../../prompts/standard-01-understand-current-state.txt](../../prompts/standard-01-understand-current-state.txt)
 - [../../prompts/standard-02-minimal-implementation.txt](../../prompts/standard-02-minimal-implementation.txt)
 - [../../prompts/standard-03-findings-first-review.txt](../../prompts/standard-03-findings-first-review.txt)

@@ -11,6 +11,7 @@
 - `scripts/check_all.ps1`、`scripts/doc_sync_check.ps1` 改为复用 `scripts/resolve_python_runtime.ps1` 探测真实 Python 运行时，避免命中 Windows Store alias 后静默失败。
 - `tools/skills/doc-driven-implementation/SKILL.md`、`tools/skills/post-change-check/SKILL.md` 补充复用优先与防架构腐化的执行 / 收口要求。
 - `README.md`、`QUICKSTART.md`、`CONTRIBUTING.md` 补充模板价值表达和维护者评审口径，明确“先找复用点，再做最小实现”。
+- 新增 `prompts/task-entry.txt` 作为统一任务入口，并在 `README.md`、`QUICKSTART.md`、`docs/governance/ai-collaboration-best-practices.md` 中补齐路由入口说明。
 
 ## [v0.3.0] - 2026-06-22
 

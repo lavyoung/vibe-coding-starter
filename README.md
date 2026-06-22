@@ -114,14 +114,25 @@ vibe-coding-starter/
 
 第一次真正进入实现前，再按 [QUICKSTART.md](QUICKSTART.md) 里的说明先让 AI 识别现有复用点。
 
-## 4 条标准会话提示词
+## 统一入口 + 4 条标准会话提示词
 
-如果你希望按固定节奏和 AI 协作，可以直接顺序使用：
+如果你不想先自己判断该用哪个 prompt，先从这个统一入口开始：
+
+- [prompts/task-entry.txt](prompts/task-entry.txt)
+  先让 agent 判断这是需求、设计、代码改动、小修复、升级还是 review，再路由到后续流程
+
+如果你已经知道当前要走哪条路径，再直接顺序使用下面 4 条标准提示词：
 
 1. [prompts/standard-01-understand-current-state.txt](prompts/standard-01-understand-current-state.txt)
 2. [prompts/standard-02-minimal-implementation.txt](prompts/standard-02-minimal-implementation.txt)
 3. [prompts/standard-03-findings-first-review.txt](prompts/standard-03-findings-first-review.txt)
 4. [prompts/standard-04-human-review-focus.txt](prompts/standard-04-human-review-focus.txt)
+
+如果是第一次进入某个任务，推荐顺序是：
+
+1. `task-entry`
+2. 按路由结果进入 `standard-01` / `design-task` / `code-change` / `small-change`
+3. 实现完成后再走 `standard-03` 和 `standard-04`
 
 对应的方法论说明见：
 
