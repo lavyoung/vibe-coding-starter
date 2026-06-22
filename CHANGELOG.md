@@ -12,6 +12,7 @@
 - `tools/skills/doc-driven-implementation/SKILL.md`、`tools/skills/post-change-check/SKILL.md` 补充复用优先与防架构腐化的执行 / 收口要求。
 - `README.md`、`QUICKSTART.md`、`CONTRIBUTING.md` 补充模板价值表达和维护者评审口径，明确“先找复用点，再做最小实现”。
 - 新增 `prompts/task-entry.txt` 作为统一任务入口，并在 `README.md`、`QUICKSTART.md`、`docs/governance/ai-collaboration-best-practices.md` 中补齐路由入口说明。
+- 新增 `docs/evolution/current-snapshot.md` 作为单点快照入口，并同步更新 `docs/index.md`、`docs/onboarding.md`、`docs/README.md`、`docs/evolution/INDEX.md`、`docs/governance/document-sync-map.md` 和 `README.md` 的接手链路说明。
 
 ## [v0.3.0] - 2026-06-22
 

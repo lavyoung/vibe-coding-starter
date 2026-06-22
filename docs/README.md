@@ -12,6 +12,7 @@
 ## 统一入口
 
 - 人类与 AI 的统一入口是 [docs/index.md](index.md)
+- 当前阶段单点快照入口是 [docs/evolution/current-snapshot.md](evolution/current-snapshot.md)
 - 当前阶段主线入口是 [docs/evolution/INDEX.md](evolution/INDEX.md)
 
 ## 目标结构
@@ -50,7 +51,7 @@ docs/
 - `ui/`：页面、弹窗、上传和交互事实源；仅在项目存在稳定界面时启用
 - `governance/`：文档治理规则、同步矩阵、状态闸门
 - `governance/ai-collaboration-best-practices.md`：推荐的人类 + AI 协作节奏与标准会话提示词
-- `evolution/`：当前主线入口
+- `evolution/`：当前主线入口与单点快照
 
 ## 关联代码
 

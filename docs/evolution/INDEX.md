@@ -11,6 +11,7 @@
 
 | 主题 | 当前优先文档 | 说明 |
 |---|---|---|
+| 当前项目快照 | [docs/evolution/current-snapshot.md](current-snapshot.md) | 单点恢复当前阶段、主线和下一步 |
 | 全局导航 | [docs/index.md](../index.md) | 文档读取顺序与分层规则 |
 | 接手入口 | [docs/onboarding.md](../onboarding.md) | 新人和 AI 新会话恢复上下文 |
 | 文档治理 | [docs/governance/document-sync-map.md](../governance/document-sync-map.md) | 查状态闸门、同步矩阵和反向索引 |

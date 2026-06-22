@@ -18,12 +18,13 @@
 
 ## 2. 推荐读取顺序
 
-1. 先看 [docs/evolution/INDEX.md](evolution/INDEX.md)
-2. 再看 [docs/architecture/current-architecture.md](architecture/current-architecture.md)
-3. 再看 [docs/onboarding.md](onboarding.md) 和 [docs/governance/document-sync-map.md](governance/document-sync-map.md)
-4. 若需要确认协作方式和会话节奏，再看 [docs/governance/ai-collaboration-best-practices.md](governance/ai-collaboration-best-practices.md)
-5. 若涉及页面或交互，再看 [docs/ui/README.md](ui/README.md)
-6. 再按业务域跳到 `requirements/`、`design/`、`tasks/`
+1. 先看 [docs/evolution/current-snapshot.md](evolution/current-snapshot.md)
+2. 再看 [docs/evolution/INDEX.md](evolution/INDEX.md)
+3. 再看 [docs/architecture/current-architecture.md](architecture/current-architecture.md)
+4. 再看 [docs/onboarding.md](onboarding.md) 和 [docs/governance/document-sync-map.md](governance/document-sync-map.md)
+5. 若需要确认协作方式和会话节奏，再看 [docs/governance/ai-collaboration-best-practices.md](governance/ai-collaboration-best-practices.md)
+6. 若涉及页面或交互，再看 [docs/ui/README.md](ui/README.md)
+7. 再按业务域跳到 `requirements/`、`design/`、`tasks/`
 
 ## 3. 文档分层
 
@@ -40,6 +41,7 @@
 | `ui/` | 页面、弹窗和交互规则是什么 | 项目存在前端 / 管理端界面时 |
 | `governance/` | 文档规则、同步矩阵、状态闸门是什么 | 需要治理和同步时 |
 | `governance/ai-collaboration-best-practices.md` | 人类 + AI 协作节奏怎么走 | 需要统一会话与 review 方式时 |
+| `evolution/current-snapshot.md` | 当前阶段最值得先看的单点快照 | 新会话、新人接手、阶段交接 |
 | `evolution/` | 当前演进主线是什么 | 需要维护阶段总览时 |
 
 ## 4. 统一状态口径
@@ -63,7 +65,7 @@
 ## 5. AI 协作约束
 
 - AI 在改代码前，优先读取本文件和 [AGENTS.md](../AGENTS.md)
-- AI 在恢复上下文或准备改代码前，优先读取 [docs/onboarding.md](onboarding.md) 和 [docs/governance/document-sync-map.md](governance/document-sync-map.md)
+- AI 在恢复上下文或准备改代码前，优先读取 [docs/evolution/current-snapshot.md](evolution/current-snapshot.md)、[docs/onboarding.md](onboarding.md) 和 [docs/governance/document-sync-map.md](governance/document-sync-map.md)
 - AI 在实现前，先确认现有模块、组件、脚本和文档里是否已有可复用路径，再决定是否新增抽象
 - AI 在落代码前，必须先确认相关文档状态已达到 `已接受`、`已生效` 或 `已落地`
 - AI 不得把 `草案`、`评审中` 文档当成已实现事实

@@ -41,6 +41,7 @@
 |---|---|---|
 | `docs/index.md` | 文档统一入口 | 接手项目、准备新增文档时 |
 | `docs/onboarding.md` | 新人和新会话接手指南 | 新成员接手、AI 新会话 |
+| `docs/evolution/current-snapshot.md` | 当前阶段单点快照 | 新人接手、AI 新会话、阶段交接 |
 | `docs/evolution/INDEX.md` | 当前项目演进总览 | 恢复当前主线时 |
 | `docs/architecture/current-architecture.md` | 当前系统整体架构基线 | 做跨域设计时 |
 | `docs/governance/ai-collaboration-best-practices.md` | AI 协作节奏与标准提示词 | 统一会话方式和 review 节奏时 |

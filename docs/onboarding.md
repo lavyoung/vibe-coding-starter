@@ -11,10 +11,11 @@
 
 1. [AGENTS.md](../AGENTS.md)
 2. [docs/index.md](index.md)
-3. [docs/evolution/INDEX.md](evolution/INDEX.md)
-4. [docs/governance/document-sync-map.md](governance/document-sync-map.md)
-5. [docs/governance/ai-collaboration-best-practices.md](governance/ai-collaboration-best-practices.md)
-6. 与当前任务最相关的 `requirements / design / tasks / upgrade / api / ui` 文档
+3. [docs/evolution/current-snapshot.md](evolution/current-snapshot.md)
+4. [docs/evolution/INDEX.md](evolution/INDEX.md)
+5. [docs/governance/document-sync-map.md](governance/document-sync-map.md)
+6. [docs/governance/ai-collaboration-best-practices.md](governance/ai-collaboration-best-practices.md)
+7. 与当前任务最相关的 `requirements / design / tasks / upgrade / api / ui` 文档
 
 ## 2. 项目文档工作流
 
@@ -45,6 +46,7 @@
 
 开场提示词统一见：
 
+- [prompts/task-entry.txt](../prompts/task-entry.txt)
 - [prompts/new-session.txt](../prompts/new-session.txt)
 - [prompts/design-task.txt](../prompts/design-task.txt)
 - [prompts/code-change.txt](../prompts/code-change.txt)
