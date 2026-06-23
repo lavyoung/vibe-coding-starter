@@ -152,6 +152,7 @@ bash scripts/init_starter.sh \
 
 - [prompts/task-entry.txt](prompts/task-entry.txt)
 - [tools/skills/task-router/SKILL.md](tools/skills/task-router/SKILL.md)
+- [docs/governance/prompt-workflow-playbook.md](docs/governance/prompt-workflow-playbook.md)
 - [prompts/new-session.txt](prompts/new-session.txt)
 - [prompts/code-change.txt](prompts/code-change.txt)
 - [prompts/standard-01-understand-current-state.txt](prompts/standard-01-understand-current-state.txt)
@@ -174,6 +175,11 @@ bash scripts/init_starter.sh \
 - 更不容易把小需求写成新框架
 - 更适合后续换人或换电脑继续接手
 - 更容易让 Codex、Claude 或其他 agent 共享同一份任务口径
+
+如果你想直接照场景使用 prompts，而不是自己拼顺序，再看：
+
+- [docs/governance/prompt-workflow-playbook.md](docs/governance/prompt-workflow-playbook.md)
+  它把“新需求 / 小改动 / bug 修复 / 联调修正 / 新会话接手”分别写成了固定顺序
 
 ## 4. 运行 `check_all.py`
 

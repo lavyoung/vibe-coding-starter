@@ -157,7 +157,13 @@ vibe-coding-starter/
 对应的方法论说明见：
 
 - [docs/governance/ai-collaboration-best-practices.md](docs/governance/ai-collaboration-best-practices.md)
+- [docs/governance/prompt-workflow-playbook.md](docs/governance/prompt-workflow-playbook.md)
 - [docs/governance/agent-collaboration-protocol.md](docs/governance/agent-collaboration-protocol.md)
+
+如果你想直接照场景走，不自己拼提示词顺序，优先看：
+
+- [docs/governance/prompt-workflow-playbook.md](docs/governance/prompt-workflow-playbook.md)
+  把“新需求 / 小改动 / bug 修复 / 联调修正 / 新会话接手”分别串成固定顺序
 
 ## 5 分钟上手
 

@@ -113,6 +113,7 @@
 - 文档读取顺序先看 [../index.md](../index.md)
 - 同步矩阵和状态闸门先看 [document-sync-map.md](document-sync-map.md)
 - AI 协作节奏和 review 方式先看 [ai-collaboration-best-practices.md](ai-collaboration-best-practices.md)
+- 按场景判断 prompts 使用顺序时，再看 [prompt-workflow-playbook.md](prompt-workflow-playbook.md)
 
 ## 关联代码
 

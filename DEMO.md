@@ -22,7 +22,13 @@
 
 1. 如果你还没判断该走设计、实现、升级还是 review，先用 [prompts/task-entry.txt](prompts/task-entry.txt)
 2. 如果你希望把这一步沉淀成仓库内 skill，再看 [tools/skills/task-router/SKILL.md](tools/skills/task-router/SKILL.md)
-3. 如果后续需要跨 agent 接力，再看 [docs/governance/agent-collaboration-protocol.md](docs/governance/agent-collaboration-protocol.md) 和 [contracts/README.md](contracts/README.md)
+3. 如果你想先按场景看“下一步该用哪个 prompt”，再看 [docs/governance/prompt-workflow-playbook.md](docs/governance/prompt-workflow-playbook.md)
+4. 如果后续需要跨 agent 接力，再看 [docs/governance/agent-collaboration-protocol.md](docs/governance/agent-collaboration-protocol.md) 和 [contracts/README.md](contracts/README.md)
+
+这两个示例和 playbook 的对应关系是：
+
+- `minimal-task-board`：更接近“新需求进入后，按需求 -> 设计 -> UI -> API -> 实现 -> handoff”这条路径
+- `spring-boot-device-center`：更接近“后端需求收敛后，按设计 -> API -> schema / upgrade -> test -> handoff”这条路径
 
 ## 完整链路
 
@@ -113,10 +119,11 @@
 
 1. 按 [QUICKSTART.md](QUICKSTART.md) 初始化一个新仓库
 2. 先用 `task-entry` 或 `task-router` 给你的第一个任务分流
-3. 复制示例项目里的目录组织方式
-4. 先写一份 `requirements`
-5. 再补 `design / tasks / api / ui`
-6. 最后把自己的代码目录映射进 `.doc-sync.json`
+3. 若不想自己判断 prompt 顺序，先按 [docs/governance/prompt-workflow-playbook.md](docs/governance/prompt-workflow-playbook.md) 选一条最接近的场景路径
+4. 复制示例项目里的目录组织方式
+5. 先写一份 `requirements`
+6. 再补 `design / tasks / api / ui`
+7. 最后把自己的代码目录映射进 `.doc-sync.json`
 
 ## 关联代码
 

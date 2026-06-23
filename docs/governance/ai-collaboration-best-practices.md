@@ -145,11 +145,12 @@ AI 自审时，不要先让它总结优点，优先让它列：
 对应文件见：
 
 1. [../../prompts/task-entry.txt](../../prompts/task-entry.txt)
-2. [agent-collaboration-protocol.md](agent-collaboration-protocol.md)
-3. [../../prompts/standard-01-understand-current-state.txt](../../prompts/standard-01-understand-current-state.txt)
-4. [../../prompts/standard-02-minimal-implementation.txt](../../prompts/standard-02-minimal-implementation.txt)
-5. [../../prompts/standard-03-findings-first-review.txt](../../prompts/standard-03-findings-first-review.txt)
-6. [../../prompts/standard-04-human-review-focus.txt](../../prompts/standard-04-human-review-focus.txt)
+2. [prompt-workflow-playbook.md](prompt-workflow-playbook.md)
+3. [agent-collaboration-protocol.md](agent-collaboration-protocol.md)
+4. [../../prompts/standard-01-understand-current-state.txt](../../prompts/standard-01-understand-current-state.txt)
+5. [../../prompts/standard-02-minimal-implementation.txt](../../prompts/standard-02-minimal-implementation.txt)
+6. [../../prompts/standard-03-findings-first-review.txt](../../prompts/standard-03-findings-first-review.txt)
+7. [../../prompts/standard-04-human-review-focus.txt](../../prompts/standard-04-human-review-focus.txt)
 
 推荐使用顺序：
 
@@ -168,6 +169,10 @@ AI 自审时，不要先让它总结优点，优先让它列：
 ```
 
 只要先把这 2 行说清楚，`task-entry` / `task-router` 就应该先去补查范围、限制和相关文档，不必要求用户一开始就写完整任务单。
+
+如果你更关心“新需求、小改动、bug 修复、联调、新会话接手分别该怎么串 prompt”，再看：
+
+- [prompt-workflow-playbook.md](prompt-workflow-playbook.md)
 
 ## 6. 前端 / UI 场景补充
 

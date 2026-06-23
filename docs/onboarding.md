@@ -16,8 +16,9 @@
 5. [docs/evolution/INDEX.md](evolution/INDEX.md)
 6. [docs/governance/document-sync-map.md](governance/document-sync-map.md)
 7. [docs/governance/ai-collaboration-best-practices.md](governance/ai-collaboration-best-practices.md)
-8. 若需要跨 agent 结构化接力，再看 [docs/governance/agent-collaboration-protocol.md](governance/agent-collaboration-protocol.md)
-9. 与当前任务最相关的 `requirements / design / tasks / upgrade / api / ui` 文档
+8. 若需要按任务场景判断 prompts 顺序，再看 [docs/governance/prompt-workflow-playbook.md](governance/prompt-workflow-playbook.md)
+9. 若需要跨 agent 结构化接力，再看 [docs/governance/agent-collaboration-protocol.md](governance/agent-collaboration-protocol.md)
+10. 与当前任务最相关的 `requirements / design / tasks / upgrade / api / ui` 文档
 
 ## 2. 项目文档工作流
 
@@ -52,6 +53,7 @@
 - [prompts/new-session.txt](../prompts/new-session.txt)
 - [prompts/design-task.txt](../prompts/design-task.txt)
 - [prompts/code-change.txt](../prompts/code-change.txt)
+- [docs/governance/prompt-workflow-playbook.md](governance/prompt-workflow-playbook.md)
 
 如果是从别人手里接着往下做，也补看：
 

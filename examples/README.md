@@ -11,6 +11,7 @@
 
 - 把它当成参考，不要原样当成你的业务模型
 - 重点学习目录组织、状态闸门和同步方式
+- 如果你还不知道应该先用哪个 prompt，先看根目录的 [docs/governance/prompt-workflow-playbook.md](../docs/governance/prompt-workflow-playbook.md)
 - 也一起看根目录的 `task-entry`、`task-router`、handoff 模板和 contracts 示例是怎样接入示例链路的
 - 示例里现在也各自带了一份 `task-entry.json` 和 handoff 摘要实物，可直接对照“任务怎么开场、回合怎么收口”
 - 真正落地时，改成你自己的业务名、代码目录和文档映射

@@ -21,6 +21,7 @@
 
 - 自然语言入口优先使用 [../../prompts/task-entry.txt](../../prompts/task-entry.txt)
 - 若仓库已提供 `tools/skills/task-router/`，也可以先用它完成同样的任务路由与文档状态检查
+- 若需要按“新需求 / 小改动 / bug 修复 / 联调 / 新会话接手”判断后续 prompt 顺序，再看 [prompt-workflow-playbook.md](prompt-workflow-playbook.md)
 - 若需要把任务稳定交给其他 agent，优先补成 [../../contracts/task-entry.schema.json](../../contracts/task-entry.schema.json) 对应结构
 - 可直接参考 [../../contracts/examples/task-entry.example.json](../../contracts/examples/task-entry.example.json)
 
@@ -65,6 +66,7 @@ findings-first review
 
 - 修改 `AGENTS.md`、`CLAUDE.md`、`prompts/task-entry.txt` 或交接流程时
 - 修改 `tools/skills/task-router/` 时
+- 修改 `docs/governance/prompt-workflow-playbook.md` 时
 - 修改 `contracts/*.schema.json` 或 `contracts/examples/*.json` 时
 - 修改 `docs/governance/project-handoff-checklist.md`、`docs/governance/ai-collaboration-best-practices.md` 时
 

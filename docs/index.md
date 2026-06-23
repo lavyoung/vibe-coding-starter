@@ -23,9 +23,10 @@
 3. 再看 [docs/architecture/current-architecture.md](architecture/current-architecture.md)
 4. 再看 [docs/onboarding.md](onboarding.md) 和 [docs/governance/document-sync-map.md](governance/document-sync-map.md)
 5. 若需要确认协作方式和会话节奏，再看 [docs/governance/ai-collaboration-best-practices.md](governance/ai-collaboration-best-practices.md)
-6. 若需要跨 Codex / Claude / 其他 agent 协作，再看 [docs/governance/agent-collaboration-protocol.md](governance/agent-collaboration-protocol.md)
-7. 若涉及页面或交互，再看 [docs/ui/README.md](ui/README.md)
-8. 再按业务域跳到 `requirements/`、`design/`、`tasks/`
+6. 若需要按“新需求 / 小改动 / bug 修复 / 联调 / 新会话接手”判断 prompts 使用顺序，再看 [docs/governance/prompt-workflow-playbook.md](governance/prompt-workflow-playbook.md)
+7. 若需要跨 Codex / Claude / 其他 agent 协作，再看 [docs/governance/agent-collaboration-protocol.md](governance/agent-collaboration-protocol.md)
+8. 若涉及页面或交互，再看 [docs/ui/README.md](ui/README.md)
+9. 再按业务域跳到 `requirements/`、`design/`、`tasks/`
 
 ## 3. 文档分层
 
@@ -42,6 +43,7 @@
 | `ui/` | 页面、弹窗和交互规则是什么 | 项目存在前端 / 管理端界面时 |
 | `governance/` | 文档规则、同步矩阵、状态闸门是什么 | 需要治理和同步时 |
 | `governance/ai-collaboration-best-practices.md` | 人类 + AI 协作节奏怎么走 | 需要统一会话与 review 方式时 |
+| `governance/prompt-workflow-playbook.md` | 常见任务场景里 prompts 应该按什么顺序用 | 不想自己判断 prompt 串联顺序时 |
 | `governance/agent-collaboration-protocol.md` | 多 agent 之间的输入 / 输出协作协议 | 跨 agent 接力、新会话续做、结构化交接时 |
 | `governance/project-handoff-checklist.md` | 一次工作结束后要交接什么 | 跨人接力、阶段收口、新会话续做 |
 | `evolution/current-snapshot.md` | 当前阶段最值得先看的单点快照 | 新会话、新人接手、阶段交接 |

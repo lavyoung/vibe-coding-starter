@@ -35,6 +35,7 @@
 - 对外提供的 `scripts/*.py` 入口应同步提供对应的 `scripts/*.ps1` 与 `scripts/*.sh`；若修改脚本行为、参数或入口文件名，应一起回查这些跨环境入口是否仍然成立
 - 若仓库已启用 `.github/workflows/doc-sync.yml`，PR 默认应通过这条统一 CI 校验，其中包含 `doc-sync`、链接检查和示例自检
 - 若修改 `AGENTS.md`、`CLAUDE.md`、`prompts/`、`tools/skills/`、PR 模板里的协作规则，需同步检查本文件和 `docs/governance/ai-collaboration-best-practices.md` 是否仍然一致
+- 若修改统一入口、prompt 使用顺序、任务分流口径，也应同步检查 `docs/governance/prompt-workflow-playbook.md` 是否仍然一致
 - 若仓库已启用 `docs/evolution/current-snapshot.md`、`docs/governance/project-handoff-checklist.md` 与 `contracts/*.schema.json`，修改统一入口、治理规则或交接流程时，也应回查这些资产是否仍然成立
 - 若仓库已启用 `docs/governance/agent-collaboration-protocol.md` 与 `contracts/examples/*.json`，修改多 agent 协作口径时，也应同步检查协议文档和示例是否仍然成立
 - 若仓库已启用 `tools/skills/task-router/`，修改统一入口、路由规则或多 agent 协作入口时，也应同步检查该 skill 是否仍然成立
@@ -49,6 +50,7 @@
 | `docs/evolution/INDEX.md` | 当前项目演进总览 | 恢复当前主线时 |
 | `docs/architecture/current-architecture.md` | 当前系统整体架构基线 | 做跨域设计时 |
 | `docs/governance/ai-collaboration-best-practices.md` | AI 协作节奏与标准提示词 | 统一会话方式和 review 节奏时 |
+| `docs/governance/prompt-workflow-playbook.md` | 常见任务场景下的提示词使用顺序说明 | 不想自己拼 prompt 顺序，或要统一场景剧本时 |
 | `docs/governance/agent-collaboration-protocol.md` | 多 agent 输入 / 输出协作协议 | 跨 agent 接力、结构化交接、新会话续做 |
 | `docs/governance/project-handoff-checklist.md` | 阶段交接和回合收口模板 | 跨人接力、AI 新会话、提交前收口时 |
 | `docs/rfcs/README.md` / `RFC_TEMPLATE.md` | 提案规则与模板 | 新技术方案设计时 |
