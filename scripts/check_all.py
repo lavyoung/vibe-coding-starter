@@ -17,18 +17,12 @@ from typing import Sequence
 MARKDOWN_LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
 SKIP_DIRS = {".git", ".idea", ".vscode", "node_modules", "__pycache__", "target"}
 REQUIRED_STARTER_FILES = {
-    "CLAUDE.md": "Claude 兼容入口",
     "prompts/task-entry.txt": "统一任务入口 prompt",
     "tools/skills/task-router/SKILL.md": "任务路由 skill",
     "tools/skills/task-router/agents/openai.yaml": "任务路由 skill UI 元数据",
     "docs/evolution/current-snapshot.md": "单点快照模板",
     "docs/governance/project-handoff-checklist.md": "交接清单模板",
     "docs/governance/agent-collaboration-protocol.md": "多 agent 协作协议",
-    "contracts/README.md": "contracts 使用说明",
-    "contracts/task-entry.schema.json": "任务入口 schema",
-    "contracts/handoff-summary.schema.json": "交接摘要 schema",
-    "contracts/examples/task-entry.example.json": "任务入口示例",
-    "contracts/examples/handoff-summary.example.json": "交接摘要示例",
     "scripts/init_starter.ps1": "初始化脚本 PowerShell 入口",
     "scripts/init_starter.sh": "初始化脚本 shell 入口",
 }
@@ -392,90 +386,111 @@ def validate_starter_assets(
             )
         )
 
-    schema_issues: list[str] = []
-    for schema_path in (
+    contract_schema_files = (
         "contracts/task-entry.schema.json",
         "contracts/handoff-summary.schema.json",
-    ):
-        absolute_path = repo_root / schema_path
-        if not absolute_path.exists():
-            continue
-        try:
-            payload = json.loads(absolute_path.read_text(encoding="utf-8"))
-        except json.JSONDecodeError as exc:
-            schema_issues.append(f"- {schema_path}: invalid JSON ({exc.msg})")
-            continue
+    )
+    contracts_enabled = any((repo_root / path).exists() for path in contract_schema_files)
 
-        missing_keys = [key for key in SCHEMA_TOP_LEVEL_KEYS if key not in payload]
-        if missing_keys:
-            schema_issues.append(
-                f"- {schema_path}: missing top-level keys {', '.join(missing_keys)}"
-            )
-
-    if schema_issues:
+    if not contracts_enabled:
         results.append(
             CheckResult(
                 group="starter-assets",
                 title="starter schema shape",
-                status="failed",
-                detail="\n".join(schema_issues),
+                status="skipped",
+                detail="contracts/ not enabled",
             )
         )
-    else:
-        results.append(
-            CheckResult(
-                group="starter-assets",
-                title="starter schema shape",
-                status="passed",
-            )
-        )
-
-    example_issues: list[str] = []
-    for schema_path, example_path in SCHEMA_EXAMPLE_MAP.items():
-        schema_file = repo_root / schema_path
-        example_file = repo_root / example_path
-        if not schema_file.exists() or not example_file.exists():
-            continue
-
-        schema_payload, schema_error = load_json_file(schema_file)
-        if schema_error:
-            example_issues.append(f"- {schema_path}: {schema_error}")
-            continue
-        if schema_payload is None:
-            continue
-
-        example_payload, example_error = load_json_file(example_file)
-        if example_error:
-            example_issues.append(f"- {example_path}: {example_error}")
-            continue
-        if example_payload is None:
-            continue
-
-        example_issues.extend(
-            validate_payload_against_schema(
-                schema_payload,
-                example_payload,
-                example_path,
-            )
-        )
-
-    if example_issues:
         results.append(
             CheckResult(
                 group="starter-assets",
                 title="contract examples",
-                status="failed",
-                detail="\n".join(example_issues),
+                status="skipped",
+                detail="contracts/ not enabled",
             )
         )
     else:
-        results.append(
-            CheckResult(
-                group="starter-assets",
-                title="contract examples",
-                status="passed",
+        schema_issues: list[str] = []
+        for schema_path in contract_schema_files:
+            absolute_path = repo_root / schema_path
+            if not absolute_path.exists():
+                continue
+            try:
+                payload = json.loads(absolute_path.read_text(encoding="utf-8"))
+            except json.JSONDecodeError as exc:
+                schema_issues.append(f"- {schema_path}: invalid JSON ({exc.msg})")
+                continue
+
+            missing_keys = [key for key in SCHEMA_TOP_LEVEL_KEYS if key not in payload]
+            if missing_keys:
+                schema_issues.append(
+                    f"- {schema_path}: missing top-level keys {', '.join(missing_keys)}"
+                )
+
+        if schema_issues:
+            results.append(
+                CheckResult(
+                    group="starter-assets",
+                    title="starter schema shape",
+                    status="failed",
+                    detail="\n".join(schema_issues),
+                )
             )
-        )
+        else:
+            results.append(
+                CheckResult(
+                    group="starter-assets",
+                    title="starter schema shape",
+                    status="passed",
+                )
+            )
+
+        example_issues: list[str] = []
+        for schema_path, example_path in SCHEMA_EXAMPLE_MAP.items():
+            schema_file = repo_root / schema_path
+            example_file = repo_root / example_path
+            if not schema_file.exists() or not example_file.exists():
+                continue
+
+            schema_payload, schema_error = load_json_file(schema_file)
+            if schema_error:
+                example_issues.append(f"- {schema_path}: {schema_error}")
+                continue
+            if schema_payload is None:
+                continue
+
+            example_payload, example_error = load_json_file(example_file)
+            if example_error:
+                example_issues.append(f"- {example_path}: {example_error}")
+                continue
+            if example_payload is None:
+                continue
+
+            example_issues.extend(
+                validate_payload_against_schema(
+                    schema_payload,
+                    example_payload,
+                    example_path,
+                )
+            )
+
+        if example_issues:
+            results.append(
+                CheckResult(
+                    group="starter-assets",
+                    title="contract examples",
+                    status="failed",
+                    detail="\n".join(example_issues),
+                )
+            )
+        else:
+            results.append(
+                CheckResult(
+                    group="starter-assets",
+                    title="contract examples",
+                    status="passed",
+                )
+            )
 
     script_entrypoint_issues: list[str] = []
     for python_path, wrapper_paths in PUBLIC_SCRIPT_ENTRYPOINTS.items():
@@ -539,12 +554,14 @@ def collect_example_workflow_assets(repo_root: Path) -> list[CheckResult]:
     task_entry_shape_issues: list[str] = []
 
     task_entry_schema_file = repo_root / "contracts/task-entry.schema.json"
-    task_entry_schema, schema_error = load_json_file(task_entry_schema_file)
-    if schema_error:
-        task_entry_shape_issues.append(
-            f"- contracts/task-entry.schema.json: {schema_error}"
-        )
-        task_entry_schema = None
+    task_entry_schema: dict[str, object] | None = None
+    if task_entry_schema_file.exists():
+        task_entry_schema, schema_error = load_json_file(task_entry_schema_file)
+        if schema_error:
+            task_entry_shape_issues.append(
+                f"- contracts/task-entry.schema.json: {schema_error}"
+            )
+            task_entry_schema = None
 
     for example_dir in sorted(examples_root.iterdir()):
         if not example_dir.is_dir():
@@ -633,7 +650,16 @@ def collect_example_workflow_assets(repo_root: Path) -> list[CheckResult]:
             )
         )
 
-    if task_entry_shape_issues:
+    if not task_entry_schema_file.exists():
+        results.append(
+            CheckResult(
+                group="examples",
+                title="example task-entry shape",
+                status="skipped",
+                detail="contracts/ not enabled",
+            )
+        )
+    elif task_entry_shape_issues:
         results.append(
             CheckResult(
                 group="examples",

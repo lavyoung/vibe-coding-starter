@@ -22,16 +22,21 @@
 
 ```text
 .github/
-contracts/
 .doc-sync.json
 AGENTS.md
-CLAUDE.md
 AGENTS.template.md
 docs/
 prompts/
 scripts/
 tools/skills/
 ```
+
+按需再带上：
+
+- `CLAUDE.md`
+  只有在你需要兼容会自动读取该文件的 agent 时才保留
+- `contracts/`
+  只有在你需要固定任务入口 / 交接摘要格式时才启用
 
 ## 2. 运行 `init_starter`
 
@@ -127,7 +132,7 @@ bash scripts/init_starter.sh \
 - `docs/evolution/current-snapshot.md`
 - `docs/governance/project-handoff-checklist.md`
 
-如果你预计会同时使用多个 agent 或跨人交接，也建议尽早看一眼：
+如果你预计会同时使用多个 agent 或跨人交接，也可以按需启用并补看：
 
 - `contracts/README.md`
 - `contracts/task-entry.schema.json`

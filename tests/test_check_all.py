@@ -25,6 +25,43 @@ def write_file(path: Path, content: str) -> None:
 
 
 class CheckAllTests(unittest.TestCase):
+    def test_validate_starter_assets_allows_missing_contracts_and_claude(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            repo_root = Path(temp_dir)
+            write_file(repo_root / "prompts" / "task-entry.txt", "task-entry\n")
+            write_file(repo_root / "tools" / "skills" / "task-router" / "SKILL.md", "# skill\n")
+            write_file(
+                repo_root / "tools" / "skills" / "task-router" / "agents" / "openai.yaml",
+                "name: task-router\n",
+            )
+            write_file(repo_root / "docs" / "evolution" / "current-snapshot.md", "# snapshot\n")
+            write_file(
+                repo_root / "docs" / "governance" / "project-handoff-checklist.md",
+                "# handoff\n",
+            )
+            write_file(
+                repo_root / "docs" / "governance" / "agent-collaboration-protocol.md",
+                "# protocol\n",
+            )
+            write_file(repo_root / "scripts" / "init_starter.ps1", "Write-Host test\n")
+            write_file(repo_root / "scripts" / "init_starter.sh", "#!/usr/bin/env sh\n")
+
+            results = CHECK_ALL.validate_starter_assets(repo_root, changed_files=[])
+
+            required_assets = next(
+                result for result in results if result.title == "required starter assets"
+            )
+            schema_shape = next(
+                result for result in results if result.title == "starter schema shape"
+            )
+            contract_examples = next(
+                result for result in results if result.title == "contract examples"
+            )
+
+            self.assertEqual(required_assets.status, "passed")
+            self.assertEqual(schema_shape.status, "skipped")
+            self.assertEqual(contract_examples.status, "skipped")
+
     def test_validate_starter_assets_checks_cross_platform_entrypoints(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             repo_root = Path(temp_dir)
@@ -85,6 +122,43 @@ class CheckAllTests(unittest.TestCase):
             self.assertEqual(target.status, "failed")
             self.assertIn("docs/tasks/<task-name>-task-entry.json", target.detail or "")
             self.assertIn("missing matching handoff", target.detail or "")
+
+    def test_collect_example_workflow_assets_skips_shape_without_contracts(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            repo_root = Path(temp_dir)
+            write_file(repo_root / "examples" / "demo" / "README.md", "# demo\n")
+            write_file(
+                repo_root
+                / "examples"
+                / "demo"
+                / "docs"
+                / "tasks"
+                / "V1-demo-task-entry.json",
+                json.dumps(
+                    {"task_type": "code_change", "goal": "demo"},
+                    ensure_ascii=False,
+                ),
+            )
+            write_file(
+                repo_root
+                / "examples"
+                / "demo"
+                / "docs"
+                / "tasks"
+                / "V1-demo-handoff.md",
+                "# handoff\n",
+            )
+
+            results = CHECK_ALL.collect_example_workflow_assets(repo_root)
+            workflow = next(
+                result for result in results if result.title == "example workflow assets"
+            )
+            task_entry_shape = next(
+                result for result in results if result.title == "example task-entry shape"
+            )
+
+            self.assertEqual(workflow.status, "passed")
+            self.assertEqual(task_entry_shape.status, "skipped")
 
     def test_collect_example_workflow_assets_accepts_valid_pair(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:

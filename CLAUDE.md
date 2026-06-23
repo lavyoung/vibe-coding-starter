@@ -1,5 +1,6 @@
 # <PROJECT_NAME> Claude 协作入口
 
+> 本文件可按需保留。
 > 本文件提供给会自动读取 `CLAUDE.md` 的 agent 使用。
 > 本项目的权威协作规则仍以同目录下的 [AGENTS.md](AGENTS.md) 为准。
 > 若修改协作规则、文档入口或收尾流程，必须同步检查 `CLAUDE.md` 与 `AGENTS.md` 是否仍然一致。

@@ -1,6 +1,6 @@
 # vibe-coding-starter
 
-一个面向“人类 + AI 协同交付”的文档优先模板仓库，内含可直接生效的 `AGENTS.md`、`CLAUDE.md` 兼容入口、文档治理骨架、状态闸门规则、复用优先协作约束和可复用的 Codex skills。
+一个面向“人类 + AI 协同交付”的文档优先模板仓库，内含可直接生效的 `AGENTS.md`、可按需保留的 `CLAUDE.md` 兼容入口、文档治理骨架、状态闸门规则、复用优先协作约束和可复用的 Codex skills。
 
 如果你是通过模板创建了一个新项目，请先把本文件标题、首段简介和仓库描述替换成你自己的项目信息；`vibe-coding-starter` 只是上游模板名。
 
@@ -48,13 +48,13 @@
 - `AGENTS.md`
   新仓库创建后即可生效的项目级协作约束起始版
 - `CLAUDE.md`
-  给会自动读取 `CLAUDE.md` 的 agent 使用的兼容入口；权威规则仍以 `AGENTS.md` 为准
+  可按需保留的兼容入口；只有在会自动读取 `CLAUDE.md` 的 agent 场景下才需要
 - `AGENTS.template.md`
   便于二次抽取或对照修改的模板副本
 - `docs/`
   一套完整的文档优先目录骨架，包含用于新会话和交接的单点快照入口
 - `contracts/`
-  可供不同 agent 共用的结构化输入 / 输出 schema、协议说明和 JSON 示例
+  可按需启用的结构化任务入口 / 交接摘要格式说明和示例
 - `.doc-sync.json`
   一份可直接定制的机器校验规则文件
 - `prompts/`
@@ -84,10 +84,10 @@
 ```text
 vibe-coding-starter/
 ├── .github/workflows/
-├── contracts/
+├── contracts/          (可选：需要固定任务入口 / 交接格式时启用)
 ├── .doc-sync.json
 ├── AGENTS.md
-├── CLAUDE.md
+├── CLAUDE.md           (可选：需要兼容会自动读取该文件的 agent 时保留)
 ├── AGENTS.template.md
 ├── docs/
 │   ├── index.md
@@ -166,20 +166,22 @@ vibe-coding-starter/
 
 `check_all` 现在还会顺带检查 starter 关键资产是否齐全，例如：
 
-- `CLAUDE.md`
 - `prompts/task-entry.txt`
 - `docs/evolution/current-snapshot.md`
 - `docs/governance/project-handoff-checklist.md`
 - `docs/governance/agent-collaboration-protocol.md`
+- 公开脚本入口对应的 `scripts/*.ps1` 与 `scripts/*.sh`
+
+如果仓库启用了 `contracts/`，还会额外检查：
+
 - `contracts/*.schema.json`
 - `contracts/examples/*.json`
-- 公开脚本入口对应的 `scripts/*.ps1` 与 `scripts/*.sh`
 
 对示例项目，它还会额外确认：
 
 - 每个示例都至少有一份 `*-task-entry.json`
 - 每个示例都至少有一份 `*-handoff.md`
-- 示例里的 `task-entry` 顶层结构仍符合根目录 `contracts/task-entry.schema.json`
+- 如果仓库启用了 `contracts/`，示例里的 `task-entry` 顶层结构也会继续对照根目录 schema
 
 ## 本地统一检查入口
 

@@ -4,7 +4,9 @@
 
 ## [Unreleased]
 
-- 暂无
+### Changed
+
+- `README.md`、`QUICKSTART.md`、`contracts/README.md` 与 `scripts/check_all.py` 收口为“`CLAUDE.md` 与 `contracts/` 按需启用”的口径，不再把它们当成默认必带能力。
 
 ## [v0.4.0] - 2026-06-23
 
