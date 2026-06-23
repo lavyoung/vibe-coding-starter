@@ -158,7 +158,15 @@ bash scripts/init_starter.sh \
 
 如果你不想先自己判断该走设计、实现、升级还是 review，优先用 `task-entry.txt` 作为统一入口。
 如果你希望把这一步沉淀成仓库内 skill，优先用 `task-router` 做同样的分流动作。
-如果你准备把这份任务再交给另一个 agent，优先把结果补成 `contracts/task-entry.schema.json` 对应结构。
+如果仓库启用了 `contracts/`，且你准备把这份任务再交给另一个 agent，优先把结果补成 `contracts/task-entry.schema.json` 对应结构。
+
+最简开场可以直接复制：
+
+```text
+请先按 task-router 工作，不要直接改代码。
+任务目标：
+要求：
+```
 
 这样做的价值很直接：
 

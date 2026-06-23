@@ -129,6 +129,13 @@ vibe-coding-starter/
 - [prompts/task-entry.txt](prompts/task-entry.txt)
   先让 agent 判断这是需求、设计、代码改动、小修复、升级还是 review，再路由到后续流程
 
+最省事的用法是直接发这 2 行：
+
+```text
+任务目标：
+要求：
+```
+
 如果你更希望把这一步沉淀成仓库内可复用 skill，也可以直接用：
 
 - [tools/skills/task-router/SKILL.md](tools/skills/task-router/SKILL.md)
