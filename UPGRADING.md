@@ -255,3 +255,31 @@ bash scripts/check_all.sh
    4. `tools/skills/task-router/`
    5. `scripts/init_starter.ps1` 与 `scripts/init_starter.sh`
    6. `scripts/check_all.py`、`tests/test_check_all.py` 与相关入口文档
+
+## 12. 从 v0.4.0 升级到 v0.4.1 时重点看什么
+
+如果你当前使用的是 `v0.4.0`，升级到 `v0.4.1` 时建议重点看下面两类变化：
+
+1. `CLAUDE.md` 和 `contracts/` 已经从“默认带上”收口为“按需启用”
+   现在模板口径已经明确：
+   - `CLAUDE.md` 只有在你需要兼容会自动读取该文件的 agent 时才保留
+   - `contracts/` 只有在你需要固定任务入口 / 交接摘要格式时才启用
+
+   如果你的项目本来就没用这两项，这次升级的意义主要是减少误导，不必为了跟模板保持一致而强行补齐它们。
+
+2. `check_all.py` 不再把这两项当成强制资产
+   现在即使你的仓库没有：
+   - `CLAUDE.md`
+   - `contracts/*.schema.json`
+   - `contracts/examples/*.json`
+
+   基础检查也仍然可以通过；只有当你主动启用了 `contracts/`，相关 schema / example 检查才会继续生效。
+
+3. 升级时的最小建议
+   如果你只想吸收 `v0.4.1` 的核心变化，优先顺序建议是：
+   1. `scripts/check_all.py`
+   2. `tests/test_check_all.py`
+   3. `README.md`
+   4. `QUICKSTART.md`
+   5. `contracts/README.md`
+   6. `CLAUDE.md`

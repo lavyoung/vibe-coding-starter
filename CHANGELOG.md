@@ -4,9 +4,14 @@
 
 ## [Unreleased]
 
+- 暂无
+
+## [v0.4.1] - 2026-06-23
+
 ### Changed
 
-- `README.md`、`QUICKSTART.md`、`contracts/README.md` 与 `scripts/check_all.py` 收口为“`CLAUDE.md` 与 `contracts/` 按需启用”的口径，不再把它们当成默认必带能力。
+- `README.md`、`QUICKSTART.md`、`contracts/README.md`、`CLAUDE.md` 与 `scripts/check_all.py` 收口为“`CLAUDE.md` 与 `contracts/` 按需启用”的口径，不再把它们当成默认必带能力。
+- `tests/test_check_all.py` 补充“缺少 `CLAUDE.md` 或 `contracts/` 仍可通过基础检查”的回归用例，避免后续把可选能力重新写回强依赖。
 
 ## [v0.4.0] - 2026-06-23
 
