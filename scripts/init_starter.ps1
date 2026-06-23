@@ -2,10 +2,10 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
-$pythonScript = Join-Path $scriptDir "doc_sync_check.py"
+$pythonScript = Join-Path $scriptDir "init_starter.py"
 . (Join-Path $scriptDir "resolve_python_runtime.ps1")
 
-# Thin cross-platform wrapper; keep this entrypoint aligned with doc_sync_check.py.
+# Thin cross-platform wrapper; keep this entrypoint aligned with init_starter.py.
 $runtime = Resolve-PythonRuntime
 if ($runtime) {
     & $runtime.command @($runtime.args + @($pythonScript) + $args)

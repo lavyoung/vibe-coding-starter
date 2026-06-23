@@ -5,6 +5,7 @@ $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $pythonScript = Join-Path $scriptDir "check_all.py"
 . (Join-Path $scriptDir "resolve_python_runtime.ps1")
 
+# Thin cross-platform wrapper; keep this entrypoint aligned with check_all.py.
 $runtime = Resolve-PythonRuntime
 if ($runtime) {
     & $runtime.command @($runtime.args + @($pythonScript) + $args)

@@ -18,79 +18,105 @@
 - “任务详情页支持上传附件 URL”
 - “管理端支持设备图片 URL 上传”
 
+开始看具体示例前，先把这条新的模板入口链路补上：
+
+1. 如果你还没判断该走设计、实现、升级还是 review，先用 [prompts/task-entry.txt](prompts/task-entry.txt)
+2. 如果你希望把这一步沉淀成仓库内 skill，再看 [tools/skills/task-router/SKILL.md](tools/skills/task-router/SKILL.md)
+3. 如果后续需要跨 agent 接力，再看 [docs/governance/agent-collaboration-protocol.md](docs/governance/agent-collaboration-protocol.md) 和 [contracts/README.md](contracts/README.md)
+
 ## 完整链路
 
 ### 示例一：最小 Node.js 闭环
 
-1. 需求来源  
+1. 结构化任务入口
+   [docs/tasks/V1.2.0-task-attachment-upload-task-entry.json](examples/minimal-task-board/docs/tasks/V1.2.0-task-attachment-upload-task-entry.json)
+
+2. 需求来源
    [docs/requirements/V1.2.0-task-attachment-upload.md](examples/minimal-task-board/docs/requirements/V1.2.0-task-attachment-upload.md)
 
-2. 设计收敛  
+3. 设计收敛
    [docs/design/V1.2.0-task-attachment-upload.md](examples/minimal-task-board/docs/design/V1.2.0-task-attachment-upload.md)
 
-3. UI 场景说明  
+4. UI 场景说明
    [docs/ui/screens/task-detail-attachment-upload.md](examples/minimal-task-board/docs/ui/screens/task-detail-attachment-upload.md)
 
-4. API 事实  
+5. API 事实
    [docs/api/task-api.md](examples/minimal-task-board/docs/api/task-api.md)
 
-5. 任务推进记录  
+6. 任务推进记录
    [docs/tasks/V1.2.0-task-attachment-upload.md](examples/minimal-task-board/docs/tasks/V1.2.0-task-attachment-upload.md)
 
-6. 代码实现  
+7. 代码实现
    [src/server.js](examples/minimal-task-board/src/server.js)  
    [src/task-store.js](examples/minimal-task-board/src/task-store.js)
 
-7. 自动化同步规则  
+8. 自动化同步规则
    [.doc-sync.json](examples/minimal-task-board/.doc-sync.json)
+
+9. 如需跨 agent 交接
+   可直接看示例内的 [docs/tasks/V1.2.0-task-attachment-upload-handoff.md](examples/minimal-task-board/docs/tasks/V1.2.0-task-attachment-upload-handoff.md)
+   同时对照根目录的 [docs/governance/project-handoff-checklist.md](docs/governance/project-handoff-checklist.md)
+   与 [contracts/examples/handoff-summary.example.json](contracts/examples/handoff-summary.example.json)
 
 ### 示例二：Spring Boot 后端闭环
 
-1. 需求来源  
+1. 结构化任务入口
+   [docs/tasks/V1.2.0-device-image-upload-task-entry.json](examples/spring-boot-device-center/docs/tasks/V1.2.0-device-image-upload-task-entry.json)
+
+2. 需求来源
    [docs/requirements/V1.2.0-device-image-upload.md](examples/spring-boot-device-center/docs/requirements/V1.2.0-device-image-upload.md)
 
-2. 设计收敛  
+3. 设计收敛
    [docs/design/V1.2.0-device-image-upload.md](examples/spring-boot-device-center/docs/design/V1.2.0-device-image-upload.md)
 
-3. API 事实  
+4. API 事实
    [docs/api/device-admin-api.md](examples/spring-boot-device-center/docs/api/device-admin-api.md)
 
-4. 表结构事实
+5. 表结构事实
    [docs/sql/device-schema.md](examples/spring-boot-device-center/docs/sql/device-schema.md)
 
-5. 升级说明
+6. 升级说明
    [docs/upgrade/V1.2.0-device-image-upload.md](examples/spring-boot-device-center/docs/upgrade/V1.2.0-device-image-upload.md)
 
-6. 任务推进记录
+7. 任务推进记录
    [docs/tasks/V1.2.0-device-image-upload.md](examples/spring-boot-device-center/docs/tasks/V1.2.0-device-image-upload.md)
 
-7. 代码实现
+8. 代码实现
    [src/main/java/com/example/devicecenter/controller/DeviceAdminController.java](examples/spring-boot-device-center/src/main/java/com/example/devicecenter/controller/DeviceAdminController.java)  
    [src/main/java/com/example/devicecenter/service/DefaultDeviceService.java](examples/spring-boot-device-center/src/main/java/com/example/devicecenter/service/DefaultDeviceService.java)  
    [src/main/java/com/example/devicecenter/repository/InMemoryDeviceRepository.java](examples/spring-boot-device-center/src/main/java/com/example/devicecenter/repository/InMemoryDeviceRepository.java)
    [src/main/resources/db/migration/V1__create_devices_table.sql](examples/spring-boot-device-center/src/main/resources/db/migration/V1__create_devices_table.sql)
    [src/main/resources/db/migration/V2__create_device_images_table.sql](examples/spring-boot-device-center/src/main/resources/db/migration/V2__create_device_images_table.sql)
 
-8. 测试验证
+9. 测试验证
    [src/test/java/com/example/devicecenter/controller/DeviceAdminControllerTest.java](examples/spring-boot-device-center/src/test/java/com/example/devicecenter/controller/DeviceAdminControllerTest.java)
 
-9. 自动化同步规则
+10. 自动化同步规则
    [.doc-sync.json](examples/spring-boot-device-center/.doc-sync.json)
+
+11. 如需跨 agent 交接
+   可直接看示例内的 [docs/tasks/V1.2.0-device-image-upload-handoff.md](examples/spring-boot-device-center/docs/tasks/V1.2.0-device-image-upload-handoff.md)
+   同时对照根目录的 [docs/governance/project-handoff-checklist.md](docs/governance/project-handoff-checklist.md)
+   与 [contracts/examples/handoff-summary.example.json](contracts/examples/handoff-summary.example.json)
 
 ## 你应该重点看什么
 
 - 需求文档只写“业务要什么”，不抢设计工作
+- 在真正进入示例实现前，可以先用 `task-entry` 或 `task-router` 做任务分流
+- `*-task-entry.json` 让“第一次接手的人”先把目标、范围、约束和验证方式收成统一格式
 - 设计文档在状态为 `已接受` 之前，不直接变成代码依据
 - 实现完成后，`API / tasks / UI / design` 会一起留痕
 - `.doc-sync.json` 只是自动化补充，不替代人工可读的治理文档
+- 如果后续要换 agent 或换人继续做，优先把结果收敛成 handoff 模板或 `contracts/examples/*.json` 那样的结构
 
 ## 如何自己复刻一遍
 
 1. 按 [QUICKSTART.md](QUICKSTART.md) 初始化一个新仓库
-2. 复制示例项目里的目录组织方式
-3. 先写一份 `requirements`
-4. 再补 `design / tasks / api / ui`
-5. 最后把自己的代码目录映射进 `.doc-sync.json`
+2. 先用 `task-entry` 或 `task-router` 给你的第一个任务分流
+3. 复制示例项目里的目录组织方式
+4. 先写一份 `requirements`
+5. 再补 `design / tasks / api / ui`
+6. 最后把自己的代码目录映射进 `.doc-sync.json`
 
 ## 关联代码
 

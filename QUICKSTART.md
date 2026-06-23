@@ -7,7 +7,7 @@
 第一次采用模板时，只按下面 5 步走：
 
 1. 创建仓库或复制模板
-2. 运行 `init_starter.py`
+2. 运行 `init_starter`
 3. 补 4 份核心文档
 4. 运行 `check_all.py`
 5. 看一份完整需求演示
@@ -33,12 +33,22 @@ scripts/
 tools/skills/
 ```
 
-## 2. 运行 `init_starter.py`
+## 2. 运行 `init_starter`
 
 推荐执行：
 
 ```bash
+# Python 入口
 python scripts/init_starter.py \
+  --project-name your-project \
+  --tech-stack "Java 17 + Spring Boot 3.3" \
+  --build-command "mvn clean package" \
+  --test-command "mvn test" \
+  --main-modules "module-user,module-order" \
+  --business-domains "用户,订单"
+
+# shell 入口
+bash scripts/init_starter.sh \
   --project-name your-project \
   --tech-stack "Java 17 + Spring Boot 3.3" \
   --build-command "mvn clean package" \
@@ -47,9 +57,20 @@ python scripts/init_starter.py \
   --business-domains "用户,订单"
 ```
 
+```powershell
+./scripts/init_starter.ps1 `
+  --project-name your-project `
+  --tech-stack "Java 17 + Spring Boot 3.3" `
+  --build-command "mvn clean package" `
+  --test-command "mvn test" `
+  --main-modules "module-user,module-order" `
+  --business-domains "用户,订单"
+```
+
 如果当前项目暂时没有界面层文档，可以改为：
 
 ```bash
+# Python 入口
 python scripts/init_starter.py \
   --project-name your-project \
   --tech-stack "Java 17 + Spring Boot 3.3" \
@@ -57,6 +78,27 @@ python scripts/init_starter.py \
   --test-command "mvn test" \
   --main-modules "module-user,module-order" \
   --business-domains "用户,订单" \
+  --disable-ui
+
+# shell 入口
+bash scripts/init_starter.sh \
+  --project-name your-project \
+  --tech-stack "Java 17 + Spring Boot 3.3" \
+  --build-command "mvn clean package" \
+  --test-command "mvn test" \
+  --main-modules "module-user,module-order" \
+  --business-domains "用户,订单" \
+  --disable-ui
+```
+
+```powershell
+./scripts/init_starter.ps1 `
+  --project-name your-project `
+  --tech-stack "Java 17 + Spring Boot 3.3" `
+  --build-command "mvn clean package" `
+  --test-command "mvn test" `
+  --main-modules "module-user,module-order" `
+  --business-domains "用户,订单" `
   --disable-ui
 ```
 
@@ -133,12 +175,20 @@ bash scripts/check_all.sh
 ./scripts/check_all.ps1
 ```
 
+说明：
+
+- `check_all.sh` / `doc_sync_check.sh` 仍依赖 `python3` 或 `python`
+- 若要让 `check_all.sh` 跑完整示例自检，还需要本机具备 `node`、`mvn`，并正确配置 `JAVA_HOME`
+- 如果当前 shell 环境只想先验证统一入口或治理检查，可先运行 `bash scripts/check_all.sh --skip-examples`
+
 这一步会统一执行：
 
 - `doc-sync`
 - Markdown 相对链接检查
 - 示例项目自检
 - starter 关键资产检查
+- 示例闭环资产检查（`task-entry / handoff`）
+- 公开脚本入口的跨环境包装检查（`.py / .ps1 / .sh`）
 
 如果你希望先理解或定制 `doc-sync` 规则，再看下面这部分。
 
@@ -191,6 +241,7 @@ bash scripts/doc_sync_check.sh
 
 - 按变更范围运行 `doc-sync`
 - 同时补充链接检查和示例自检
+- 同时检查示例是否仍保留完整的 `task-entry -> handoff` 演示链路
 
 ## 5. 看一份完整需求演示
 
@@ -206,6 +257,8 @@ bash scripts/doc_sync_check.sh
 - [scripts/check_all.ps1](scripts/check_all.ps1)
 - [scripts/check_all.sh](scripts/check_all.sh)
 - [scripts/init_starter.py](scripts/init_starter.py)
+- [scripts/init_starter.ps1](scripts/init_starter.ps1)
+- [scripts/init_starter.sh](scripts/init_starter.sh)
 - [.doc-sync.json](.doc-sync.json)
 - [scripts/doc_sync_check.py](scripts/doc_sync_check.py)
 - [scripts/doc_sync_check.ps1](scripts/doc_sync_check.ps1)

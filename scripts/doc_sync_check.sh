@@ -4,6 +4,7 @@ set -eu
 SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 PYTHON_SCRIPT="$SCRIPT_DIR/doc_sync_check.py"
 
+# Thin cross-platform wrapper; keep this entrypoint aligned with doc_sync_check.py.
 if command -v python3 >/dev/null 2>&1; then
     exec python3 "$PYTHON_SCRIPT" "$@"
 fi

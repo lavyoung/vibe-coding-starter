@@ -1,0 +1,38 @@
+{
+  "task_type": "code_change",
+  "goal": "给任务详情页补上附件 URL 录入能力，并让相关文档、接口和代码实现保持同步。",
+  "scope": [
+    "docs/requirements/V1.2.0-task-attachment-upload.md",
+    "docs/design/V1.2.0-task-attachment-upload.md",
+    "docs/api/task-api.md",
+    "docs/ui/screens/task-detail-attachment-upload.md",
+    "docs/tasks/V1.2.0-task-attachment-upload.md",
+    "src/server.js",
+    "src/task-store.js"
+  ],
+  "constraints": [
+    "保持最小 Node.js 示例风格，不引入额外框架",
+    "只支持 URL 方式，不做二进制文件上传",
+    "每个任务最多 3 个附件",
+    "文档与代码改动必须同步"
+  ],
+  "related_docs": [
+    "AGENTS.md",
+    "docs/evolution/INDEX.md",
+    "docs/requirements/V1.2.0-task-attachment-upload.md",
+    "docs/design/V1.2.0-task-attachment-upload.md",
+    "docs/api/task-api.md",
+    "docs/ui/screens/task-detail-attachment-upload.md",
+    "docs/tasks/V1.2.0-task-attachment-upload.md"
+  ],
+  "expected_output": [
+    "任务附件上传相关文档齐全且状态一致",
+    "最小实现支持查询任务和新增附件",
+    "任务状态与代码行为相互对应"
+  ],
+  "validation": [
+    "node --check src/server.js",
+    "node --check src/task-store.js",
+    "python ../../scripts/doc_sync_check.py"
+  ]
+}

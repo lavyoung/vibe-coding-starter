@@ -29,12 +29,30 @@ REQUIRED_STARTER_FILES = {
     "contracts/handoff-summary.schema.json": "交接摘要 schema",
     "contracts/examples/task-entry.example.json": "任务入口示例",
     "contracts/examples/handoff-summary.example.json": "交接摘要示例",
+    "scripts/init_starter.ps1": "初始化脚本 PowerShell 入口",
+    "scripts/init_starter.sh": "初始化脚本 shell 入口",
+}
+PUBLIC_SCRIPT_ENTRYPOINTS = {
+    "scripts/check_all.py": (
+        "scripts/check_all.ps1",
+        "scripts/check_all.sh",
+    ),
+    "scripts/doc_sync_check.py": (
+        "scripts/doc_sync_check.ps1",
+        "scripts/doc_sync_check.sh",
+    ),
+    "scripts/init_starter.py": (
+        "scripts/init_starter.ps1",
+        "scripts/init_starter.sh",
+    ),
 }
 SCHEMA_TOP_LEVEL_KEYS = ("$schema", "title", "type", "properties")
 SCHEMA_EXAMPLE_MAP = {
     "contracts/task-entry.schema.json": "contracts/examples/task-entry.example.json",
     "contracts/handoff-summary.schema.json": "contracts/examples/handoff-summary.example.json",
 }
+EXAMPLE_TASK_ENTRY_SUFFIX = "-task-entry.json"
+EXAMPLE_HANDOFF_SUFFIX = "-handoff.md"
 SYNC_REVIEW_TRIGGER_PREFIXES = (
     "prompts/",
     "tools/skills/",
@@ -124,6 +142,74 @@ def run_command(command: list[str], cwd: Path, group: str, title: str) -> CheckR
 
 def normalize_path(path: str) -> str:
     return path.replace("\\", "/").strip("/")
+
+
+def load_json_file(path: Path) -> tuple[dict[str, object] | None, str | None]:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        return None, f"invalid JSON ({exc.msg})"
+
+    if not isinstance(payload, dict):
+        return None, "top-level payload should be an object"
+    return payload, None
+
+
+def validate_payload_against_schema(
+    schema_payload: dict[str, object],
+    candidate_payload: dict[str, object],
+    candidate_path: str,
+) -> list[str]:
+    issues: list[str] = []
+    schema_properties = schema_payload.get("properties", {})
+    if not isinstance(schema_properties, dict):
+        return [f"- {candidate_path}: schema properties should be an object"]
+
+    required_keys = set(schema_payload.get("required", []))
+    candidate_keys = set(candidate_payload.keys())
+
+    missing_keys = sorted(required_keys - candidate_keys)
+    extra_keys = sorted(candidate_keys - set(schema_properties.keys()))
+    if missing_keys:
+        issues.append(
+            f"- {candidate_path}: missing required keys {', '.join(missing_keys)}"
+        )
+    if extra_keys:
+        issues.append(
+            f"- {candidate_path}: unknown keys {', '.join(extra_keys)}"
+        )
+
+    for key in sorted(required_keys & candidate_keys):
+        property_schema = schema_properties.get(key, {})
+        if not isinstance(property_schema, dict):
+            continue
+
+        expected_type = property_schema.get("type")
+        value = candidate_payload[key]
+
+        if expected_type == "array" and not isinstance(value, list):
+            issues.append(f"- {candidate_path}: key {key} should be an array")
+        elif expected_type == "string" and not isinstance(value, str):
+            issues.append(f"- {candidate_path}: key {key} should be a string")
+
+        allowed_values = property_schema.get("enum")
+        if isinstance(allowed_values, list) and value not in allowed_values:
+            issues.append(
+                f"- {candidate_path}: key {key} should be one of {', '.join(allowed_values)}"
+            )
+
+    return issues
+
+
+def format_detail_with_hints(
+    hint_lines: Sequence[str],
+    issue_lines: Sequence[str],
+) -> str:
+    lines = [*hint_lines]
+    if hint_lines and issue_lines:
+        lines.append("")
+    lines.extend(issue_lines)
+    return "\n".join(lines)
 
 
 def run_git_status(repo_root: Path) -> list[str]:
@@ -351,52 +437,27 @@ def validate_starter_assets(
         if not schema_file.exists() or not example_file.exists():
             continue
 
-        try:
-            schema_payload = json.loads(schema_file.read_text(encoding="utf-8"))
-        except json.JSONDecodeError as exc:
-            example_issues.append(f"- {schema_path}: invalid JSON ({exc.msg})")
+        schema_payload, schema_error = load_json_file(schema_file)
+        if schema_error:
+            example_issues.append(f"- {schema_path}: {schema_error}")
+            continue
+        if schema_payload is None:
             continue
 
-        try:
-            example_payload = json.loads(example_file.read_text(encoding="utf-8"))
-        except json.JSONDecodeError as exc:
-            example_issues.append(f"- {example_path}: invalid JSON ({exc.msg})")
+        example_payload, example_error = load_json_file(example_file)
+        if example_error:
+            example_issues.append(f"- {example_path}: {example_error}")
+            continue
+        if example_payload is None:
             continue
 
-        schema_properties = schema_payload.get("properties", {})
-        required_keys = set(schema_payload.get("required", []))
-        example_keys = set(example_payload.keys())
-
-        missing_keys = sorted(required_keys - example_keys)
-        extra_keys = sorted(example_keys - set(schema_properties.keys()))
-        if missing_keys:
-            example_issues.append(
-                f"- {example_path}: missing required keys {', '.join(missing_keys)}"
+        example_issues.extend(
+            validate_payload_against_schema(
+                schema_payload,
+                example_payload,
+                example_path,
             )
-        if extra_keys:
-            example_issues.append(
-                f"- {example_path}: unknown keys {', '.join(extra_keys)}"
-            )
-
-        for key in sorted(required_keys & example_keys):
-            property_schema = schema_properties.get(key, {})
-            expected_type = property_schema.get("type")
-            value = example_payload[key]
-
-            if expected_type == "array" and not isinstance(value, list):
-                example_issues.append(
-                    f"- {example_path}: key {key} should be an array"
-                )
-            elif expected_type == "string" and not isinstance(value, str):
-                example_issues.append(
-                    f"- {example_path}: key {key} should be a string"
-                )
-
-            allowed_values = property_schema.get("enum")
-            if allowed_values and value not in allowed_values:
-                example_issues.append(
-                    f"- {example_path}: key {key} should be one of {', '.join(allowed_values)}"
-                )
+        )
 
     if example_issues:
         results.append(
@@ -412,6 +473,35 @@ def validate_starter_assets(
             CheckResult(
                 group="starter-assets",
                 title="contract examples",
+                status="passed",
+            )
+        )
+
+    script_entrypoint_issues: list[str] = []
+    for python_path, wrapper_paths in PUBLIC_SCRIPT_ENTRYPOINTS.items():
+        python_file = repo_root / python_path
+        if not python_file.exists():
+            continue
+        for wrapper_path in wrapper_paths:
+            if not (repo_root / wrapper_path).exists():
+                script_entrypoint_issues.append(
+                    f"- {python_path}: missing {wrapper_path}"
+                )
+
+    if script_entrypoint_issues:
+        results.append(
+            CheckResult(
+                group="starter-assets",
+                title="cross-platform script entrypoints",
+                status="failed",
+                detail="\n".join(script_entrypoint_issues),
+            )
+        )
+    else:
+        results.append(
+            CheckResult(
+                group="starter-assets",
+                title="cross-platform script entrypoints",
                 status="passed",
             )
         )
@@ -442,8 +532,137 @@ def validate_starter_assets(
     return results
 
 
+def collect_example_workflow_assets(repo_root: Path) -> list[CheckResult]:
+    results: list[CheckResult] = []
+    examples_root = repo_root / "examples"
+    workflow_issues: list[str] = []
+    task_entry_shape_issues: list[str] = []
+
+    task_entry_schema_file = repo_root / "contracts/task-entry.schema.json"
+    task_entry_schema, schema_error = load_json_file(task_entry_schema_file)
+    if schema_error:
+        task_entry_shape_issues.append(
+            f"- contracts/task-entry.schema.json: {schema_error}"
+        )
+        task_entry_schema = None
+
+    for example_dir in sorted(examples_root.iterdir()):
+        if not example_dir.is_dir():
+            continue
+        if not (example_dir / "README.md").exists():
+            continue
+
+        tasks_dir = example_dir / "docs" / "tasks"
+        example_label = normalize_path(str(example_dir.relative_to(repo_root)))
+
+        if not tasks_dir.exists():
+            workflow_issues.append(f"- {example_label}: missing docs/tasks/")
+            continue
+
+        task_entry_files = sorted(tasks_dir.glob(f"*{EXAMPLE_TASK_ENTRY_SUFFIX}"))
+        handoff_files = sorted(tasks_dir.glob(f"*{EXAMPLE_HANDOFF_SUFFIX}"))
+
+        if not task_entry_files:
+            workflow_issues.append(
+                f"- {example_label}: missing docs/tasks/*{EXAMPLE_TASK_ENTRY_SUFFIX}"
+            )
+        if not handoff_files:
+            workflow_issues.append(
+                f"- {example_label}: missing docs/tasks/*{EXAMPLE_HANDOFF_SUFFIX}"
+            )
+
+        task_entry_bases = {
+            path.name[: -len(EXAMPLE_TASK_ENTRY_SUFFIX)] for path in task_entry_files
+        }
+        handoff_bases = {
+            path.name[: -len(EXAMPLE_HANDOFF_SUFFIX)] for path in handoff_files
+        }
+
+        for base_name in sorted(task_entry_bases - handoff_bases):
+            workflow_issues.append(
+                f"- {example_label}: missing matching handoff for {base_name}{EXAMPLE_TASK_ENTRY_SUFFIX}"
+            )
+        for base_name in sorted(handoff_bases - task_entry_bases):
+            workflow_issues.append(
+                f"- {example_label}: missing matching task-entry for {base_name}{EXAMPLE_HANDOFF_SUFFIX}"
+            )
+
+        if task_entry_schema is None:
+            continue
+
+        for task_entry_file in task_entry_files:
+            relative_path = normalize_path(str(task_entry_file.relative_to(repo_root)))
+            payload, payload_error = load_json_file(task_entry_file)
+            if payload_error:
+                task_entry_shape_issues.append(f"- {relative_path}: {payload_error}")
+                continue
+            if payload is None:
+                continue
+
+            task_entry_shape_issues.extend(
+                validate_payload_against_schema(
+                    task_entry_schema,
+                    payload,
+                    relative_path,
+                )
+            )
+
+    if workflow_issues:
+        results.append(
+            CheckResult(
+                group="examples",
+                title="example workflow assets",
+                status="failed",
+                detail=format_detail_with_hints(
+                    (
+                        "each example should keep at least one complete workflow pair:",
+                        f"- docs/tasks/<task-name>{EXAMPLE_TASK_ENTRY_SUFFIX}",
+                        f"- docs/tasks/<task-name>{EXAMPLE_HANDOFF_SUFFIX}",
+                        "- keep the <task-name> base consistent so the pair is easy to trace",
+                    ),
+                    workflow_issues,
+                ),
+            )
+        )
+    else:
+        results.append(
+            CheckResult(
+                group="examples",
+                title="example workflow assets",
+                status="passed",
+            )
+        )
+
+    if task_entry_shape_issues:
+        results.append(
+            CheckResult(
+                group="examples",
+                title="example task-entry shape",
+                status="failed",
+                detail=format_detail_with_hints(
+                    (
+                        "align example task-entry files with:",
+                        "- contracts/task-entry.schema.json",
+                        "- contracts/examples/task-entry.example.json",
+                    ),
+                    task_entry_shape_issues,
+                ),
+            )
+        )
+    else:
+        results.append(
+            CheckResult(
+                group="examples",
+                title="example task-entry shape",
+                status="passed",
+            )
+        )
+
+    return results
+
+
 def run_example_checks(repo_root: Path) -> list[CheckResult]:
-    checks: list[CheckResult] = []
+    checks = collect_example_workflow_assets(repo_root)
 
     node = shutil.which("node")
     if node:

@@ -1,0 +1,40 @@
+{
+  "task_type": "code_change",
+  "goal": "给管理端补上设备图片 URL 上传能力，并同步接口、SQL 资产、升级说明和测试。",
+  "scope": [
+    "docs/requirements/V1.2.0-device-image-upload.md",
+    "docs/design/V1.2.0-device-image-upload.md",
+    "docs/api/device-admin-api.md",
+    "docs/sql/device-schema.md",
+    "docs/upgrade/V1.2.0-device-image-upload.md",
+    "docs/tasks/V1.2.0-device-image-upload.md",
+    "src/main/java/com/example/devicecenter/controller/DeviceAdminController.java",
+    "src/main/java/com/example/devicecenter/service/DefaultDeviceService.java",
+    "src/test/java/com/example/devicecenter/controller/DeviceAdminControllerTest.java"
+  ],
+  "constraints": [
+    "保持 Spring Boot 示例现有的 controller / service / repository 分层",
+    "只支持图片 URL 追加，不引入真实文件存储依赖",
+    "单台设备最多 3 张图片",
+    "SQL、升级说明、任务状态和测试需要同步"
+  ],
+  "related_docs": [
+    "AGENTS.md",
+    "docs/evolution/INDEX.md",
+    "docs/requirements/V1.2.0-device-image-upload.md",
+    "docs/design/V1.2.0-device-image-upload.md",
+    "docs/api/device-admin-api.md",
+    "docs/sql/device-schema.md",
+    "docs/upgrade/V1.2.0-device-image-upload.md",
+    "docs/tasks/V1.2.0-device-image-upload.md"
+  ],
+  "expected_output": [
+    "设备图片上传相关文档齐全且状态一致",
+    "管理端接口支持创建设备、追加图片和查询详情",
+    "测试覆盖关键 happy path 与约束行为"
+  ],
+  "validation": [
+    "mvn test",
+    "python ../../scripts/doc_sync_check.py"
+  ]
+}

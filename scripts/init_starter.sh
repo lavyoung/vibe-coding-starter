@@ -2,9 +2,9 @@
 set -eu
 
 SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
-PYTHON_SCRIPT="$SCRIPT_DIR/check_all.py"
+PYTHON_SCRIPT="$SCRIPT_DIR/init_starter.py"
 
-# Thin cross-platform wrapper; keep this entrypoint aligned with check_all.py.
+# Thin cross-platform wrapper; keep this entrypoint aligned with init_starter.py.
 if command -v python3 >/dev/null 2>&1; then
     exec python3 "$PYTHON_SCRIPT" "$@"
 fi

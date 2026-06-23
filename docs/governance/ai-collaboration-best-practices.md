@@ -122,6 +122,12 @@ AI 自审时，不要先让它总结优点，优先让它列：
 
 如果仓库启用了 `.doc-sync.json` 和 `scripts/doc_sync_check.py`，收尾时还要跑一轮 `doc-sync`。
 
+如果这轮改动命中了公开脚本入口，也要同步回查：
+
+- 对应的 `scripts/*.ps1`
+- 对应的 `scripts/*.sh`
+- 文档中的命令示例是否仍然可用
+
 如果仓库已经维护了 `docs/evolution/current-snapshot.md` 和 `docs/governance/project-handoff-checklist.md`，收尾时还应确认：
 
 - 当前阶段快照是否仍然准确

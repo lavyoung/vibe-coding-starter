@@ -4,17 +4,28 @@
 
 ## [Unreleased]
 
+- 暂无
+
+## [v0.4.0] - 2026-06-23
+
 ### Added
 
 - 新增根级 `CLAUDE.md` 兼容入口，方便会自动读取该文件的 agent 直接按与 `AGENTS.md` 同口径的规则协作。
 - 新增 `docs/governance/agent-collaboration-protocol.md`、`contracts/README.md` 与 `contracts/examples/*.json`，补齐跨 Codex / Claude / 其他 agent 的最小协作协议和可直接复用示例。
 - 新增 `tools/skills/task-router/`，把“先路由任务、再决定实现路径”的入口沉淀为仓库内可复用 skill。
+- 新增 `scripts/init_starter.ps1`、`scripts/init_starter.sh`，补齐初始化脚本的 PowerShell / shell 入口。
+- 新增 `.gitattributes` 统一文本文件行尾策略，并补充 `tests/test_check_all.py` 轻量自测，固定关键治理检查行为。
 
 ### Changed
 
 - `README.md`、`QUICKSTART.md`、`EXPORTING.md`、`docs/index.md`、`docs/onboarding.md`、`docs/README.md`、`docs/governance/*.md` 与 `scripts/check_all.py` 同步补齐 `CLAUDE.md` 入口和一致性检查说明。
 - `README.md`、`QUICKSTART.md`、`docs/index.md`、`docs/onboarding.md`、`docs/governance/*.md`、`EXPORTING.md`、`UPGRADING.md` 同步补齐多 agent 协作协议入口。
 - `README.md`、`QUICKSTART.md`、`docs/governance/*.md` 与 `scripts/check_all.py` 同步补齐 `task-router` skill 入口和检查约束。
+- `DEMO.md` 与 `examples/README.md` 同步补齐 `task-entry`、`task-router`、handoff 与 contracts example 在完整演示链路中的位置。
+- 两个示例项目各自新增 `docs/tasks/*-task-entry.json` 与 `docs/tasks/*-handoff.md` 实物，并同步更新示例 README、演进总览和 DEMO 链路。
+- `scripts/check_all.py`、`README.md` 与 `QUICKSTART.md` 补齐示例闭环资产检查，确保每个示例至少保留一份 `task-entry`、一份 `handoff`，且 `task-entry` 顶层结构仍符合根目录 contract。
+- `AGENTS.md`、治理文档、prompt、skill、`README.md`、`QUICKSTART.md` 与 `scripts/check_all.py` 补齐“公开脚本入口需同步维护 `.py / .ps1 / .sh`”的约束，并让 `check_all` 自动检查这些入口是否齐全。
+- `README.md` 与 `QUICKSTART.md` 补充 shell 入口的环境前提说明，并明确 `check_all.sh --skip-examples` 可用于只验证统一入口与治理检查。
 
 ## [v0.3.1] - 2026-06-22
 

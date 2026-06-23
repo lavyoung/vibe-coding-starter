@@ -9,7 +9,7 @@
 如果你想先快速试起来，不用先通读整个仓库，直接按这个顺序：
 
 1. 复制模板到新项目
-2. 运行 `python scripts/init_starter.py`
+2. 运行 `init_starter`
 3. 补 4 份核心文档
 4. 运行检查脚本
 5. 看一份完整需求演示
@@ -115,7 +115,7 @@ vibe-coding-starter/
 首页只保留第一次采用最短路径，详细操作统一看 [QUICKSTART.md](QUICKSTART.md)：
 
 1. 复制模板到新项目
-2. 运行 `python scripts/init_starter.py`
+2. 运行 `init_starter`
 3. 补 4 份核心文档
 4. 运行检查脚本
 5. 看 [DEMO.md](DEMO.md) 里的完整需求演示
@@ -173,8 +173,29 @@ vibe-coding-starter/
 - `docs/governance/agent-collaboration-protocol.md`
 - `contracts/*.schema.json`
 - `contracts/examples/*.json`
+- 公开脚本入口对应的 `scripts/*.ps1` 与 `scripts/*.sh`
+
+对示例项目，它还会额外确认：
+
+- 每个示例都至少有一份 `*-task-entry.json`
+- 每个示例都至少有一份 `*-handoff.md`
+- 示例里的 `task-entry` 顶层结构仍符合根目录 `contracts/task-entry.schema.json`
 
 ## 本地统一检查入口
+
+初始化脚本也提供了同样的跨环境入口：
+
+```bash
+# Python 入口
+python scripts/init_starter.py
+
+# shell 入口
+bash scripts/init_starter.sh
+```
+
+```powershell
+./scripts/init_starter.ps1
+```
 
 - [scripts/check_all.py](scripts/check_all.py)：统一检查的 Python 主实现
 - [scripts/check_all.ps1](scripts/check_all.ps1)：Windows PowerShell 入口
@@ -183,13 +204,22 @@ vibe-coding-starter/
 示例：
 
 ```bash
+# Python 入口
 python scripts/check_all.py
+
+# shell 入口
 bash scripts/check_all.sh
 ```
 
 ```powershell
 ./scripts/check_all.ps1
 ```
+
+说明：
+
+- `check_all.sh` / `doc_sync_check.sh` 只是 shell 包装入口，仍依赖 `python3` 或 `python`
+- 若要让 `check_all.sh` 跑完整示例自检，还需要本机具备 `node`、`mvn`，并正确配置 `JAVA_HOME`
+- 如果当前 shell 环境只想先验证治理检查或包装脚本本身，可先运行 `bash scripts/check_all.sh --skip-examples`
 
 ## 一次完整需求演示
 

@@ -4,6 +4,7 @@
 
 ## 这个示例演示什么
 
+- 如何先把需求整理成一份结构化 `task-entry`
 - 如何用 `requirements / design / api / tasks / architecture` 驱动后端实现
 - 如何组织 `controller / service / repository / test` 这类常见企业项目结构
 - 如何用 `.doc-sync.json` 约束代码与文档同步
@@ -13,11 +14,13 @@
 
 - [AGENTS.md](AGENTS.md)
 - [docs/evolution/INDEX.md](docs/evolution/INDEX.md)
+- [docs/tasks/V1.2.0-device-image-upload-task-entry.json](docs/tasks/V1.2.0-device-image-upload-task-entry.json)
 - [docs/requirements/V1.2.0-device-image-upload.md](docs/requirements/V1.2.0-device-image-upload.md)
 - [docs/design/V1.2.0-device-image-upload.md](docs/design/V1.2.0-device-image-upload.md)
 - [docs/api/device-admin-api.md](docs/api/device-admin-api.md)
 - [docs/sql/device-schema.md](docs/sql/device-schema.md)
 - [docs/upgrade/V1.2.0-device-image-upload.md](docs/upgrade/V1.2.0-device-image-upload.md)
+- [docs/tasks/V1.2.0-device-image-upload-handoff.md](docs/tasks/V1.2.0-device-image-upload-handoff.md)
 - [src/main/java/com/example/devicecenter/controller/DeviceAdminController.java](src/main/java/com/example/devicecenter/controller/DeviceAdminController.java)
 - [src/main/java/com/example/devicecenter/service/DefaultDeviceService.java](src/main/java/com/example/devicecenter/service/DefaultDeviceService.java)
 - [src/main/resources/db/migration/V1__create_devices_table.sql](src/main/resources/db/migration/V1__create_devices_table.sql)

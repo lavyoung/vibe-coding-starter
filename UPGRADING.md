@@ -196,3 +196,62 @@ bash scripts/check_all.sh
    3. `docs/governance/project-handoff-checklist.md`
    4. `contracts/*.schema.json`
    5. `scripts/check_all.py` 与相关入口文档
+
+## 11. 从 v0.3.1 升级到 v0.4.0 时重点看什么
+
+如果你当前使用的是 `v0.3.1`，升级到 `v0.4.0` 时建议重点吸收下面几类变化：
+
+1. 多 agent 协作入口已经补成更完整的闭环
+   新增：
+   - `CLAUDE.md`
+   - `docs/governance/agent-collaboration-protocol.md`
+   - `contracts/README.md`
+   - `contracts/examples/task-entry.example.json`
+   - `contracts/examples/handoff-summary.example.json`
+   - `tools/skills/task-router/`
+
+   如果你的项目会在 Codex、Claude 或其他 agent 之间交接任务，这一组能力通常值得优先同步。
+
+2. 示例项目已经从“只演示主线文档”升级到“入口 + 收口”都有实物
+   两个示例现在都各自包含：
+   - `docs/tasks/*-task-entry.json`
+   - `docs/tasks/*-handoff.md`
+
+   如果你希望新人或新会话能直接对照一条完整链路，这部分参考价值比单纯看 README 更高。
+
+3. 初始化脚本和检查脚本的跨环境入口更完整了
+   新增：
+   - `scripts/init_starter.ps1`
+   - `scripts/init_starter.sh`
+
+   同时模板已经明确：公开脚本入口应同步维护 `.py / .ps1 / .sh`。如果你的项目已经改过 `scripts/`，建议按 diff 合并，不要只同步单一平台入口。
+
+4. 统一检查入口现在会兜住更多模板一致性问题
+   `scripts/check_all.py` 现在除了原有检查，还会覆盖：
+   - 示例是否保留完整的 `task-entry -> handoff` 闭环
+   - 示例里的 `task-entry` 顶层结构是否仍符合根目录 contract
+   - 公开 Python 脚本是否保留对应的 PowerShell / shell 包装入口
+
+   如果你的项目已经裁剪了示例、contracts 或脚本入口，需要在升级前先判断是同步这些能力，还是相应调整本地检查规则。
+
+5. 模板现在自带一层轻量脚本自测和统一行尾策略
+   新增：
+   - `.gitattributes`
+   - `tests/test_check_all.py`
+
+   如果你的仓库也在 Windows 和 macOS / Linux 混用，这部分通常值得直接同步，能减少行尾噪音并固定关键治理检查行为。
+
+6. shell 入口的运行前提已经明确写进文档
+   `README.md` 与 `QUICKSTART.md` 现在明确说明：
+   - `check_all.sh` / `doc_sync_check.sh` 仍依赖 `python3` 或 `python`
+   - 若要跑完整示例自检，还需要 `node`、`mvn` 和正确配置的 `JAVA_HOME`
+   - 如果只想验证统一入口或治理检查，可先用 `bash scripts/check_all.sh --skip-examples`
+
+7. 升级时的最小建议
+   如果你只想吸收最有价值的 `v0.4.0` 能力，优先顺序建议是：
+   1. `CLAUDE.md`
+   2. `docs/governance/agent-collaboration-protocol.md`
+   3. `contracts/examples/*.json`
+   4. `tools/skills/task-router/`
+   5. `scripts/init_starter.ps1` 与 `scripts/init_starter.sh`
+   6. `scripts/check_all.py`、`tests/test_check_all.py` 与相关入口文档

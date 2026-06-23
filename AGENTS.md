@@ -79,5 +79,6 @@
 
 - 若仓库存在 `.doc-sync.json`，它是“代码 -> 文档同步矩阵”的机器可校验补充，不替代 `docs/governance/document-sync-map.md`
 - 若仓库存在 `scripts/doc_sync_check.py`，本地改动收口和 CI 应优先复用该脚本
+- 若仓库公开了 `scripts/*.py` 形式的用户入口脚本，应同步维护对应的 `scripts/*.ps1` 与 `scripts/*.sh` 入口；修改脚本行为、参数或文件名时，不要只改单一平台入口
 - 若仓库存在 `.github/workflows/doc-sync.yml`，提交前应确保相关文档改动能通过这条检查
 - 若仓库同时维护 `CLAUDE.md`，它只作为会自动读取该文件的 agent 的兼容入口；协作规则变更时必须与 `AGENTS.md` 保持同口径
