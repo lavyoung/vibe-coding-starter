@@ -14,17 +14,15 @@
 
 - 若存在与当前任务匹配的 skill，优先读取对应 `SKILL.md`，并按其中约束执行。
 - 若多个 skill 同时匹配，按“最小覆盖原则”选择必要 skill 组合。
+- 修改既有行为、共享组件、配置、脚本、合并或暂存前，必须读取 `tools/skills/safe-code-change/SKILL.md`。
+- 完成代码或文档改动、准备交付前，必须读取 `tools/skills/post-change-check/SKILL.md`。
+- 新增或重构 Java 服务层结构时，读取 `tools/skills/java-service-structure/SKILL.md`；调整 Spring 事务边界时，同时读取 `tools/skills/java-transaction-boundary/SKILL.md`。
 - 若当前任务与已有 skill 均不匹配，再回退到本 `AGENTS.md` 与全局规则继续执行。
 
 ## 1. 项目事实
 
-- 项目名称：`<PROJECT_NAME>`
-- 技术栈：`<TECH_STACK>`
-- 主模块：`<MAIN_MODULES>`
-- 主要业务域：`<BUSINESS_DOMAINS>`
-- 构建命令：`<BUILD_COMMAND>`
-- 测试命令：`<TEST_COMMAND>`
-- 编码约定：统一使用 UTF-8
+- 项目事实、构建测试入口和专项 skill 启用条件维护在 [docs/project-profile.md](docs/project-profile.md)。
+- 编码约定：统一使用 UTF-8。
 
 ## 2. 代码实现约束
 
@@ -48,10 +46,11 @@
 改代码或写文档前，优先读取：
 
 1. [docs/index.md](docs/index.md)
-2. [docs/onboarding.md](docs/onboarding.md)
-3. [docs/evolution/INDEX.md](docs/evolution/INDEX.md)
-4. [docs/governance/document-sync-map.md](docs/governance/document-sync-map.md)
-5. 若涉及页面、弹窗、上传交互、前端文案或空态 / 错误态，再补查 `docs/ui/`
+2. [docs/project-profile.md](docs/project-profile.md)
+3. [docs/onboarding.md](docs/onboarding.md)
+4. [docs/evolution/INDEX.md](docs/evolution/INDEX.md)
+5. [docs/governance/document-sync-map.md](docs/governance/document-sync-map.md)
+6. 若涉及页面、弹窗、上传交互、前端文案或空态 / 错误态，再补查 `docs/ui/`
 
 ## 5. 代码 -> 文档同步要求
 

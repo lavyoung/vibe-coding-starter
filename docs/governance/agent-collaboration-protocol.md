@@ -21,6 +21,7 @@
 
 - 自然语言入口优先使用 [../../prompts/task-entry.txt](../../prompts/task-entry.txt)
 - 若仓库已提供 `tools/skills/task-router/`，也可以先用它完成同样的任务路由与文档状态检查
+- 对既有行为的修改，还应在交接中保留改前基线、改后验证与工作区归属信息。
 - 若需要按“新需求 / 小改动 / bug 修复 / 联调 / 新会话接手”判断后续 prompt 顺序，再看 [prompt-workflow-playbook.md](prompt-workflow-playbook.md)
 - 若需要把任务稳定交给其他 agent，优先补成 [../../contracts/task-entry.schema.json](../../contracts/task-entry.schema.json) 对应结构
 - 可直接参考 [../../contracts/examples/task-entry.example.json](../../contracts/examples/task-entry.example.json)
@@ -30,6 +31,7 @@
 - 权威规则源优先看 [../../AGENTS.md](../../AGENTS.md)
 - 若当前 agent 会自动读取 [../../CLAUDE.md](../../CLAUDE.md)，它只作为兼容入口，规则必须与 `AGENTS.md` 一致
 - 实现前继续按仓库要求读取 `docs/index.md`、`docs/onboarding.md`、`docs/evolution/INDEX.md` 和 `docs/governance/document-sync-map.md`
+- 在选择构建命令或专项 skill 前，读取 `docs/project-profile.md` 并确认其事实仍适用。
 
 ### 2.3 回合收口
 

@@ -20,8 +20,9 @@
 
 1. 先看 [docs/evolution/current-snapshot.md](evolution/current-snapshot.md)
 2. 再看 [docs/evolution/INDEX.md](evolution/INDEX.md)
-3. 再看 [docs/architecture/current-architecture.md](architecture/current-architecture.md)
-4. 再看 [docs/onboarding.md](onboarding.md) 和 [docs/governance/document-sync-map.md](governance/document-sync-map.md)
+3. 再看 [docs/project-profile.md](project-profile.md)
+4. 再看 [docs/architecture/current-architecture.md](architecture/current-architecture.md)
+5. 再看 [docs/onboarding.md](onboarding.md) 和 [docs/governance/document-sync-map.md](governance/document-sync-map.md)
 5. 若需要确认协作方式和会话节奏，再看 [docs/governance/ai-collaboration-best-practices.md](governance/ai-collaboration-best-practices.md)
 6. 若需要按“新需求 / 小改动 / bug 修复 / 联调 / 新会话接手”判断 prompts 使用顺序，再看 [docs/governance/prompt-workflow-playbook.md](governance/prompt-workflow-playbook.md)
 7. 若需要跨 Codex / Claude / 其他 agent 协作，再看 [docs/governance/agent-collaboration-protocol.md](governance/agent-collaboration-protocol.md)
@@ -42,6 +43,7 @@
 | `api/` / `sql/` | 稳定事实是什么 | 契约和结构事实 |
 | `ui/` | 页面、弹窗和交互规则是什么 | 项目存在前端 / 管理端界面时 |
 | `governance/` | 文档规则、同步矩阵、状态闸门是什么 | 需要治理和同步时 |
+| `project-profile.md` | 项目技术、验证和架构事实是什么 | 初始化、接手或启用专项 skill 时 |
 | `governance/ai-collaboration-best-practices.md` | 人类 + AI 协作节奏怎么走 | 需要统一会话与 review 方式时 |
 | `governance/prompt-workflow-playbook.md` | 常见任务场景里 prompts 应该按什么顺序用 | 不想自己判断 prompt 串联顺序时 |
 | `governance/agent-collaboration-protocol.md` | 多 agent 之间的输入 / 输出协作协议 | 跨 agent 接力、新会话续做、结构化交接时 |

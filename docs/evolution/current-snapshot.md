@@ -45,7 +45,8 @@
 2. [docs/index.md](../index.md)
 3. [docs/onboarding.md](../onboarding.md)
 4. [docs/governance/document-sync-map.md](../governance/document-sync-map.md)
-5. [docs/governance/ai-collaboration-best-practices.md](../governance/ai-collaboration-best-practices.md)
+5. [docs/project-profile.md](../project-profile.md)
+6. [docs/governance/ai-collaboration-best-practices.md](../governance/ai-collaboration-best-practices.md)
 
 如果要开始一个新任务，优先再看：
 

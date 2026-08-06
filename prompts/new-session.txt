@@ -9,9 +9,11 @@
 开始前必须先阅读并遵守：
 1. AGENTS.md
 2. docs/index.md
-3. docs/evolution/INDEX.md
-4. docs/governance/document-sync-map.md
-5. 与当前任务相关的 requirements / design / tasks / upgrade / api 文档
+3. docs/project-profile.md
+4. docs/evolution/INDEX.md
+5. docs/governance/document-sync-map.md
+6. tools/skills 下与当前任务匹配的 SKILL.md
+7. 与当前任务相关的 requirements / design / tasks / upgrade / api 文档
 
 工作规则：
 - 不要直接开始写代码，先恢复文档上下文

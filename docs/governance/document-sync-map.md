@@ -35,6 +35,7 @@
 - 对外提供的 `scripts/*.py` 入口应同步提供对应的 `scripts/*.ps1` 与 `scripts/*.sh`；若修改脚本行为、参数或入口文件名，应一起回查这些跨环境入口是否仍然成立
 - 若仓库已启用 `.github/workflows/doc-sync.yml`，PR 默认应通过这条统一 CI 校验，其中包含 `doc-sync`、链接检查和示例自检
 - 若修改 `AGENTS.md`、`CLAUDE.md`、`prompts/`、`tools/skills/`、PR 模板里的协作规则，需同步检查本文件和 `docs/governance/ai-collaboration-best-practices.md` 是否仍然一致
+- 若修改 `docs/project-profile.md`，需同步检查 `AGENTS.md`、`docs/index.md`、`docs/README.md` 与 onboarding 入口是否仍然指向它
 - 若修改统一入口、prompt 使用顺序、任务分流口径，也应同步检查 `docs/governance/prompt-workflow-playbook.md` 是否仍然一致
 - 若仓库已启用 `docs/evolution/current-snapshot.md`、`docs/governance/project-handoff-checklist.md` 与 `contracts/*.schema.json`，修改统一入口、治理规则或交接流程时，也应回查这些资产是否仍然成立
 - 若仓库已启用 `docs/governance/agent-collaboration-protocol.md` 与 `contracts/examples/*.json`，修改多 agent 协作口径时，也应同步检查协议文档和示例是否仍然成立
@@ -46,6 +47,7 @@
 |---|---|---|
 | `docs/index.md` | 文档统一入口 | 接手项目、准备新增文档时 |
 | `docs/onboarding.md` | 新人和新会话接手指南 | 新成员接手、AI 新会话 |
+| `docs/project-profile.md` | 项目技术、验证与专项 skill 启用事实 | 初始化、接手、构建测试或专项实现前 |
 | `docs/evolution/current-snapshot.md` | 当前阶段单点快照 | 新人接手、AI 新会话、阶段交接 |
 | `docs/evolution/INDEX.md` | 当前项目演进总览 | 恢复当前主线时 |
 | `docs/architecture/current-architecture.md` | 当前系统整体架构基线 | 做跨域设计时 |

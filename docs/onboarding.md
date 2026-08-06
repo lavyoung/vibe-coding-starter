@@ -12,13 +12,14 @@
 1. [AGENTS.md](../AGENTS.md)
 2. 若当前 agent 会自动读取根目录 [CLAUDE.md](../CLAUDE.md)，同步确认它与 `AGENTS.md` 一致
 3. [docs/index.md](index.md)
-4. [docs/evolution/current-snapshot.md](evolution/current-snapshot.md)
-5. [docs/evolution/INDEX.md](evolution/INDEX.md)
-6. [docs/governance/document-sync-map.md](governance/document-sync-map.md)
-7. [docs/governance/ai-collaboration-best-practices.md](governance/ai-collaboration-best-practices.md)
-8. 若需要按任务场景判断 prompts 顺序，再看 [docs/governance/prompt-workflow-playbook.md](governance/prompt-workflow-playbook.md)
-9. 若需要跨 agent 结构化接力，再看 [docs/governance/agent-collaboration-protocol.md](governance/agent-collaboration-protocol.md)
-10. 与当前任务最相关的 `requirements / design / tasks / upgrade / api / ui` 文档
+4. [docs/project-profile.md](project-profile.md)
+5. [docs/evolution/current-snapshot.md](evolution/current-snapshot.md)
+6. [docs/evolution/INDEX.md](evolution/INDEX.md)
+7. [docs/governance/document-sync-map.md](governance/document-sync-map.md)
+8. [docs/governance/ai-collaboration-best-practices.md](governance/ai-collaboration-best-practices.md)
+9. 若需要按任务场景判断 prompts 顺序，再看 [docs/governance/prompt-workflow-playbook.md](governance/prompt-workflow-playbook.md)
+10. 若需要跨 agent 结构化接力，再看 [docs/governance/agent-collaboration-protocol.md](governance/agent-collaboration-protocol.md)
+11. 与当前任务最相关的 `requirements / design / tasks / upgrade / api / ui` 文档
 
 ## 2. 项目文档工作流
 

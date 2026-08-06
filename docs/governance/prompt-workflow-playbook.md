@@ -41,9 +41,9 @@
 无论走哪条路径，前 4 步都尽量固定：
 
 1. 先用 `task-entry` 或 `task-router` 判断任务类型
-2. 先恢复文档上下文，确认有效文档状态
+2. 先恢复文档上下文与 `project-profile`，确认有效文档状态
 3. 先找现有可复用实现，再决定是否新增抽象
-4. 再进入设计、实现、联调或 review
+4. 修改既有行为时先建立改前基线，再进入实现、联调或 review
 
 统一收口也尽量固定：
 
@@ -106,7 +106,7 @@
 推荐顺序：
 
 1. `task-entry` 或 `task-router`
-2. `small-change`
+2. `small-change`；涉及既有行为时补 `safe-code-change`
 3. 必要时补 `standard-03-findings-first-review`
 4. 必要时补 `standard-04-human-review-focus`
 

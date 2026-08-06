@@ -28,11 +28,12 @@ description: 在 docs-first 仓库里先做任务分流与入口判断。适用�
 
 1. `AGENTS.md`
 2. `docs/index.md`
-3. `docs/onboarding.md`
-4. `docs/evolution/INDEX.md`
-5. `docs/governance/document-sync-map.md`
-6. `docs/governance/ai-collaboration-best-practices.md`
-7. 若仓库已启用多 agent 协作协议，再看 `docs/governance/agent-collaboration-protocol.md`
+3. `docs/project-profile.md`
+4. `docs/onboarding.md`
+5. `docs/evolution/INDEX.md`
+6. `docs/governance/document-sync-map.md`
+7. `docs/governance/ai-collaboration-best-practices.md`
+8. 若仓库已启用多 agent 协作协议，再看 `docs/governance/agent-collaboration-protocol.md`
 
 不要只根据会话内容做路由判断。
 
@@ -72,6 +73,7 @@ description: 在 docs-first 仓库里先做任务分流与入口判断。适用�
 
 - 新需求 / 新能力：`prompts/design-task.txt`
 - 已有功能代码改动：`prompts/code-change.txt`
+- 修改既有行为、共享组件、配置、脚本、合并或暂存：同时读取 `tools/skills/safe-code-change/SKILL.md`
 - 小改动 / 小修复：`prompts/small-change.txt`
 - findings-first review：`prompts/standard-03-findings-first-review.txt`
 - 人工复核重点：`prompts/standard-04-human-review-focus.txt`

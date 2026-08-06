@@ -12,6 +12,7 @@
 ## 统一入口
 
 - 人类与 AI 的统一入口是 [docs/index.md](index.md)
+- 项目差异化事实入口是 [docs/project-profile.md](project-profile.md)
 - 当前阶段单点快照入口是 [docs/evolution/current-snapshot.md](evolution/current-snapshot.md)
 - 当前阶段主线入口是 [docs/evolution/INDEX.md](evolution/INDEX.md)
 - 若当前 agent 会自动读取根目录 `CLAUDE.md`，也要与 `AGENTS.md` 保持同口径
@@ -23,6 +24,7 @@
 ```text
 docs/
 ├── index.md
+├── project-profile.md
 ├── onboarding.md
 ├── evolution/
 ├── governance/
