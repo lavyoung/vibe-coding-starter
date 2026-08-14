@@ -47,6 +47,7 @@ SCHEMA_EXAMPLE_MAP = {
 }
 EXAMPLE_TASK_ENTRY_SUFFIX = "-task-entry.json"
 EXAMPLE_HANDOFF_SUFFIX = "-handoff.md"
+SKILL_DIRS_SKIP = {"_template"}
 SYNC_REVIEW_TRIGGER_PREFIXES = (
     "prompts/",
     "tools/skills/",
@@ -108,6 +109,11 @@ def parse_args() -> argparse.Namespace:
         "--skip-examples",
         action="store_true",
         help="跳过示例项目自检。",
+    )
+    parser.add_argument(
+        "--scan-docs",
+        action="store_true",
+        help="doc-sync 全量存量治理模式（透传 --scan-all，不依赖 git diff）。",
     )
     parser.add_argument(
         "--base",
@@ -281,8 +287,9 @@ def run_doc_sync(
     changed_files: Sequence[str],
     base: str | None,
     head: str | None,
+    scan_docs: bool = False,
 ) -> CheckResult:
-    if not changed_files:
+    if not scan_docs and not changed_files:
         return CheckResult(
             group="doc-sync",
             title="doc-sync",
@@ -298,7 +305,9 @@ def run_doc_sync(
         "--config",
         ".doc-sync.json",
     ]
-    if base or head:
+    if scan_docs:
+        command.append("--scan-all")
+    elif base or head:
         if base:
             command.extend(["--base", base])
         if head:
@@ -355,6 +364,66 @@ def validate_links(repo_root: Path) -> CheckResult:
             detail=detail,
         )
     return CheckResult(group="markdown-links", title="markdown-links", status="passed")
+
+
+def parse_frontmatter(content: str) -> dict[str, str]:
+    """解析 SKILL.md 头部 --- frontmatter 块。"""
+    fields: dict[str, str] = {}
+    if not content.startswith("---"):
+        return fields
+    end = content.find("\n---", 3)
+    if end < 0:
+        return fields
+    for line in content[3:end].splitlines():
+        key, sep, value = line.partition(":")
+        if sep:
+            fields[key.strip()] = value.strip().strip("\"'")
+    return fields
+
+
+def validate_skill_library(repo_root: Path) -> CheckResult:
+    """每个 skill 目录必须包含 SKILL.md 与 agents/openai.yaml；
+    frontmatter 的 name 必须与目录名一致、description 非空。"""
+    skills_dir = repo_root / "tools" / "skills"
+    if not skills_dir.is_dir():
+        return CheckResult(
+            group="starter-assets",
+            title="skill library assets",
+            status="passed",
+            detail="tools/skills/ not present",
+        )
+    issues: list[str] = []
+    for skill_dir in sorted(entry for entry in skills_dir.iterdir() if entry.is_dir()):
+        name = skill_dir.name
+        if name in SKILL_DIRS_SKIP:
+            continue
+        skill_md = skill_dir / "SKILL.md"
+        if not skill_md.exists():
+            issues.append(f"- {name}: missing SKILL.md")
+            continue
+        if not (skill_dir / "agents" / "openai.yaml").exists():
+            issues.append(f"- {name}: missing agents/openai.yaml")
+        frontmatter = parse_frontmatter(skill_md.read_text(encoding="utf-8"))
+        if not frontmatter.get("name"):
+            issues.append(f"- {name}: SKILL.md frontmatter missing name")
+        elif frontmatter["name"] != name:
+            issues.append(
+                f"- {name}: frontmatter name '{frontmatter['name']}' != directory name"
+            )
+        if not frontmatter.get("description"):
+            issues.append(f"- {name}: SKILL.md frontmatter missing description")
+    if issues:
+        return CheckResult(
+            group="starter-assets",
+            title="skill library assets",
+            status="failed",
+            detail="\n".join(issues),
+        )
+    return CheckResult(
+        group="starter-assets",
+        title="skill library assets",
+        status="passed",
+    )
 
 
 def validate_starter_assets(
@@ -543,6 +612,8 @@ def validate_starter_assets(
                 ),
             )
         )
+
+    results.append(validate_skill_library(repo_root))
 
     return results
 
@@ -773,7 +844,9 @@ def main() -> int:
             )
         )
     else:
-        results.append(run_doc_sync(repo_root, changed_files, args.base, args.head))
+        results.append(
+            run_doc_sync(repo_root, changed_files, args.base, args.head, args.scan_docs)
+        )
 
     if args.skip_links:
         requested_skips.append("markdown-links")

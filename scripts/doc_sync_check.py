@@ -21,6 +21,11 @@ LINKED_CODE_HEADING = "## 关联代码"
 BACKTICK_REF_RE = re.compile(r"`([^`\n]+)`")
 # 反引号引用中属于模板占位符 / URL / 非仓库路径的特征
 PLACEHOLDER_MARKERS = ("<", ">", "...", "vX.Y.Z")
+# 状态推进证据链：已生效 / 已落地 必须携带真实日期（YYYY-MM-DD）
+REAL_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+# 交付物型目录：根级只允许 README.md 与模板，实际文件必须位于 vX.Y.Z/ 版本子目录
+DELIVERY_DIR_NAMES = ("requirements", "design", "tasks", "upgrade", "api", "sql")
+VERSION_DIR_RE = re.compile(r"^v\d+\.\d+\.\d+$")
 
 
 def parse_args() -> argparse.Namespace:
@@ -135,16 +140,20 @@ def is_ignored_ref(ref: str) -> bool:
     return any(marker in ref for marker in PLACEHOLDER_MARKERS)
 
 
-def validate_linked_code_paths(repo_root: Path, doc_path: str) -> list[str]:
+def validate_linked_code_paths(
+    repo_root: Path, doc_path: str
+) -> tuple[list[str], list[str]]:
     """校验“## 关联代码”章节中反引号包裹的仓库内路径真实存在。
 
     同时支持两种写法：相对本文档目录（Markdown 链接语义）与相对仓库根。
+    返回 (issues, 找到的代码路径)；代码路径指非 docs/ 开头的引用。
     """
     full_path = repo_root / doc_path
     content = full_path.read_text(encoding="utf-8")
     section = content.split(LINKED_CODE_HEADING, 1)[1]
     section = section.split("\n## ", 1)[0]
     issues: list[str] = []
+    code_paths: list[str] = []
     checked: set[str] = set()
     for match in BACKTICK_REF_RE.finditer(section):
         ref = match.group(1).strip().split("#", 1)[0].strip()
@@ -158,7 +167,10 @@ def validate_linked_code_paths(repo_root: Path, doc_path: str) -> list[str]:
                 f"{doc_path}: “关联代码”引用不存在：`{ref}`"
                 "（已按相对本文档与仓库根两种方式解析）。"
             )
-    return issues
+            continue
+        if not ref.startswith("docs/"):
+            code_paths.append(ref)
+    return issues, code_paths
 
 
 def validate_doc_file(repo_root: Path, doc_path: str) -> list[str]:
@@ -177,6 +189,7 @@ def validate_doc_file(repo_root: Path, doc_path: str) -> list[str]:
     status_line = next(
         (line for line in lines if line.startswith(STATUS_PREFIX)), None
     )
+    status: str | None = None
     if status_line is None:
         issues.append(f"{doc_path}: 缺少“当前状态”元数据。")
     else:
@@ -186,11 +199,31 @@ def validate_doc_file(repo_root: Path, doc_path: str) -> list[str]:
                 f"{doc_path}: “当前状态”取值 {status!r} 非法，"
                 f"必须为 {' / '.join(VALID_DOC_STATUSES)} 之一。"
             )
+        elif status in ("已生效", "已落地"):
+            # 状态推进证据链：已生效 / 已落地 必须有真实更新日期，不能是 YYYY-MM-DD 占位
+            update_line = next(
+                (line for line in lines if line.startswith("- 最近更新：")), None
+            )
+            if update_line is None:
+                issues.append(f"{doc_path}: 状态为 {status} 但缺少“最近更新”元数据。")
+            else:
+                update_value = update_line[len("- 最近更新："):].strip()
+                if not REAL_DATE_RE.match(update_value):
+                    issues.append(
+                        f"{doc_path}: 状态为 {status}，但“最近更新”不是真实日期"
+                        f"（当前 {update_value!r}，应为 YYYY-MM-DD）。"
+                    )
 
     if LINKED_CODE_HEADING not in content:
         issues.append(f"{doc_path}: 缺少“{LINKED_CODE_HEADING}”章节。")
     else:
-        issues.extend(validate_linked_code_paths(repo_root, doc_path))
+        linked_issues, code_paths = validate_linked_code_paths(repo_root, doc_path)
+        issues.extend(linked_issues)
+        if status == "已落地" and not code_paths:
+            issues.append(
+                f"{doc_path}: 状态为“已落地”但“关联代码”没有引用任何代码路径"
+                "（docs/ 之外的引用），无法证明已落地事实。"
+            )
 
     return issues
 
@@ -222,6 +255,31 @@ def validate_openapi_yaml(path: Path, doc_path: str) -> list[str]:
         issues.append(f"{doc_path}: OpenAPI YAML 缺少 info 节点（title / version）。")
     if not isinstance(data.get("paths"), dict):
         issues.append(f"{doc_path}: OpenAPI YAML 缺少 paths 节点。")
+    return issues
+
+
+def validate_versioned_layout(repo_root: Path) -> list[str]:
+    """交付物型目录（requirements/design/tasks/upgrade/api/sql）根级只允许
+    README.md 与 *TEMPLATE* 文件，实际文件必须位于 vX.Y.Z/ 版本子目录。"""
+    issues: list[str] = []
+    docs_root = repo_root / "docs"
+    for dirname in DELIVERY_DIR_NAMES:
+        delivery_dir = docs_root / dirname
+        if not delivery_dir.is_dir():
+            continue
+        for entry in sorted(delivery_dir.iterdir()):
+            if entry.is_dir():
+                if not VERSION_DIR_RE.match(entry.name):
+                    issues.append(
+                        f"docs/{dirname}/{entry.name}: 交付物目录的子目录必须是 vX.Y.Z 版本目录"
+                    )
+                continue
+            if entry.name == "README.md" or "TEMPLATE" in entry.name:
+                continue
+            issues.append(
+                f"docs/{dirname}/{entry.name}: 交付物目录根级只允许 README.md 与模板，"
+                "实际文件必须放入 vX.Y.Z/ 子目录"
+            )
     return issues
 
 
@@ -259,6 +317,9 @@ def main() -> int:
     changed_code = [path for path in changed_files if path not in changed_docs]
 
     issues: list[str] = []
+
+    # 版本演进约束：交付物目录根级布局（与模式无关，始终校验）
+    issues.extend(validate_versioned_layout(repo_root))
 
     for rule in config.get("rules", []):
         code_matches = [
