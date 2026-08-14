@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import subprocess
 import sys
 from pathlib import Path, PurePosixPath
@@ -12,6 +13,14 @@ from typing import Iterable
 
 
 DEFAULT_DOC_GLOBS = ("docs/*.md", "docs/**/*.md")
+
+# 文档状态闸门的合法取值（与 AGENTS.md §3、document-sync-map.md §1.2 同口径）
+VALID_DOC_STATUSES = ("草案", "评审中", "已接受", "已生效", "已落地", "已废弃")
+STATUS_PREFIX = "- 当前状态："
+LINKED_CODE_HEADING = "## 关联代码"
+BACKTICK_REF_RE = re.compile(r"`([^`\n]+)`")
+# 反引号引用中属于模板占位符 / URL / 非仓库路径的特征
+PLACEHOLDER_MARKERS = ("<", ">", "...", "vX.Y.Z")
 
 
 def parse_args() -> argparse.Namespace:
@@ -33,6 +42,14 @@ def parse_args() -> argparse.Namespace:
         action="append",
         default=[],
         help="Explicit changed file path. Repeat to bypass git diff and test locally.",
+    )
+    parser.add_argument(
+        "--scan-all",
+        action="store_true",
+        help=(
+            "全量扫描 docGlobs 下所有文档（不依赖 git diff），"
+            "校验状态枚举与关联代码引用，用于存量治理。"
+        ),
     )
     return parser.parse_args()
 
@@ -92,6 +109,58 @@ def classify_docs(changed_files: list[str], config: dict) -> list[str]:
     return [path for path in changed_files if match_any(path, doc_globs)]
 
 
+def scan_all_docs(repo_root: Path, config: dict) -> list[str]:
+    """全量扫描 docGlobs 下的所有文档，供 --scan-all 存量治理使用。"""
+    doc_globs = config.get("docGlobs") or list(DEFAULT_DOC_GLOBS)
+    ignore_patterns = config.get("ignore", [])
+    found: list[str] = []
+    seen: set[str] = set()
+    for pattern in doc_globs:
+        for path in repo_root.glob(pattern):
+            rel = normalize_path(path.relative_to(repo_root).as_posix())
+            if rel in seen or match_any(rel, ignore_patterns):
+                continue
+            seen.add(rel)
+            found.append(rel)
+    return sorted(found)
+
+
+def is_ignored_ref(ref: str) -> bool:
+    """过滤掉模板占位符、URL、锚点、方法引用等非仓库路径的引用。"""
+    lowered = ref.lower()
+    if lowered.startswith(("http://", "https://", "mailto:")):
+        return True
+    if "/" not in ref or ref.startswith("#") or "{" in ref or "(" in ref:
+        return True
+    return any(marker in ref for marker in PLACEHOLDER_MARKERS)
+
+
+def validate_linked_code_paths(repo_root: Path, doc_path: str) -> list[str]:
+    """校验“## 关联代码”章节中反引号包裹的仓库内路径真实存在。
+
+    同时支持两种写法：相对本文档目录（Markdown 链接语义）与相对仓库根。
+    """
+    full_path = repo_root / doc_path
+    content = full_path.read_text(encoding="utf-8")
+    section = content.split(LINKED_CODE_HEADING, 1)[1]
+    section = section.split("\n## ", 1)[0]
+    issues: list[str] = []
+    checked: set[str] = set()
+    for match in BACKTICK_REF_RE.finditer(section):
+        ref = match.group(1).strip().split("#", 1)[0].strip()
+        if ref in checked or is_ignored_ref(ref):
+            continue
+        checked.add(ref)
+        resolved = (full_path.parent / ref).resolve()
+        root_resolved = (repo_root / ref).resolve()
+        if not resolved.exists() and not root_resolved.exists():
+            issues.append(
+                f"{doc_path}: “关联代码”引用不存在：`{ref}`"
+                "（已按相对本文档与仓库根两种方式解析）。"
+            )
+    return issues
+
+
 def validate_doc_file(repo_root: Path, doc_path: str) -> list[str]:
     full_path = repo_root / doc_path
     content = full_path.read_text(encoding="utf-8")
@@ -104,10 +173,24 @@ def validate_doc_file(repo_root: Path, doc_path: str) -> list[str]:
         issues.append(f"{doc_path}: 第一行必须是一级标题。")
     if "## 文档元数据" not in content:
         issues.append(f"{doc_path}: 缺少“## 文档元数据”章节。")
-    if "- 当前状态：" not in content:
+
+    status_line = next(
+        (line for line in lines if line.startswith(STATUS_PREFIX)), None
+    )
+    if status_line is None:
         issues.append(f"{doc_path}: 缺少“当前状态”元数据。")
-    if "## 关联代码" not in content:
-        issues.append(f"{doc_path}: 缺少“## 关联代码”章节。")
+    else:
+        status = status_line[len(STATUS_PREFIX):].strip()
+        if status not in VALID_DOC_STATUSES:
+            issues.append(
+                f"{doc_path}: “当前状态”取值 {status!r} 非法，"
+                f"必须为 {' / '.join(VALID_DOC_STATUSES)} 之一。"
+            )
+
+    if LINKED_CODE_HEADING not in content:
+        issues.append(f"{doc_path}: 缺少“{LINKED_CODE_HEADING}”章节。")
+    else:
+        issues.extend(validate_linked_code_paths(repo_root, doc_path))
 
     return issues
 
@@ -148,7 +231,9 @@ def main() -> int:
     config_path = (repo_root / args.config).resolve()
     config = load_config(config_path)
 
-    if args.changed_file:
+    if args.scan_all:
+        changed_files = scan_all_docs(repo_root, config)
+    elif args.changed_file:
         changed_files = [normalize_path(path) for path in args.changed_file]
     else:
         changed_files = run_git_diff(repo_root, args.base, args.head)
@@ -161,7 +246,10 @@ def main() -> int:
     print("doc-sync check")
     print(f"- repo: {repo_root}")
     print(f"- config: {config_path}")
-    print(f"- changed files: {len(changed_files)}")
+    if args.scan_all:
+        print(f"- scanned docs: {len(changed_files)}")
+    else:
+        print(f"- changed files: {len(changed_files)}")
 
     if not changed_files:
         print("No relevant changed files. Nothing to validate.")

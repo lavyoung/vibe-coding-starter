@@ -24,7 +24,7 @@
 ## 1.2 文档状态生效规则
 
 - 设计类、RFC、ADR、治理类文档，只有在状态为 `已接受`、`已生效` 或 `已落地` 时，才属于当前有效文档。
-- `草案`、`评审中` 文档只能用于讨论、评审、补充上下文，不能直接作为落代码、联调、上线、对外说明的依据。
+- `草案`、`评审中`、`已废弃` 文档只能用于讨论、评审、补充上下文，不能直接作为落代码、联调、上线、对外说明的依据。
 - 改代码前，必须先核对本次依赖文档的状态；若状态未生效，先推进文档收敛，再推进实现。
 
 ## 1.3 自动化补充口径
@@ -32,6 +32,8 @@
 - `docs/governance/document-sync-map.md` 仍是人工可读的主矩阵
 - `.doc-sync.json` 是机器可校验的补充规则文件
 - `scripts/doc_sync_check.py` 用于在本地和 CI 中检查“代码改了但文档没跟上”的问题
+- **机器兜底以 `.doc-sync.json` 的 `rules` 为准**：新增代码域（新目录 / 新模块）时，必须先在该文件登记 `code → docs` 规则，否则该域改动不受 doc-sync 保护；§3 人工矩阵与 `rules` 必须保持覆盖一致。跨域架构调整属于 docs ↔ docs 联动，`rules` 不承载，仍按 §3 人工维护。
+- `doc_sync_check.py --scan-all` 可全量扫描 `docs/` 下所有文档（不依赖 git diff），校验“当前状态”枚举与“关联代码”引用路径，建议定期或上线前跑一轮做存量治理。
 - 对外提供的 `scripts/*.py` 入口应同步提供对应的 `scripts/*.ps1` 与 `scripts/*.sh`；若修改脚本行为、参数或入口文件名，应一起回查这些跨环境入口是否仍然成立
 - 若仓库已启用 `.github/workflows/doc-sync.yml`，PR 默认应通过这条统一 CI 校验，其中包含 `doc-sync`、链接检查和示例自检
 - 若修改 `AGENTS.md`、`CLAUDE.md`、`prompts/`、`tools/skills/`、PR 模板里的协作规则，需同步检查本文件和 `docs/governance/ai-collaboration-best-practices.md` 是否仍然一致

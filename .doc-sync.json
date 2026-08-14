@@ -76,6 +76,38 @@
         "docs/ui/**",
         "docs/design/**"
       ]
+    },
+    {
+      "name": "config-and-env",
+      "code": [
+        "config/**",
+        "src/main/resources/**",
+        "application*.yml",
+        "application*.yaml",
+        "application*.properties",
+        "**/*.properties",
+        "**/.env*"
+      ],
+      "docs": [
+        "docs/upgrade/**",
+        "docs/architecture/**"
+      ]
+    },
+    {
+      "name": "jobs-and-schedulers",
+      "code": [
+        "src/jobs/**",
+        "src/schedulers/**",
+        "src/workers/**",
+        "src/tasks/**",
+        "app/jobs/**",
+        "app/schedulers/**",
+        "packages/*/src/jobs/**"
+      ],
+      "docs": [
+        "docs/upgrade/**",
+        "docs/design/**"
+      ]
     }
   ]
 }

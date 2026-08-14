@@ -30,6 +30,7 @@
 ### Changed
 
 - 处理技能库技术栈偏斜：`AGENTS.md` 0.3 专项门禁改为条件式（仅项目技术栈为 Java 系时生效，依据 `docs/project-profile.md` 技术栈字段）；`task-router`、`post-change-check`、`safe-code-change` 的 `java-*` 引用同步增加技术栈前置条件；`docs/project-profile.md` §4 与 README 技能清单补充裁剪说明。
+- 文档防呆增强：`doc_sync_check.py` 新增“当前状态”枚举校验（`草案` / `评审中` / `已接受` / `已生效` / `已落地` / `已废弃`）与“关联代码”引用路径存在性校验，新增 `--scan-all` 全量存量治理模式；`.doc-sync.json` 补充 `config-and-env`、`jobs-and-schedulers` 两条同步规则（与人工矩阵 §3 对齐）；`document-sync-map.md` 明确“机器兜底以 `rules` 为准，新增代码域必须先登记”的口径并统一状态枚举；5 个文档模板的“当前状态”由占位说明统一为 `已生效`；README 代价小节补充防呆边界声明。
 - `README.md`、`QUICKSTART.md`、`contracts/README.md`、`CLAUDE.md` 与 `scripts/check_all.py` 收口为“`CLAUDE.md` 与 `contracts/` 按需启用”的口径，不再把它们当成默认必带能力。
 - `tests/test_check_all.py` 补充“缺少 `CLAUDE.md` 或 `contracts/` 仍可通过基础检查”的回归用例，避免后续把可选能力重新写回强依赖。
 
