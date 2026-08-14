@@ -23,8 +23,13 @@
 
 ## [v0.4.1] - 2026-06-23
 
+### Added
+
+- 新增 `tools/skills/README.md`（技能库结构、非 Java 项目 3 步裁剪法、新增 skill 规范）与 `tools/skills/_template/`（空白 skill 模板），非 Java 项目可一键裁剪栈绑定技能并照模板补位。
+
 ### Changed
 
+- 处理技能库技术栈偏斜：`AGENTS.md` 0.3 专项门禁改为条件式（仅项目技术栈为 Java 系时生效，依据 `docs/project-profile.md` 技术栈字段）；`task-router`、`post-change-check`、`safe-code-change` 的 `java-*` 引用同步增加技术栈前置条件；`docs/project-profile.md` §4 与 README 技能清单补充裁剪说明。
 - `README.md`、`QUICKSTART.md`、`contracts/README.md`、`CLAUDE.md` 与 `scripts/check_all.py` 收口为“`CLAUDE.md` 与 `contracts/` 按需启用”的口径，不再把它们当成默认必带能力。
 - `tests/test_check_all.py` 补充“缺少 `CLAUDE.md` 或 `contracts/` 仍可通过基础检查”的回归用例，避免后续把可选能力重新写回强依赖。
 

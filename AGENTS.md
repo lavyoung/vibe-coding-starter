@@ -17,9 +17,12 @@
 - 修改既有行为、共享组件、配置、脚本、合并或暂存前，必须读取 `tools/skills/safe-code-change/SKILL.md`。
 - 完成代码或文档改动、准备交付前，必须读取 `tools/skills/post-change-check/SKILL.md`。
 - 新增或重构 Java 服务层结构时，读取 `tools/skills/java-service-structure/SKILL.md`；调整 Spring 事务边界时，同时读取 `tools/skills/java-transaction-boundary/SKILL.md`。
+- 仅当项目技术栈为 Java 系（以 [`docs/project-profile.md`](docs/project-profile.md) 的“技术栈”字段为准）时，`tools/skills/java-*` 技能才参与匹配与门禁；非 Java 项目按 [`tools/skills/README.md`](tools/skills/README.md) 裁剪技能库，并同步精简本节与 0.3 门禁中的 Java 条目。
 - 若当前任务与已有 skill 均不匹配，再回退到本 `AGENTS.md` 与全局规则继续执行。
 
 ### 0.3 专项 skill 强制门禁
+
+> 本节仅在项目技术栈为 Java 系（见 [`docs/project-profile.md`](docs/project-profile.md) 技术栈字段）时生效；技术栈不匹配时跳过本节，技能库处理方式见 [`tools/skills/README.md`](tools/skills/README.md)。
 
 涉及以下区域时，必须同时读取对应 `SKILL.md` 并按其中约束执行：
 

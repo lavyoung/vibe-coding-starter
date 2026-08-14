@@ -34,6 +34,8 @@
 
 ## 4. 专项 skills 启用条件
 
+> 本节以 Java 系技能库为示例。非 Java 项目按 [`tools/skills/README.md`](../tools/skills/README.md) 裁剪技能库后，同步精简或改写本节条目。
+
 - Java 编码规范（命名、不可变性、Optional、日志、文件组织）：`tools/skills/java-coding-standards/`
 - Java 接口 Javadoc 契约：`tools/skills/java-interface-javadoc/`
 - Java 分层或类职责调整：`tools/skills/java-service-structure/`

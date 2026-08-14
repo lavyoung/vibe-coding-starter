@@ -69,7 +69,7 @@ git ls-files --others --exclude-standard
 - 保留已接受的更新契约细节，如同一版本 CAS 更新里的可选状态变更。
 - 普通同步请求从租户上下文取 `tenantId`，不加入每个业务方法签名；仅异步、回调、跨租户扫描、受控租户切换或保留解析上下文的不可变事务命令显式传递。
 
-按改动领域读对应 skill：
+技术栈为 Java 系（见 `docs/project-profile.md` 技术栈字段）时，按改动领域读对应 skill：
 
 - 分布式锁：`tools/skills/java-distributed-lock/SKILL.md`
 - MyBatis 查询：`tools/skills/java-mybatis-query/SKILL.md`

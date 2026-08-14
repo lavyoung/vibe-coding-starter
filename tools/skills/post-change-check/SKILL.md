@@ -64,7 +64,7 @@ description: 在代码或文档改动后执行最后一轮仓库感知检查。�
 
 如果仓库已经说明了应使用什么命令，不要临时发明一套新的验证方式。
 
-按改动区域回查专项 skill：完整门禁见 `AGENTS.md` 0.3；本次改动命中 Controller / OpenAPI、错误码 / i18n、MyBatis、异步、防腐层、事务、分布式锁、服务结构或测试时，重读对应 `tools/skills/java-*` SKILL.md 的“校验清单 / Review”章节后再收口。
+按改动区域回查专项 skill：完整门禁见 `AGENTS.md` 0.3；技术栈为 Java 系（见 `docs/project-profile.md` 技术栈字段）且本次改动命中 Controller / OpenAPI、错误码 / i18n、MyBatis、异步、防腐层、事务、分布式锁、服务结构或测试时，重读对应 `tools/skills/java-*` SKILL.md 的“校验清单 / Review”章节后再收口。
 
 如果仓库存在 `.doc-sync.json` 与 `scripts/doc_sync_check.py`，默认把 `doc-sync` 检查视为本轮收口的必跑项之一。
 

@@ -105,7 +105,8 @@
 - `tools/skills/`
   17 个可复用 skill：
   - 通用：`task-router`、`doc-driven-implementation`、`post-change-check`、`code-review`、`safe-code-change`
-  - Java 专项：`java-service-structure`、`java-transaction-boundary`、`java-distributed-lock`、`java-mybatis-query`、`java-controller-contract`、`java-spring-openapi-doc-generator`、`java-error-code-i18n`、`java-async-thread-pool`、`java-client-adapter`、`java-unit-test-designer`、`java-coding-standards`、`java-interface-javadoc`
+  - Java 专项（栈绑定）：`java-service-structure`、`java-transaction-boundary`、`java-distributed-lock`、`java-mybatis-query`、`java-controller-contract`、`java-spring-openapi-doc-generator`、`java-error-code-i18n`、`java-async-thread-pool`、`java-client-adapter`、`java-unit-test-designer`、`java-coding-standards`、`java-interface-javadoc`
+  - 注：`java-*` 为栈绑定技能，非 Java 项目按 [tools/skills/README.md](tools/skills/README.md) 裁剪
 - `examples/`
   两个可直接参考的示例项目
 
