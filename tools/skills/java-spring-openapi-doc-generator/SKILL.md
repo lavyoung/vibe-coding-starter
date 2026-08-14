@@ -3,115 +3,115 @@ name: java-spring-openapi-doc-generator
 description: Generate or improve Spring Boot API definition-layer code and OpenAPI 3 annotations in this repository. Use when creating Controller endpoint skeletons, request/response objects, enum validation, i18n validation messages, Swagger annotations, or front-end mock responses from an accepted version design document.
 ---
 
-# Java Spring OpenAPI Doc Generator
+# Java Spring OpenAPI 文档生成
 
-Generate API definition-layer code so callers can understand and integrate the contract without reading service implementation code.
+生成接口定义层代码，让调用方不读 service 实现即可理解并集成契约。
 
-## Input Document Gate
+## 输入文档闸门
 
-- Prefer an accepted/effective/landed version design, API contract, or task document as the source of truth.
-- Before generating code, distinguish "new endpoint" from "existing endpoint change".
-- Extract at least: controller package, controller name, `@Tag`, `@RequestMapping`, HTTP method, request JSON example, response JSON example, and whether the endpoint is new or modified.
-- If the source document is missing key contract details, state the missing fields before implementing instead of inventing business semantics.
+- 以已接受/已生效/已落地的版本设计、接口契约或任务文档为事实源。
+- 生成前先区分“新端点”与“既有端点变更”。
+- 至少提取：controller 包、controller 名、`@Tag`、`@RequestMapping`、HTTP 方法、请求 JSON 示例、响应 JSON 示例，以及端点是新增还是修改。
+- 源文档缺失关键契约细节时，先说明缺失字段再实现，不要凭空发明业务语义。
 
-## API Definition Phase Scope
+## 接口定义阶段范围
 
-When the user says the current stage is only API definition / table design / front-end contract scaffolding, stay within:
+当用户说明当前阶段仅限接口定义 / 表设计 / 前端契约脚手架时，只改：
 
 - `controller`
 - `request`
 - `response`
 - `dto`
 - `enum`
-- validation i18n files under `resources/i18n/validation_message*.properties`
-- the importable OpenAPI YAML contract under `docs/api/` (default contract output, see the OpenAPI YAML section below)
-- API examples and explanatory text in the source design document when explicitly requested
+- `resources/i18n/validation_message*.properties` 下的校验 i18n 文件
+- `docs/api/vX.Y.Z/` 下可导入的 OpenAPI YAML 契约（默认契约产出，见下文“OpenAPI YAML 契约产出”）
+- 用户明确要求时，源设计文档中的 API 示例与解释文本
 
-Do not implement these unless the user explicitly asks:
+用户未明确要求时不得实现：
 
-- `service` or `service.impl`
-- complex statistics or aggregation logic
-- transaction orchestration
-- remote calls
+- `service` 或 `service.impl`
+- 复杂统计或聚合逻辑
+- 事务编排
+- 远程调用
 - MQ / Job / Listener
-- real data backfill scripts
+- 真实数据回填脚本
 
-## OpenAPI YAML Contract Output
+## OpenAPI YAML 契约产出
 
-The repository's `docs/api/` responsibility is an importable OpenAPI YAML contract, generated together with the accepted design document. Markdown is no longer the default contract output.
+仓库 `docs/api/` 的职责是可导入的 OpenAPI YAML 契约，随已接受设计文档生成；Markdown 不再作为默认契约输出。
 
-- Generate `docs/api/<domain>-api.yaml` (or `<version>-<domain>-api.yaml` for versioned contracts) in OpenAPI 3.x shape: top-level `openapi`, `info`, `paths`, and `components.schemas`.
-- The YAML must be importable by common tools (swagger-ui / redoc / openapi-generator): valid YAML, resolvable `$ref`, realistic examples, and no leftover draft paths.
-- Keep paths, methods, request/response schemas, and error codes in the YAML aligned with the accepted design examples; do not maintain a second Markdown contract as the source of truth.
-- A Markdown notes file (`*-notes.md`) is allowed only for human-readable supplements that YAML cannot express (business rules, error semantics, integration notes); it is not the contract body.
-- Do not write draft interfaces into the formal YAML; keep them out of the file or mark the whole file explicitly as draft until the contract is accepted.
+- 生成 `docs/api/vX.Y.Z/<domain>-api.yaml`（版本化契约按版本目录组织，文件名按业务域），OpenAPI 3.x 形态：顶层 `openapi`、`info`、`paths` 与 `components.schemas`。
+- YAML 必须可被常见工具导入（swagger-ui / redoc / openapi-generator）：合法 YAML、`$ref` 可解析、示例真实、无遗留草案路径。
+- YAML 中的路径、方法、请求/响应结构与错误码必须与已接受设计示例一致；不维护第二份 Markdown 契约作为事实源。
+- 仅当 YAML 无法表达人类补充说明（业务规则、错误语义、联调注意点）时允许 `*-notes.md`；它不是契约本体。
+- 不把草案接口写进正式 YAML；契约未接受前保持文件外或整体显式标注草案。
 
-## Document Controllers
+## 文档化 Controller
 
-- Add `@Tag` with a concise module name and one-sentence description.
-- Add `@Operation` for each endpoint.
-- Keep `summary` short and action-oriented.
-- Use a text block for `description` when the endpoint needs rules, examples, enum meanings, or response notes.
-- Use the project route prefix through the existing route-prefix constants class.
-- Check existing controllers before adding routes; do not create duplicate `HTTP Method + Path` mappings.
-- Keep method signatures, request types, response types, and route semantics complete even when the method body is temporary.
+- 每个端点加 `@Tag`：简洁模块名 + 一句话描述。
+- 每个端点加 `@Operation`。
+- `summary` 简短、动作导向。
+- 端点需要规则、示例、枚举含义或响应说明时，用文本块写 `description`。
+- 通过既有路由前缀常量类使用项目路由前缀。
+- 加路由前先检查既有 controller；不创建重复 `HTTP Method + Path`。
+- 方法体临时时也要保持签名、请求类型、响应类型与路由语义完整。
 
-## Document Parameters
+## 文档化参数
 
-- Add `@Parameter` for important path and query parameters.
-- Use real examples, not placeholders such as `123`, `xxx`, or `foo`.
-- Mark required parameters explicitly.
-- Explain enum or status values in Chinese when the caller needs them.
+- 重要路径与查询参数加 `@Parameter`。
+- 用真实示例，不用 `123`、`xxx`、`foo` 等占位。
+- 必填参数显式标注。
+- 调用方需要时用中文解释枚举或状态值。
 
-## Document DTOs And VOs
+## 文档化 DTO 与 VO
 
-- Add class-level `@Schema(description = "...")`.
-- Add field-level `@Schema` with at least `description` and `example`.
-- Add `requiredMode = REQUIRED` for required fields when appropriate.
-- Add `allowableValues` for enum-like string fields.
-- Put request objects under the existing `model.request.xxx` style package and response objects under `model.response.xxx` unless nearby code uses a different established pattern.
-- For `LocalDateTime` fields, use 13-digit millisecond timestamp examples when the project web starter serializes `LocalDateTime` as milliseconds; match the convention proven by nearby fields.
-- Do not use formatted date-time string examples such as `2026-05-12 08:00:14` for `LocalDateTime` API fields when the project serializes milliseconds.
-- For amount fields, follow the existing interface-layer convention: response values are usually `BigDecimal` yuan; DO/database fields are usually integer/long cents.
-- For page endpoints, use request types that inherit the project page-request base class (for example `WebPageRequest`) and response shapes based on the project page wrapper (for example `PageResult<T>`).
+- 类级加 `@Schema(description = "...")`。
+- 字段级 `@Schema` 至少包含 `description` 与 `example`。
+- 适当时必填字段加 `requiredMode = REQUIRED`。
+- 枚举型字符串字段加 `allowableValues`。
+- 请求对象放既有 `model.request.xxx` 风格包，响应对象放 `model.response.xxx`，除非相邻代码有不同既定模式。
+- `LocalDateTime` 字段：项目 web starter 按毫秒序列化时使用 13 位毫秒时间戳示例；以相邻字段证实的约定为准。
+- 项目按毫秒序列化时，`LocalDateTime` API 字段不要用 `2026-05-12 08:00:14` 这类格式化日期串示例。
+- 金额字段遵循既有接口层约定：响应值通常是 `BigDecimal` 元；DO/数据库字段通常是整型/长整型分。
+- 分页端点：请求类型继承项目分页请求基类（如 `WebPageRequest`），响应形状基于项目分页包装（如 `PageResult<T>`）。
 
-## Validation, I18n, And Enums
+## 校验、i18n 与枚举
 
-- Do not hard-code Chinese validation messages in annotations.
-- Validation messages must reference i18n keys, for example `@NotNull(message = "{profit.share.account.id.not.null}")`.
-- When adding validation keys, update all project validation bundles: the default plus every maintained locale (for example `validation_message.properties`, `validation_message_zh_CN.properties`, `validation_message_zh_TW.properties`, and `validation_message_en_US.properties`).
-- For enum-like request fields, prefer adding or reusing an enum and validate with the framework's enum-validation annotations (for example `@InEnum` or `@StringInEnum`); do not rely only on comments such as `1-xxx, 2-yyy`.
-- Integer enums should implement the valuable-array interface (for example `IntArrayValuable`) and string enums the string variant (for example `StringArrayValuable`) when the project framework provides them.
+- 注解中不写死中文校验文案。
+- 校验消息引用 i18n key，例如 `@NotNull(message = "{profit.share.account.id.not.null}")`。
+- 新增校验 key 时更新全部项目校验 bundle：默认与每个维护语言区（如 `validation_message.properties`、`validation_message_zh_CN.properties`、`validation_message_zh_TW.properties`、`validation_message_en_US.properties`）。
+- 枚举型请求字段优先新增或复用枚举，并用框架枚举校验注解（如 `@InEnum` 或 `@StringInEnum`）校验；不要只靠 `1-xxx, 2-yyy` 注释。
+- 框架提供时，整型枚举实现可取值数组接口（如 `IntArrayValuable`），字符串枚举实现对应字符串变体（如 `StringArrayValuable`）。
 
-## Front-End Mock Response Boundary
+## 前端 Mock 响应边界
 
-If the user explicitly needs front-end integration before real business implementation, prefer temporary controller-direct mock responses.
+用户明确需要前端在真实业务实现前先联调时，优先 controller 直出临时 mock 响应。
 
-- Use this only for newly added endpoints or the current version's newly added endpoint group.
-- Do not enter service, mapper, statistics, or remote-call logic.
-- Do not introduce a mock framework.
-- Build response objects directly in the controller and return the standard project wrapper.
-- Page endpoints must return at least one realistic example row unless the design document explicitly requires an empty result.
-- Keep list/detail examples consistent for the same business ids, organization ids, account ids, and timestamps.
-- Use private `mockXxx()` helper methods inside the controller when examples would otherwise clutter endpoint methods.
+- 只用于新增端点或当前版本新增端点组。
+- 不进入 service、mapper、统计或远程调用逻辑。
+- 不引入 mock 框架。
+- 直接在 controller 构造响应对象并返回项目标准包装。
+- 分页端点至少返回一行真实示例，除非设计文档明确要求空结果。
+- 同一业务 id、组织 id、账户 id 与时间戳在列表/详情示例间保持一致。
+- 示例会让端点方法变吵时，controller 内用私有 `mockXxx()` 助手。
 
-## Keep The Output Useful
+## 让产出有用
 
-- Explain validation rules for write operations.
-- Add request examples for body-based POST or PUT endpoints.
-- Add response structure notes when callers would otherwise misread nested data.
-- Mark i18n-sensitive display fields when the value shown to users depends on language context.
-- Keep JSON examples in documents copyable: do not use `//` comments inside JSON blocks; prefer `_comment_xxx` fields or surrounding prose.
+- 写操作说明校验规则。
+- body 型 POST/PUT 端点给请求示例。
+- 调用方可能误读嵌套数据时补响应结构说明。
+- 展示值随语言变化时标注 i18n 敏感字段。
+- 文档中的 JSON 示例保持可复制：JSON 块内不用 `//` 注释；优先 `_comment_xxx` 字段或正文说明。
 
-## Review Before Finishing
+## 完成前复核
 
-- Confirm each endpoint has `@Operation`.
-- Confirm each DTO or VO field that matters to callers has `@Schema`.
-- Confirm examples are realistic and formatted consistently.
-- Confirm enum, status, and validation semantics are visible to API consumers.
-- Confirm request/response fields match the source design examples.
-- Confirm there is no duplicate `HTTP Method + Path` route.
-- Confirm `docs/api/` carries an importable OpenAPI YAML contract aligned with the design examples (no Markdown-only contract).
-- Confirm all `LocalDateTime` `@Schema(example)` values match the project serialization convention (13-digit millisecond timestamps when the web starter serializes milliseconds).
-- Confirm enum request fields have enum validation where appropriate.
-- Confirm validation i18n keys exist in all required validation bundles.
+- 每个端点有 `@Operation`。
+- 每个对调用方重要的 DTO/VO 字段有 `@Schema`。
+- 示例真实且格式一致。
+- 枚举、状态与校验语义对 API 消费方可视。
+- 请求/响应字段与源设计示例一致。
+- 无重复 `HTTP Method + Path` 路由。
+- `docs/api/vX.Y.Z/` 下存在与设计示例一致的可导入 OpenAPI YAML 契约（不得只有 Markdown 契约）。
+- 全部 `LocalDateTime` `@Schema(example)` 值符合项目序列化约定（web starter 按毫秒序列化时用 13 位毫秒时间戳）。
+- 枚举请求字段在适当处有枚举校验。
+- 校验 i18n key 存在于全部必需 bundle。

@@ -3,76 +3,76 @@ name: java-distributed-lock
 description: Design, implement, refactor, or review distributed locking in a multi-instance Java service. Use when touching Redis lock keys, account or user balance concurrency, mobile locks, nested locks, lock ordering, watchdog renewal, lock release, batch locking, or database CAS alternatives.
 ---
 
-# Java Distributed Lock
+# Java 分布式锁
 
-Reuse the project lock infrastructure and prove the concurrency invariant before adding a lock.
+先复用项目锁基础设施，加锁前先证明并发不变量。
 
-## 1. Select the existing capability
+## 1. 先选既有能力
 
-Use this order:
+按此顺序：
 
-1. Use a declarative public-method lock annotation (for example `@Lock4j`) for a simple lock whose key can be expressed from method arguments.
-2. Use the project's programmatic lock helper (for example `RedisUtil#executeWithLock(...)`) for programmatic scope, custom business exceptions, return values, or explicit acquisition waiting.
-3. If neither entry supports a required behavior, add the smallest reusable overload to the project's lock util.
+1. 简单声明式公开方法锁、且键可由方法参数表达时，用声明式锁注解（如 `@Lock4j`）。
+2. 需要编程式范围、自定义业务异常、返回值或显式等待获取时，用项目编程式锁助手（如 `RedisUtil#executeWithLock(...)`）。
+3. 两个入口都无法满足必需行为时，给项目锁工具加最小的可复用重载。
 
-Do not add a new lock-manager abstraction, a domain-specific copy of the same abstraction, or direct scattered Redisson code.
+不新增锁管理器抽象、同抽象的领域复制品或散落的直接 Redisson 代码。
 
-A custom-exception programmatic overload may pass lease time `-1` to the underlying Redisson executor, use a bounded acquisition wait, release in `finally`, and log unlock failures without replacing the business result. Treat watchdog renewal as verified only for the overload and its tests; do not generalize it to older fixed-lease overloads or annotations without inspecting their configuration.
+自定义异常编程式重载可能向底层 Redisson 执行器传租约时间 `-1`，使用有界获取等待，在 `finally` 释放，解锁失败只记日志不替换业务结果。watchdog 续约只对已验证的重载及其测试成立；不要未经检查配置就推广到旧固定租约重载或注解。
 
-## 2. Define the protected resource and canonical key
+## 2. 定义受保护资源与规范键
 
-Write the invariant first. The lock key must represent the resource, not the caller or operation.
+先写不变量。锁键必须代表资源，而不是调用方或操作。
 
-- All mutations of the same protected resource (for example a user balance account) must use the same key domain, such as `tenantId + userId`.
-- Build the key through the project's key constants class (for example `RedisKeyConstants`); do not duplicate string formats.
-- Do not create separate "credit," "debit," "refund," or "reward" locks for the same resource.
-- Use a tenant-plus-digest lock only before a stable resource ID exists or to close a registration race. Never place plaintext identifiers (for example mobile numbers) in Redis keys or logs.
+- 同一受保护资源（如用户余额账户）的所有变更必须用同一键域，如 `tenantId + userId`。
+- 通过项目键常量类（如 `RedisKeyConstants`）构造键；不复制字符串格式。
+- 不为同一资源建“入账”“出账”“退款”“奖励”等分立锁。
+- 仅在稳定资源 ID 存在前或关闭注册竞态时使用租户加摘要锁；Redis 键与日志中绝不出现明文标识符（如手机号）。
 
-If a future scope policy changes, change the resource-scope policy and key strategy deliberately; do not silently append one dimension to one path while other paths remain at the old scope.
+未来作用域策略变化时，有目的地修改资源作用域策略与键策略；不要只给一条路径静默追加一个维度，其他路径仍保持旧作用域。
 
-## 3. Prevent nested-lock deadlocks
+## 3. 防止嵌套锁死锁
 
-Inventory every path that can acquire more than one lock and produce a lock-order table.
+盘点所有可能获取多个锁的路径并产出锁顺序表。
 
-- Prefer one canonical resource lock.
-- If two locks are unavoidable, use one global acquisition order in every path.
-- Never acquire lock A then lock B in one path and B then A in another.
-- Do not hold a broad activity/batch lock while waiting for a resource lock, remote call, or item transaction.
-- Release the first lock before switching identity domains when correctness allows it; otherwise encapsulate the common acquisition order in one helper.
+- 优先一个规范资源锁。
+- 两个锁无法避免时，所有路径使用同一全局获取顺序。
+- 一条路径 A 后 B、另一条 B 后 A 是禁止的。
+- 等待资源锁、远程调用或条目事务时，不持有宽活动/批量锁。
+- 正确性允许时先释放第一个锁再切换身份域；否则把公共获取顺序封装进一个助手。
 
-Do not call a deadlock impossible because lock waits are bounded. A timeout limits duration but still causes failures and throughput collapse.
+不要说死锁不可能，因为锁等待有界。超时只是限制时长，仍会造成失败与吞吐塌陷。
 
-## 4. Prefer database CAS for database invariants
+## 4. 数据库不变量优先数据库 CAS
 
-Use database CAS/unique constraints when the contested fact is already a single-row or indexed database invariant:
+争议事实已是单行或索引化数据库不变量时，用数据库 CAS/唯一约束：
 
-- distributed quantity and upper/lower bounds;
-- versioned status transitions;
-- idempotent unique records.
+- 活动分布式数量与上下界
+- 版本化状态流转
+- 幂等唯一记录
 
-Keep the resource lock when multiple reads/writes must be serialized across rows or stores, with version CAS as the database safety net. Do not use a distributed lock as a substitute for missing transactional or unique constraints.
+跨账户行或门店需要串行化多个读/写时保留资源锁，版本 CAS 作数据库安全网。不用分布式锁替代缺失的事务或唯一约束。
 
-## 5. Keep lock and transaction boundaries small
+## 5. 锁与事务边界保持小
 
-- Resolve request context and perform non-critical remote prefetch before locking.
-- Acquire the distributed lock outside the Spring database transaction.
-- Enter a proxy-backed short transaction inside the lock.
-- Do not wrap a whole batch, N remote calls, or multiple independent item transactions in one lock.
-- Preserve original lock-competition behavior and error mapping unless a reviewed requirement changes it.
+- 加锁前解析请求上下文并做非关键远程预取。
+- 分布式锁在 Spring 数据库事务外获取。
+- 锁内进入代理支撑的短事务。
+- 不用一个锁包住整个批量、N 次远程调用或多个独立条目事务。
+- 保留既有锁竞争行为与错误映射，除非评审过的需求改变它。
 
-## 6. Verify behavior, not comments
+## 6. 验证行为，不是注释
 
-Add tests for:
+为以下项加测试：
 
-- exact key and acquisition timeout;
-- lock-unavailable mapping;
-- return value and exception propagation;
-- release after success and failure;
-- unlock failure not replacing the business outcome;
-- watchdog lease argument for the selected overload;
-- same-resource paths using the same key;
-- canonical nested-lock order;
-- concurrent CAS loss and idempotency;
-- batch throughput or remote-call count when many items miss prefetch.
+- 精确键与获取超时
+- 锁不可用映射
+- 返回值与异常传播
+- 成功与失败后释放
+- 解锁失败不替换业务结果
+- 所选重载的 watchdog 租约参数
+- 同一资源路径使用同一键
+- 规范嵌套锁顺序
+- 并发 CAS 失败与幂等
+- 大量条目错过预取时的批量吞吐或远程调用次数
 
-Use a real Redis/multi-process test for claims about cross-instance renewal or deadlock behavior when release readiness depends on it. Unit tests may verify call contracts but must not be reported as full distributed proof.
+关于跨实例续约或死锁行为、且释放就绪性依赖它的断言，用真实 Redis/多进程测试。单元测试可验证调用契约，但不能当作完整分布式证明。

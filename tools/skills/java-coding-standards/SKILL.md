@@ -3,55 +3,55 @@ name: java-coding-standards
 description: Apply shared Java service coding conventions for Spring Boot code. Use when creating or editing Java classes, records, services, repositories, exceptions, and tests that need consistent naming, immutability, Optional handling, logging, and package layout.
 ---
 
-# Java Coding Standards
+# Java 编码规范
 
-Write clear, maintainable Java 17+ code and prefer simple, explicit structures over clever shortcuts.
+编写清晰、可维护的 Java 17+ 代码，优先简单显式的结构，而不是取巧的捷径。
 
-## Apply These Defaults
+## 默认偏好
 
-- Prefer clarity over compactness.
-- Prefer immutable data and `final` fields where practical.
-- Prefer records for small immutable carriers when the surrounding project style allows them.
-- Prefer descriptive names for classes, methods, fields, and constants.
-- Prefer domain-specific exceptions over broad generic failures.
+- 清晰优于紧凑。
+- 实用之处优先不可变数据与 `final` 字段。
+- 周围项目风格允许时，小体积不可变载体优先用 `record`。
+- 类、方法、字段与常量的命名优先描述性。
+- 领域专属异常优先于宽泛的通用失败。
 
-## Name Things Consistently
+## 命名一致
 
-- Use `PascalCase` for classes, interfaces, enums, and records.
-- Use `camelCase` for methods and fields.
-- Use `UPPER_SNAKE_CASE` for constants.
-- Keep package names lowercase and purpose-driven.
+- 类、接口、枚举、record 用 `PascalCase`。
+- 方法与字段用 `camelCase`。
+- 常量用 `UPPER_SNAKE_CASE`。
+- 包名小写且表达用途。
 
-## Handle Data Safely
+## 数据安全处理
 
-- Return `Optional<T>` from lookup-style methods when absence is part of the contract.
-- Do not use `Optional` for fields, DTO properties, or method parameters.
-- Avoid `null` as a hidden business signal.
-- Use Bean Validation for request inputs when the call boundary supports it.
+- 查找类方法在“缺失是契约的一部分”时返回 `Optional<T>`。
+- 字段、DTO 属性与方法参数不得使用 `Optional`。
+- 避免把 `null` 当作隐藏业务信号。
+- 调用边界支持时，请求输入使用 Bean Validation。
 
-## Keep Methods Focused
+## 方法聚焦
 
-- Keep methods short and single-purpose.
-- Extract private helpers when branching or transformation steps start to blur intent.
-- Prefer early returns over deep nesting.
-- Replace magic numbers and strings with named constants or enums.
+- 方法保持短小、单一用途。
+- 分支或转换步骤开始模糊意图时，抽取私有助手。
+- 优先早返回，避免深嵌套。
+- 用命名常量或枚举替换魔法数字与字符串。
 
-## Use Collections And Streams Carefully
+## 集合与 Stream 谨慎使用
 
-- Use streams for short, readable transformations.
-- Switch back to loops when a stream pipeline becomes nested or stateful.
-- Prefer immutable collection factories such as `List.of()` when data should not change.
-- Avoid raw types; keep generics explicit.
+- 短小可读的转换用 stream。
+- 管道变嵌套或带状态时回到循环。
+- 数据不应变化时优先不可变集合工厂（如 `List.of()`）。
+- 避免裸类型；保持泛型显式。
 
-## Log And Throw Intentionally
+## 有意地日志与抛出
 
-- Log important identifiers and business context.
-- Avoid swallowing exceptions.
-- Wrap technical exceptions with useful domain context when rethrowing.
-- Keep log messages searchable and structured.
+- 记录重要标识符与业务上下文。
+- 避免吞掉异常。
+- 重新抛出时用有用的领域上下文包装技术异常。
+- 日志消息保持可搜索、结构化。
 
-## Keep Files Predictable
+## 文件组织可预期
 
-- Keep one public top-level type per file.
-- Keep member order stable: constants, fields, constructor, public methods, then private helpers.
-- Mirror `src/main/java` structure under `src/test/java`.
+- 每个文件一个公开顶层类型。
+- 成员顺序稳定：常量、字段、构造器、公开方法、私有助手。
+- `src/test/java` 镜像 `src/main/java` 结构。

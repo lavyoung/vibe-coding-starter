@@ -3,36 +3,36 @@ name: java-interface-javadoc
 description: Write or improve Javadocs for Java interfaces in this repository. Use when adding interface comments, documenting method contracts, clarifying params and returns, or aligning interface-level comments with the project's Chinese Javadoc style.
 ---
 
-# Java Interface Javadoc
+# Java 接口 Javadoc
 
-Document interface contracts clearly enough that callers understand behavior without reading the implementation.
+把接口契约写清楚，让调用方不读实现也能理解行为。
 
-## Write Class Javadocs In Project Style
+## 按项目风格写类级 Javadoc
 
-- Start with a short Chinese summary line.
-- Add at least one `<p>1. ...</p>` line that states the interface responsibility.
-- Keep `@author` in `<a href="mailto:email">name</a>` format when nearby files use it.
-- Keep `@since` format consistent with nearby files.
-- Match the existing spacing and star alignment used by nearby interfaces.
+- 开头一行简短中文摘要。
+- 至少一行 `<p>1. ...</p>` 说明接口职责。
+- 相邻文件使用 `<a href="mailto:email">name</a>` 格式时，`@author` 保持一致。
+- `@since` 格式与相邻文件一致。
+- 星号对齐与间距贴合相邻接口的既有风格。
 
-## Write Method Javadocs As Contracts
+## 把方法 Javadoc 写成契约
 
-- State what the method does on the first line.
-- Use extra `<p>` blocks only for business rules, side effects, or usage constraints.
-- Add `@param` for every parameter.
-- Add `@return` for every non-void method.
-- Explain empty-result, nullable, and exception behavior when it matters.
-- Use `{@link ...}` for enums, config keys, or related types when that helps the reader.
+- 第一行说明方法做什么。
+- 仅当有业务规则、副作用或使用约束时使用额外 `<p>` 块。
+- 每个参数都要 `@param`。
+- 每个非 void 方法都要 `@return`。
+- 空结果、可空与异常行为在影响调用方时必须说明。
+- 有助于读者理解时，用 `{@link ...}` 指向枚举、配置键或相关类型。
 
-## Document Absence Explicitly
+## 显式说明缺失语义
 
-- Prefer `Optional<T>` when a new interface truly models absence.
-- If a signature cannot change, document whether it returns `null`, an empty list, an empty map, or a partially empty object.
-- Do not leave callers guessing about missing data semantics.
+- 新接口真正建模缺失时优先 `Optional<T>`。
+- 签名无法变更时，说明返回 `null`、空列表、空 map 还是部分空对象。
+- 不要让调用方猜缺失数据语义。
 
-## Review Before Finishing
+## 完成前复核
 
-- Confirm the interface has class-level Javadoc.
-- Confirm every public interface method has Javadoc.
-- Confirm every parameter and non-void return is documented.
-- Confirm absence and exception behavior is explicit where needed.
+- 确认接口有类级 Javadoc。
+- 确认每个公开方法有 Javadoc。
+- 确认每个参数与非 void 返回都有说明。
+- 确认缺失与异常行为在需要处显式。
