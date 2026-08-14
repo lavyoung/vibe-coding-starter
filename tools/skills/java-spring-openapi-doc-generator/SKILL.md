@@ -52,7 +52,7 @@ The repository's `docs/api/` responsibility is an importable OpenAPI YAML contra
 - Add `@Operation` for each endpoint.
 - Keep `summary` short and action-oriented.
 - Use a text block for `description` when the endpoint needs rules, examples, enum meanings, or response notes.
-- Use the project route prefix through the existing constants class (for example `SharedCarWashConstants.PREFIX`).
+- Use the project route prefix through the existing route-prefix constants class.
 - Check existing controllers before adding routes; do not create duplicate `HTTP Method + Path` mappings.
 - Keep method signatures, request types, response types, and route semantics complete even when the method body is temporary.
 

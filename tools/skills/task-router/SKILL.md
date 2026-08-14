@@ -74,6 +74,7 @@ description: 在 docs-first 仓库里先做任务分流与入口判断。适用�
 - 新需求 / 新能力：`prompts/design-task.txt`
 - 已有功能代码改动：`prompts/code-change.txt`
 - 修改既有行为、共享组件、配置、脚本、合并或暂存：同时读取 `tools/skills/safe-code-change/SKILL.md`
+- Java 业务改动命中专项区域（分布式锁、MyBatis、Controller / OpenAPI、错误码 / i18n、异步、防腐层、事务、服务结构、测试）时，按 `AGENTS.md` 0.3 门禁读取对应 `tools/skills/java-*` SKILL.md
 - 小改动 / 小修复：`prompts/small-change.txt`
 - findings-first review：`prompts/standard-03-findings-first-review.txt`
 - 人工复核重点：`prompts/standard-04-human-review-focus.txt`

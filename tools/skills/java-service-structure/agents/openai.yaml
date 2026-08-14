@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java 服务结构"
+  short_description: "设计或重构 Java 服务层结构与单向依赖。"
+  default_prompt: "新增或重构 Java 服务、support、rule、transaction、client、convert、record 或工具类时使用此 skill，保持职责单一、依赖单向并避免伪抽象。"

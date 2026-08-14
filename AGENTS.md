@@ -19,6 +19,20 @@
 - 新增或重构 Java 服务层结构时，读取 `tools/skills/java-service-structure/SKILL.md`；调整 Spring 事务边界时，同时读取 `tools/skills/java-transaction-boundary/SKILL.md`。
 - 若当前任务与已有 skill 均不匹配，再回退到本 `AGENTS.md` 与全局规则继续执行。
 
+### 0.3 专项 skill 强制门禁
+
+涉及以下区域时，必须同时读取对应 `SKILL.md` 并按其中约束执行：
+
+- 分布式锁、Redisson、锁键或账户 / 用户并发控制：`tools/skills/java-distributed-lock/SKILL.md`
+- MyBatis-Plus 查询、Mapper、Wrapper 条件或分页条件：`tools/skills/java-mybatis-query/SKILL.md`
+- Controller、接口契约、统一返回包装或校验链路：`tools/skills/java-controller-contract/SKILL.md`
+- 接口定义阶段生成 OpenAPI YAML 契约或 Swagger 注解：`tools/skills/java-spring-openapi-doc-generator/SKILL.md`
+- 业务错误码或校验 i18n 文案：`tools/skills/java-error-code-i18n/SKILL.md`
+- 异步任务或线程池复用：`tools/skills/java-async-thread-pool/SKILL.md`
+- 第三方接入、厂商适配或防腐层：`tools/skills/java-client-adapter/SKILL.md`
+- 新增或评审 Java 单元测试：`tools/skills/java-unit-test-designer/SKILL.md`
+- 新增 Java 类、接口或枚举：`tools/skills/java-coding-standards/SKILL.md` 与 `tools/skills/java-interface-javadoc/SKILL.md`
+
 ## 1. 项目事实
 
 - 项目事实、构建测试入口和专项 skill 启用条件维护在 [docs/project-profile.md](docs/project-profile.md)。

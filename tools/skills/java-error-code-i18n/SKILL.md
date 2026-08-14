@@ -9,7 +9,7 @@ description: Add or adjust business error codes, user-visible exception messages
 
 ## 先检查
 
-- 读项目业务错误码常量类（如 `CarWashErrorCodeConstants.java`）。
+- 读项目业务错误码常量类（如 `XxxErrorCodeConstants.java`）。
 - 新增常量前先找到最近领域块。
 - 当前业务错误码段以项目约定为准（例如 `1_017_000_000`）。
 - 先判断失败是否真的面向用户；内部失败可继续映射既有全局/内部码，不需要专属码。

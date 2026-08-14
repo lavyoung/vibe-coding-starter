@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java 事务边界"
+  short_description: "设计、实现或评审 Spring 事务边界、一致性集合与代理路径。"
+  default_prompt: "新增或调整 @Transactional、多写工作流、CAS 状态流转、补偿或事务附近远程调用时使用此 skill。"

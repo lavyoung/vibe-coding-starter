@@ -1,0 +1,4 @@
+interface:
+  display_name: "安全改动既有行为"
+  short_description: "在保留用户工作区改动与兼容证据的前提下安全改动既有行为。"
+  default_prompt: "修改既有代码路径、共享组件、配置、脚本、合并或暂存前使用此 skill，先冻结工作区、建立改前基线，再做最小改动。"
