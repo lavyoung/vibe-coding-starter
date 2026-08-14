@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java 异步与线程池"
+  short_description: "复用项目执行器实现异步与并发任务。"
+  default_prompt: "新增异步任务、重试、延迟任务、状态同步或外部调用时使用此 skill，先复用既有执行器并保持多实例安全。"

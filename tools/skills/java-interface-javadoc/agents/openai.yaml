@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java 接口 Javadoc"
+  short_description: "为 Java 接口编写或改进符合项目风格的 Javadoc 契约。"
+  default_prompt: "新增或修改 Java 接口注释时使用此 skill，补齐类级职责、方法契约、参数与返回/缺失语义说明。"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java 错误码与国际化"
+  short_description: "新增或调整业务错误码、用户可见异常消息与 i18n 映射。"
+  default_prompt: "新增或修改业务错误码、用户可见异常文案或校验 i18n 消息时使用此 skill。"

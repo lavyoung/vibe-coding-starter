@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java 编码规范"
+  short_description: "Java 17+ 代码的命名、不可变性、Optional、日志与文件组织约定。"
+  default_prompt: "创建或修改 Java 类、接口、枚举、record、服务与测试时使用此 skill，按项目一致的命名、数据安全、日志与文件组织风格编写代码。"

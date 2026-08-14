@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java 客户端适配与防腐层"
+  short_description: "在 client/strategy/防腐层后扩展或重构第三方接入。"
+  default_prompt: "新增渠道接入、远程 API 调用、厂商适配或错误重映射时使用此 skill，把厂商细节隔离在边缘层。"

@@ -4,7 +4,15 @@
 
 ## [Unreleased]
 
-- 暂无
+### Added
+
+- 新增 `tools/skills/java-coding-standards/`、`tools/skills/java-interface-javadoc/`、`tools/skills/java-spring-openapi-doc-generator/`、`tools/skills/java-unit-test-designer/`、`tools/skills/java-mybatis-query/` 与 `tools/skills/java-distributed-lock/` 六个通用 Java skill（从 `shared_car_wash_saas` 移植并去项目化），覆盖编码规范、接口 Javadoc、OpenAPI 定义层、单元测试设计、MyBatis 查询与分布式锁。
+- 新增 `tools/skills/java-async-thread-pool/`、`tools/skills/java-client-adapter/`、`tools/skills/java-controller-contract/` 与 `tools/skills/java-error-code-i18n/` 四个通用 Java skill（从 `shared_car_wash_saas` 移植并去项目化），覆盖异步线程池、第三方防腐层、Controller 接口契约与错误码国际化。
+- `docs/project-profile.md` 的“专项 skills 启用条件”同步登记上述 skill 的启用场景。
+
+### Changed
+
+- `tools/skills/java-service-structure/`、`tools/skills/java-transaction-boundary/`（含两份 references）与 `tools/skills/safe-code-change/` 吸收 `shared_car_wash_saas` 同源 skill 的深度内容：包职责矩阵、规则静态化决策、伪提取判别四问、事务一致性集合与代理路径、改前基线证据门禁、批量与资金流保护、带证据合并与强制交接检查。
 
 ## [v0.4.1] - 2026-06-23
 

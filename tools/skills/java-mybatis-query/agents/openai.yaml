@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java MyBatis 查询"
+  short_description: "按 MyBatis-Plus 风格编写或评审数据访问代码。"
+  default_prompt: "新增或修改 Mapper、分页/列表查询、Wrapper 条件、租户与逻辑删除、批量查询或 N+1 防护时使用此 skill。"

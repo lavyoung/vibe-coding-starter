@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java 分布式锁"
+  short_description: "设计、实现、重构或评审分布式锁的选型、锁键、顺序与测试。"
+  default_prompt: "涉及分布式锁、锁键、账户/用户并发、嵌套锁、锁顺序、watchdog、锁释放或数据库 CAS 替代方案时使用此 skill。"

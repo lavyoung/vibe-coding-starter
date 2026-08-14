@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java Spring OpenAPI 文档生成"
+  short_description: "从已接受的设计文档生成 Controller、DTO、枚举与校验 i18n 的接口定义层代码。"
+  default_prompt: "在接口定义阶段从已接受设计文档生成或改进 Spring Boot API 定义层代码（Controller 骨架、请求/响应对象、枚举校验、Swagger 注解、i18n 校验消息）时使用此 skill。"

@@ -34,8 +34,18 @@
 
 ## 4. 专项 skills 启用条件
 
+- Java 编码规范（命名、不可变性、Optional、日志、文件组织）：`tools/skills/java-coding-standards/`
+- Java 接口 Javadoc 契约：`tools/skills/java-interface-javadoc/`
 - Java 分层或类职责调整：`tools/skills/java-service-structure/`
 - Spring 事务边界调整：`tools/skills/java-transaction-boundary/`
+- 分布式锁、锁键或并发控制调整：`tools/skills/java-distributed-lock/`
+- MyBatis-Plus 查询、Mapper 或分页条件调整：`tools/skills/java-mybatis-query/`
+- 接口定义层 / OpenAPI / Swagger / 校验 i18n：`tools/skills/java-spring-openapi-doc-generator/`
+- JUnit 5 测试设计（覆盖率方案、边界与回归）：`tools/skills/java-unit-test-designer/`
+- 异步任务或线程池复用：`tools/skills/java-async-thread-pool/`
+- 第三方接入或防腐层：`tools/skills/java-client-adapter/`
+- Controller 接口契约与统一返回包装：`tools/skills/java-controller-contract/`
+- 错误码与 i18n 文案：`tools/skills/java-error-code-i18n/`
 - 修改既有行为、共享组件、配置或脚本：`tools/skills/safe-code-change/`
 - 完成代码或文档变更：`tools/skills/post-change-check/`
 

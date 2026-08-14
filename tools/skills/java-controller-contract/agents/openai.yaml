@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java Controller 接口契约"
+  short_description: "按项目统一返回包装与路由契约构建或更新 Controller。"
+  default_prompt: "新增接口、修改请求/响应 DTO、分页端点、校验、Swagger 注解或统一返回包装时使用此 skill。"

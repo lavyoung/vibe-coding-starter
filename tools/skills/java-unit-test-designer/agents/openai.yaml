@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java 单元测试设计"
+  short_description: "在实现前设计有意图的 JUnit 5 覆盖率方案。"
+  default_prompt: "为新增方法、覆盖率缺口、bug 复现或重构安全网设计 JUnit 5 测试方案时使用此 skill。"
