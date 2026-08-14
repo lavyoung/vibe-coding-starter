@@ -19,6 +19,7 @@
 - skill 体系优化：清除 `java-spring-openapi-doc-generator` 与 `java-error-code-i18n` 中的项目特定符号残留；`AGENTS.md` 新增 0.3 专项 skill 强制门禁（分布式锁、MyBatis、Controller / OpenAPI、错误码 / i18n、异步、防腐层、测试、编码规范等 9 个区域）；为 `java-service-structure`、`java-transaction-boundary`、`safe-code-change` 补齐 `agents/openai.yaml`；`task-router` 与 `post-change-check` 衔接 `java-*` skill 路由与收口复核。
 - skill 语言统一：`java-coding-standards`、`java-interface-javadoc`、`java-spring-openapi-doc-generator`、`java-unit-test-designer`、`java-mybatis-query`、`java-distributed-lock` 六个 skill 正文由英文统一为中文；frontmatter `description` 保留英文供工具链语义匹配，代码符号与示例保持原文。
 - 示例资产同步新规则：`minimal-task-board` 与 `spring-boot-device-center` 的交付物文档迁移到 `v1.2.0/` 版本目录（requirements / design / tasks / upgrade / sql），API 契约由 Markdown 改写为可导入 OpenAPI YAML（`docs/api/v1.2.0/*.yaml`，与实际代码行为对齐）；`check_all.py` 示例 task-entry / handoff 查找改为递归以支持版本目录；根仓库与两个示例的 `.doc-sync.json` `docGlobs` 加深一层覆盖版本目录三层路径；同步更新示例 README / index / INDEX / document-sync-map / handoff / task-entry 与根 `DEMO.md` 的全部引用。
+- 强化价值主张：`README.md` 新增“为什么值得用（对比裸 AGENTS.md）”小节（失效场景表、机制对比表、可数资产清单、“这套体系的代价”小节），并修正 skill 清单事实（四个通用 Codex skill → 17 个 skill 全量清单）；`QUICKSTART.md` 开头新增“为什么值得花这 5 分钟”，先说服再操作。
 
 ## [v0.4.1] - 2026-06-23
 

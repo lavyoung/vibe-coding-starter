@@ -1,6 +1,6 @@
 # vibe-coding-starter
 
-一个面向“人类 + AI 协同交付”的文档优先模板仓库，内含可直接生效的 `AGENTS.md`、可按需保留的 `CLAUDE.md` 兼容入口、文档治理骨架、状态闸门规则、复用优先协作约束和可复用的 Codex skills。
+一个面向“人类 + AI 协同交付”的文档优先模板仓库，内含可直接生效的 `AGENTS.md`、可按需保留的 `CLAUDE.md` 兼容入口、文档治理骨架、状态闸门规则、复用优先协作约束和 17 个可复用 skills。
 
 如果你是通过模板创建了一个新项目，请先把本文件标题、首段简介和仓库描述替换成你自己的项目信息；`vibe-coding-starter` 只是上游模板名。
 
@@ -18,6 +18,47 @@
 
 - 第 1 到 4 步： [QUICKSTART.md](QUICKSTART.md)
 - 第 5 步： [DEMO.md](DEMO.md)
+
+## 为什么值得用（对比裸 AGENTS.md）
+
+只写一份裸 `AGENTS.md`（3~5 条“请先写文档”的约定）5 分钟就能建好，但所有约束都靠自觉，常见结局是：
+
+| 裸 AGENTS.md 没有的机制 | 实际发生什么 |
+|---|---|
+| 文档状态闸门 | 草稿被 AI 当成实现依据，返工后才被发现 |
+| 代码 -> 文档同步矩阵 | 改代码忘改文档，下次接手被旧文档误导 |
+| 机器校验 / CI 拦截 | 规则是否执行全凭运气，PR 拦不住 |
+| 可复用 skill | 每个新会话重新“教” AI 规则，口径慢慢漂移 |
+| 交接协议 | 换人 / 换会话 = 重新讲一遍背景 |
+
+本模板用约 30 分钟初始化，换回的是这些**可执行**的保障：
+
+| 能力 | 裸 AGENTS.md | 本模板 |
+|---|---|---|
+| 文档状态闸门 | 无 | 有：`已接受 / 已生效 / 已落地` 才能落码 |
+| 代码 -> 文档同步 | 口头约定 | 同步矩阵 + `.doc-sync.json` + CI 强制校验 |
+| 新会话恢复上下文 | 翻聊天记录 | 单点快照 + 演进索引 + 交接模板 |
+| AI 行为约束 | 无 | 17 个可复用 skill，`AGENTS.md` 0.3 设强制门禁 |
+| 跨 agent / 跨会话交接 | 无 | JSON Schema 结构化 task-entry / handoff |
+| 接口契约 | 无 | 可导入的 OpenAPI YAML，随设计文档生成 |
+| 参考实现 | 无 | 2 个可运行示例项目（Node / Spring Boot） |
+
+拿来即用的资产（都是仓库里可数的事实）：
+
+- **17 个 skill**：任务路由、文档驱动实现、安全改动、收口检查、代码评审 5 个通用能力，外加 12 个 Java 专项（服务结构、事务边界、分布式锁、MyBatis 查询、Controller 契约、OpenAPI 生成、错误码 i18n、异步线程池、客户端防腐层、单元测试设计、编码规范、接口 Javadoc）
+- **14 个跨平台脚本入口**（`*.py` / `*.ps1` / `*.sh`）：模板初始化、doc-sync 校验、统一自检
+- **治理骨架**：状态闸门、同步矩阵、版本演进约束、契约与结构事实目录（含 OpenAPI YAML 契约体系）
+- **结构化交接**：`contracts/*.schema.json` 与可直接复用的示例
+
+### 这套体系的代价
+
+价值主张的另一半是诚实说明成本，避免拿模板套错项目：
+
+- **初始化约 30 分钟**：运行 `init_starter` + 补 4 份核心文档
+- **每个版本有持续维护成本**：同步维护需求 / 设计 / 升级 / 契约文档（有模板与 skill 约束，常规每轮约 10~30 分钟）
+- **不适合轻量场景**：一次性脚本、临时试验仓库、生命周期很短的小项目直接用裸 `AGENTS.md` 更合适
+
+结论：这套体系适合**长期演进、AI 参与度高、需要跨人跨会话接力**的项目；判断口径见文末“适合 / 不适合什么项目”。
 
 ## 这套模板要解决什么问题
 
@@ -62,11 +103,9 @@
 - `scripts/`
   可在本地和 CI 复用的 `doc-sync` 校验脚本、模板初始化脚本和统一自检入口
 - `tools/skills/`
-  四个通用 Codex skill：
-  - `task-router`
-  - `doc-driven-implementation`
-  - `post-change-check`
-  - `code-review`
+  17 个可复用 skill：
+  - 通用：`task-router`、`doc-driven-implementation`、`post-change-check`、`code-review`、`safe-code-change`
+  - Java 专项：`java-service-structure`、`java-transaction-boundary`、`java-distributed-lock`、`java-mybatis-query`、`java-controller-contract`、`java-spring-openapi-doc-generator`、`java-error-code-i18n`、`java-async-thread-pool`、`java-client-adapter`、`java-unit-test-designer`、`java-coding-standards`、`java-interface-javadoc`
 - `examples/`
   两个可直接参考的示例项目
 
