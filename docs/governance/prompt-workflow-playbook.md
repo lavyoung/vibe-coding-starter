@@ -155,7 +155,7 @@
 
 1. `task-entry` 或 `task-router`
 2. `standard-01-understand-current-state`
-3. 补查 `docs/api/`、`docs/design/`、必要时补 `docs/ui/`
+3. 补查 `docs/api/`（OpenAPI YAML 契约）、`docs/design/`、必要时补 `docs/ui/`
 4. 若只是局部兼容修正，走 `small-change`
 5. 若涉及接口行为调整，走 `code-change`
 6. 若需要跨 agent 接力，再补看 [agent-collaboration-protocol.md](agent-collaboration-protocol.md)

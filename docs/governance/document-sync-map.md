@@ -61,7 +61,7 @@
 | `<docs/design/...>` | 已接受的领域设计 | 改对应领域代码时 |
 | `<docs/tasks/...>` | 领域任务拆分和进度 | 实施推进和交接时 |
 | `<docs/upgrade/...>` | 升级说明和脚本 | 上线和发布时 |
-| `<docs/api/...>` | 对外接口契约 | 联调和对接时 |
+| `<docs/api/...>` | 对外接口契约（可导入 OpenAPI YAML，随设计文档生成） | 联调和对接时 |
 | `<docs/sql/...>` | 表结构和 SQL 脚本 | 排查表结构和升级时 |
 
 ## 3. 代码 -> 文档同步矩阵模板
@@ -70,7 +70,7 @@
 
 | 代码模块 | 必须同步的文档 | 同步动作 |
 |---|---|---|
-| `<controller/...>` | `<docs/api/...>` + `<docs/design/...>` | 新增 / 修改 / 废弃端点同步契约和设计 |
+| `<controller/...>` | `<docs/api/*.yaml>` + `<docs/design/...>` | 新增 / 修改 / 废弃端点同步契约（OpenAPI YAML）和设计 |
 | `<service/...>` | `<docs/design/...>` + `<docs/tasks/...>` | 重大逻辑变化同步设计和任务状态 |
 | `<dataobject / entity / schema>` | `<docs/sql/...>` + `<docs/upgrade/...>` + `<docs/design/...>` | 字段 / 索引 / DDL / 升级说明同步 |
 | `<config / properties / env>` | `<docs/upgrade/...>` + `<docs/architecture/...>` | 配置项和基线变化同步 |
@@ -84,7 +84,7 @@
 | 文档 | 必须先确认的代码 | 不允许凭空写 |
 |---|---|---|
 | `<docs/design/...>` | 先 grep 代码现状，再写 | 禁止写“将来会做但代码没有”的内容 |
-| `<docs/api/...>` | 必须基于当前接口生成 | 禁止保留无效路径 |
+| `<docs/api/*.yaml>` | 必须基于当前接口生成可导入的 OpenAPI YAML | 禁止保留无效路径、禁止用 md 替代 YAML 作为契约本体 |
 | `<docs/sql/...>` | 必须与实体 / DO / schema 一致 | 禁止写不存在的字段 |
 | `<docs/upgrade/...>` | 必须基于当前代码和脚本生成 | 禁止把未落地能力写成已完成 |
 | `<docs/ui/screens/...>` | 必须先确认当前页面、组件、接口约束 | 禁止把草图或未实现交互写成现状 |

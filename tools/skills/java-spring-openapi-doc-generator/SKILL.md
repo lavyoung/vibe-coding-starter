@@ -24,6 +24,7 @@ When the user says the current stage is only API definition / table design / fro
 - `dto`
 - `enum`
 - validation i18n files under `resources/i18n/validation_message*.properties`
+- the importable OpenAPI YAML contract under `docs/api/` (default contract output, see the OpenAPI YAML section below)
 - API examples and explanatory text in the source design document when explicitly requested
 
 Do not implement these unless the user explicitly asks:
@@ -34,6 +35,16 @@ Do not implement these unless the user explicitly asks:
 - remote calls
 - MQ / Job / Listener
 - real data backfill scripts
+
+## OpenAPI YAML Contract Output
+
+The repository's `docs/api/` responsibility is an importable OpenAPI YAML contract, generated together with the accepted design document. Markdown is no longer the default contract output.
+
+- Generate `docs/api/<domain>-api.yaml` (or `<version>-<domain>-api.yaml` for versioned contracts) in OpenAPI 3.x shape: top-level `openapi`, `info`, `paths`, and `components.schemas`.
+- The YAML must be importable by common tools (swagger-ui / redoc / openapi-generator): valid YAML, resolvable `$ref`, realistic examples, and no leftover draft paths.
+- Keep paths, methods, request/response schemas, and error codes in the YAML aligned with the accepted design examples; do not maintain a second Markdown contract as the source of truth.
+- A Markdown notes file (`*-notes.md`) is allowed only for human-readable supplements that YAML cannot express (business rules, error semantics, integration notes); it is not the contract body.
+- Do not write draft interfaces into the formal YAML; keep them out of the file or mark the whole file explicitly as draft until the contract is accepted.
 
 ## Document Controllers
 
@@ -100,6 +111,7 @@ If the user explicitly needs front-end integration before real business implemen
 - Confirm enum, status, and validation semantics are visible to API consumers.
 - Confirm request/response fields match the source design examples.
 - Confirm there is no duplicate `HTTP Method + Path` route.
+- Confirm `docs/api/` carries an importable OpenAPI YAML contract aligned with the design examples (no Markdown-only contract).
 - Confirm all `LocalDateTime` `@Schema(example)` values match the project serialization convention (13-digit millisecond timestamps when the web starter serializes milliseconds).
 - Confirm enum request fields have enum validation where appropriate.
 - Confirm validation i18n keys exist in all required validation bundles.

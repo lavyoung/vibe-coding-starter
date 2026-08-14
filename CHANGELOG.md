@@ -13,6 +13,8 @@
 ### Changed
 
 - `tools/skills/java-service-structure/`、`tools/skills/java-transaction-boundary/`（含两份 references）与 `tools/skills/safe-code-change/` 吸收 `shared_car_wash_saas` 同源 skill 的深度内容：包职责矩阵、规则静态化决策、伪提取判别四问、事务一致性集合与代理路径、改前基线证据门禁、批量与资金流保护、带证据合并与强制交接检查。
+- `docs/api/` 职责调整：对外接口契约默认产出**可导入的 OpenAPI YAML**（随设计文档生成），Markdown 不再作为默认契约输出（仅允许 `*-notes.md` 作补充说明）；同步更新 `docs/api/README.md`、`docs/governance/document-sync-map.md`、`docs/index.md`、`docs/README.md`、`docs/design/DESIGN_TEMPLATE.md`、`docs/evolution/current-snapshot.md`、`docs/governance/prompt-workflow-playbook.md` 与 `tools/skills/java-spring-openapi-doc-generator/`；并新增可直接导入的完整示例契约 `docs/api/task-api.yaml`。
+- `.doc-sync.json` 将 `docs/api/**/*.yaml` 纳入文档校验范围，`scripts/doc_sync_check.py` 对 OpenAPI YAML 走结构校验（顶层 `openapi` / `info` / `paths`），不再套用 Markdown 文档模板要求。
 
 ## [v0.4.1] - 2026-06-23
 

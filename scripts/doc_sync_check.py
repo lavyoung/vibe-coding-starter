@@ -93,7 +93,10 @@ def classify_docs(changed_files: list[str], config: dict) -> list[str]:
 
 
 def validate_doc_file(repo_root: Path, doc_path: str) -> list[str]:
-    content = (repo_root / doc_path).read_text(encoding="utf-8")
+    full_path = repo_root / doc_path
+    content = full_path.read_text(encoding="utf-8")
+    if doc_path.lower().endswith((".yaml", ".yml")):
+        return validate_openapi_yaml(full_path, doc_path)
     lines = [line.strip() for line in content.splitlines() if line.strip()]
     issues: list[str] = []
 
@@ -106,6 +109,36 @@ def validate_doc_file(repo_root: Path, doc_path: str) -> list[str]:
     if "## 关联代码" not in content:
         issues.append(f"{doc_path}: 缺少“## 关联代码”章节。")
 
+    return issues
+
+
+def validate_openapi_yaml(path: Path, doc_path: str) -> list[str]:
+    """OpenAPI YAML 契约按自身结构校验，不套用 Markdown 文档模板。"""
+    issues: list[str] = []
+    try:
+        import yaml
+    except ImportError:
+        issues.append(
+            f"{doc_path}: 缺少 PyYAML，无法校验 OpenAPI 结构"
+            "（python -m pip install pyyaml 后重跑）。"
+        )
+        return issues
+
+    try:
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except Exception as exc:
+        issues.append(f"{doc_path}: OpenAPI YAML 解析失败：{exc}")
+        return issues
+
+    if not isinstance(data, dict):
+        issues.append(f"{doc_path}: OpenAPI YAML 顶层必须是映射（openapi / info / paths）。")
+        return issues
+    if "openapi" not in data:
+        issues.append(f"{doc_path}: OpenAPI YAML 缺少顶层 openapi 版本字段（如 openapi: 3.1.0）。")
+    if not isinstance(data.get("info"), dict):
+        issues.append(f"{doc_path}: OpenAPI YAML 缺少 info 节点（title / version）。")
+    if not isinstance(data.get("paths"), dict):
+        issues.append(f"{doc_path}: OpenAPI YAML 缺少 paths 节点。")
     return issues
 
 

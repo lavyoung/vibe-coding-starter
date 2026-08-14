@@ -1,0 +1,419 @@
+# Task API 契约示例（管任务域的对外接口事实，接口联调与对接前先查）
+# 随对应设计文档生成；可导入 swagger-ui / redoc / openapi-generator 等工具。
+# 变更契约时必须同步 docs/governance/document-sync-map.md 的同步矩阵。
+
+openapi: 3.1.0
+info:
+  title: Task API
+  version: v1.0
+  description: |
+    任务管理对外接口契约（完整示例）。
+    统一返回包装：{ "code": 0, "data": ..., "message": "success" }；code 非 0 表示业务失败。
+    分页字段：page（从 1 开始）、pageSize、total、list。
+servers:
+  - url: https://api.example.com
+    description: 示例环境地址，实际以部署配置为准
+tags:
+  - name: task
+    description: 任务管理
+paths:
+  /tasks:
+    get:
+      tags:
+        - task
+      operationId: pageTasks
+      summary: 分页查询任务列表
+      description: |
+        按状态、标题关键字分页查询任务；status 为空表示不过滤。
+        查询结果为空时返回 total=0 与空 list，不得退化为全量返回。
+      parameters:
+        - name: page
+          in: query
+          required: false
+          description: 页码，从 1 开始
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: pageSize
+          in: query
+          required: false
+          description: 每页条数
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: status
+          in: query
+          required: false
+          description: 任务状态过滤
+          schema:
+            $ref: '#/components/schemas/TaskStatus'
+        - name: keyword
+          in: query
+          required: false
+          description: 标题关键字模糊匹配
+          schema:
+            type: string
+            maxLength: 64
+      responses:
+        "200":
+          description: 分页结果
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskPageResp'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "500":
+          $ref: '#/components/responses/InternalError'
+    post:
+      tags:
+        - task
+      operationId: createTask
+      summary: 创建任务
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskCreateReq'
+            example:
+              title: 接入 OpenAPI 契约
+              priority: HIGH
+              assigneeId: 1001
+              dueDate: "2026-07-01"
+      responses:
+        "200":
+          description: 创建成功，返回任务详情
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResp'
+        "400":
+          $ref: '#/components/responses/BadRequest'
+        "409":
+          $ref: '#/components/responses/Conflict'
+  /tasks/{id}:
+    get:
+      tags:
+        - task
+      operationId: getTask
+      summary: 查询任务详情
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 任务 ID
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: 任务详情
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResp'
+        "404":
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+        - task
+      operationId: updateTask
+      summary: 更新任务（乐观锁 CAS）
+      description: |
+        必须携带 expectedVersion 做版本 CAS；版本不匹配返回 409，
+        调用方应重新拉取详情后再重试，避免覆盖他人修改。
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 任务 ID
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TaskUpdateReq'
+      responses:
+        "200":
+          description: 更新成功，返回最新任务详情
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaskResp'
+        "404":
+          $ref: '#/components/responses/NotFound'
+        "409":
+          $ref: '#/components/responses/Conflict'
+    delete:
+      tags:
+        - task
+      operationId: deleteTask
+      summary: 删除任务（逻辑删除）
+      description: |
+        删除为逻辑删除；删除后详情查询返回 404。
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 任务 ID
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: 删除成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VoidResp'
+        "404":
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    BadRequest:
+      description: 参数校验失败
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResp'
+          example:
+            code: 40000
+            message: 参数校验失败，请检查请求参数
+            data: null
+    NotFound:
+      description: 资源不存在或已删除
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResp'
+          example:
+            code: 40400
+            message: 任务不存在
+            data: null
+    Conflict:
+      description: 版本冲突或当前状态不允许该操作
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResp'
+          example:
+            code: 40900
+            message: 版本已过期，请刷新后重试
+            data: null
+    InternalError:
+      description: 服务内部错误
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResp'
+          example:
+            code: 50000
+            message: 系统繁忙，请稍后重试
+            data: null
+  schemas:
+    TaskStatus:
+      type: string
+      enum:
+        - TODO
+        - DOING
+        - DONE
+      description: 任务状态（TODO 待处理 / DOING 处理中 / DONE 已完成）
+    TaskPriority:
+      type: string
+      enum:
+        - LOW
+        - MEDIUM
+        - HIGH
+      description: 任务优先级（LOW 低 / MEDIUM 中 / HIGH 高）
+    Task:
+      type: object
+      required:
+        - id
+        - title
+        - status
+        - version
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: 任务 ID
+          example: 10001
+        title:
+          type: string
+          description: 任务标题
+          example: 接入 OpenAPI 契约
+        status:
+          $ref: '#/components/schemas/TaskStatus'
+        priority:
+          $ref: '#/components/schemas/TaskPriority'
+        assigneeId:
+          type: integer
+          format: int64
+          description: 负责人用户 ID，可为空
+          example: 1001
+        dueDate:
+          type: string
+          format: date
+          description: 截止日期，可为空
+          example: "2026-07-01"
+        version:
+          type: integer
+          description: 乐观锁版本号，每次更新后递增
+          example: 3
+        createdAt:
+          type: integer
+          format: int64
+          description: 创建时间（毫秒时间戳）
+          example: 1751270400000
+    TaskCreateReq:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 64
+          description: 任务标题
+        priority:
+          $ref: '#/components/schemas/TaskPriority'
+        assigneeId:
+          type: integer
+          format: int64
+          description: 负责人用户 ID，可为空
+        dueDate:
+          type: string
+          format: date
+          description: 截止日期，可为空
+    TaskUpdateReq:
+      type: object
+      required:
+        - title
+        - status
+        - version
+      properties:
+        title:
+          type: string
+          minLength: 1
+          maxLength: 64
+          description: 任务标题
+        status:
+          $ref: '#/components/schemas/TaskStatus'
+        priority:
+          $ref: '#/components/schemas/TaskPriority'
+        assigneeId:
+          type: integer
+          format: int64
+          description: 负责人用户 ID，可为空
+        dueDate:
+          type: string
+          format: date
+          description: 截止日期，可为空
+        version:
+          type: integer
+          description: 期望版本号，用于 CAS 校验
+    TaskResp:
+      type: object
+      required:
+        - code
+        - data
+        - message
+      properties:
+        code:
+          type: integer
+          description: 业务码，0 表示成功
+          example: 0
+        data:
+          $ref: '#/components/schemas/Task'
+        message:
+          type: string
+          description: 提示信息
+          example: success
+    TaskPageResp:
+      type: object
+      required:
+        - code
+        - data
+        - message
+      properties:
+        code:
+          type: integer
+          description: 业务码，0 表示成功
+          example: 0
+        data:
+          $ref: '#/components/schemas/PageResult'
+        message:
+          type: string
+          description: 提示信息
+          example: success
+    PageResult:
+      type: object
+      required:
+        - page
+        - pageSize
+        - total
+        - list
+      properties:
+        page:
+          type: integer
+          description: 当前页码
+          example: 1
+        pageSize:
+          type: integer
+          description: 每页条数
+          example: 20
+        total:
+          type: integer
+          format: int64
+          description: 总条数
+          example: 3
+        list:
+          type: array
+          description: 当前页数据
+          items:
+            $ref: '#/components/schemas/Task'
+    VoidResp:
+      type: object
+      required:
+        - code
+        - data
+        - message
+      properties:
+        code:
+          type: integer
+          description: 业务码，0 表示成功
+          example: 0
+        data:
+          type:
+            - object
+            - "null"
+          description: 无返回数据
+        message:
+          type: string
+          description: 提示信息
+          example: success
+    ErrorResp:
+      type: object
+      required:
+        - code
+        - data
+        - message
+      properties:
+        code:
+          type: integer
+          description: 业务错误码，非 0 表示失败
+        data:
+          type:
+            - object
+            - "null"
+          description: 失败时通常为 null
+        message:
+          type: string
+          description: 用户可读错误信息

@@ -231,12 +231,12 @@ bash scripts/check_all.sh
 示例命令：
 
 ```bash
-python scripts/doc_sync_check.py --changed-file src/routes/tasks.js --changed-file docs/api/tasks.md
-bash scripts/doc_sync_check.sh --changed-file src/routes/tasks.js --changed-file docs/api/tasks.md
+python scripts/doc_sync_check.py --changed-file src/routes/tasks.js --changed-file docs/api/tasks.yaml
+bash scripts/doc_sync_check.sh --changed-file src/routes/tasks.js --changed-file docs/api/tasks.yaml
 ```
 
 ```powershell
-./scripts/doc_sync_check.ps1 --changed-file src/routes/tasks.js --changed-file docs/api/tasks.md
+./scripts/doc_sync_check.ps1 --changed-file src/routes/tasks.js --changed-file docs/api/tasks.yaml
 ```
 
 如果你希望直接按 git diff 检查，也可以运行：
