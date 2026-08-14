@@ -18,5 +18,5 @@
 
 ## 关联代码
 
-- [../../src/server.js](../../src/server.js)
-- [../../src/task-store.js](../../src/task-store.js)
+- [../../../src/server.js](../../../src/server.js)
+- [../../../src/task-store.js](../../../src/task-store.js)

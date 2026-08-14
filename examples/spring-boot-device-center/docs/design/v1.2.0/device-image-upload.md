@@ -23,6 +23,6 @@
 
 ## 关联代码
 
-- [../../src/main/java/com/example/devicecenter/service/DefaultDeviceService.java](../../src/main/java/com/example/devicecenter/service/DefaultDeviceService.java)
-- [../../src/main/java/com/example/devicecenter/repository/InMemoryDeviceRepository.java](../../src/main/java/com/example/devicecenter/repository/InMemoryDeviceRepository.java)
-- [../../src/main/resources/db/migration/V2__create_device_images_table.sql](../../src/main/resources/db/migration/V2__create_device_images_table.sql)
+- [../../../src/main/java/com/example/devicecenter/service/DefaultDeviceService.java](../../../src/main/java/com/example/devicecenter/service/DefaultDeviceService.java)
+- [../../../src/main/java/com/example/devicecenter/repository/InMemoryDeviceRepository.java](../../../src/main/java/com/example/devicecenter/repository/InMemoryDeviceRepository.java)
+- [../../../src/main/resources/db/migration/V2__create_device_images_table.sql](../../../src/main/resources/db/migration/V2__create_device_images_table.sql)

@@ -11,9 +11,9 @@
 
 1. [docs/evolution/INDEX.md](evolution/INDEX.md)
 2. [docs/governance/document-sync-map.md](governance/document-sync-map.md)
-3. [docs/requirements/V1.2.0-task-attachment-upload.md](requirements/V1.2.0-task-attachment-upload.md)
-4. [docs/design/V1.2.0-task-attachment-upload.md](design/V1.2.0-task-attachment-upload.md)
-5. [docs/api/task-api.md](api/task-api.md)
+3. [docs/requirements/v1.2.0/task-attachment-upload.md](requirements/v1.2.0/task-attachment-upload.md)
+4. [docs/design/v1.2.0/task-attachment-upload.md](design/v1.2.0/task-attachment-upload.md)
+5. [docs/api/v1.2.0/task-api.yaml](api/v1.2.0/task-api.yaml)
 6. [docs/ui/screens/task-detail-attachment-upload.md](ui/screens/task-detail-attachment-upload.md)
 
 ## 关联代码

@@ -17,4 +17,4 @@
 
 ## 关联代码
 
-- [../../src/main/java/com/example/devicecenter/controller/DeviceAdminController.java](../../src/main/java/com/example/devicecenter/controller/DeviceAdminController.java)
+- [../../../src/main/java/com/example/devicecenter/controller/DeviceAdminController.java](../../../src/main/java/com/example/devicecenter/controller/DeviceAdminController.java)

@@ -4,6 +4,7 @@
   "docGlobs": [
     "docs/*.md",
     "docs/**/*.md",
+    "docs/**/**/*.md",
     "docs/api/*.yaml",
     "docs/api/**/*.yaml"
   ],

@@ -34,7 +34,7 @@
 ### 文档与代码范围
 
 - 代码：`src/main/java/com/example/devicecenter/controller/DeviceAdminController.java`、`src/main/java/com/example/devicecenter/service/DefaultDeviceService.java`、`src/main/java/com/example/devicecenter/repository/InMemoryDeviceRepository.java`
-- 文档：`docs/requirements/V1.2.0-device-image-upload.md`、`docs/design/V1.2.0-device-image-upload.md`、`docs/api/device-admin-api.md`、`docs/sql/device-schema.md`、`docs/upgrade/V1.2.0-device-image-upload.md`、`docs/tasks/V1.2.0-device-image-upload.md`
+- 文档：`docs/requirements/v1.2.0/device-image-upload.md`、`docs/design/v1.2.0/device-image-upload.md`、`docs/api/v1.2.0/device-admin-api.yaml`、`docs/sql/v1.2.0/device-schema.md`、`docs/upgrade/v1.2.0/device-image-upload.md`、`docs/tasks/v1.2.0/device-image-upload.md`
 - 无需更新但已检查：`docs/architecture/current-architecture.md`、`docs/governance/document-sync-map.md`
 
 ### 验证结果
@@ -44,6 +44,6 @@
 
 ## 关联代码
 
-- [../../src/main/java/com/example/devicecenter/controller/DeviceAdminController.java](../../src/main/java/com/example/devicecenter/controller/DeviceAdminController.java)
-- [../../src/main/java/com/example/devicecenter/service/DefaultDeviceService.java](../../src/main/java/com/example/devicecenter/service/DefaultDeviceService.java)
-- [../../src/test/java/com/example/devicecenter/controller/DeviceAdminControllerTest.java](../../src/test/java/com/example/devicecenter/controller/DeviceAdminControllerTest.java)
+- [../../../src/main/java/com/example/devicecenter/controller/DeviceAdminController.java](../../../src/main/java/com/example/devicecenter/controller/DeviceAdminController.java)
+- [../../../src/main/java/com/example/devicecenter/service/DefaultDeviceService.java](../../../src/main/java/com/example/devicecenter/service/DefaultDeviceService.java)
+- [../../../src/test/java/com/example/devicecenter/controller/DeviceAdminControllerTest.java](../../../src/test/java/com/example/devicecenter/controller/DeviceAdminControllerTest.java)

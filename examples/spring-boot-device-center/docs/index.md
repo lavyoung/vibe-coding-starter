@@ -12,12 +12,12 @@
 1. [docs/evolution/INDEX.md](evolution/INDEX.md)
 2. [docs/architecture/current-architecture.md](architecture/current-architecture.md)
 3. [docs/governance/document-sync-map.md](governance/document-sync-map.md)
-4. [docs/requirements/V1.2.0-device-image-upload.md](requirements/V1.2.0-device-image-upload.md)
-5. [docs/design/V1.2.0-device-image-upload.md](design/V1.2.0-device-image-upload.md)
-6. [docs/api/device-admin-api.md](api/device-admin-api.md)
-7. [docs/sql/device-schema.md](sql/device-schema.md)
-8. [docs/upgrade/V1.2.0-device-image-upload.md](upgrade/V1.2.0-device-image-upload.md)
-9. [docs/tasks/V1.2.0-device-image-upload.md](tasks/V1.2.0-device-image-upload.md)
+4. [docs/requirements/v1.2.0/device-image-upload.md](requirements/v1.2.0/device-image-upload.md)
+5. [docs/design/v1.2.0/device-image-upload.md](design/v1.2.0/device-image-upload.md)
+6. [docs/api/v1.2.0/device-admin-api.yaml](api/v1.2.0/device-admin-api.yaml)
+7. [docs/sql/v1.2.0/device-schema.md](sql/v1.2.0/device-schema.md)
+8. [docs/upgrade/v1.2.0/device-image-upload.md](upgrade/v1.2.0/device-image-upload.md)
+9. [docs/tasks/v1.2.0/device-image-upload.md](tasks/v1.2.0/device-image-upload.md)
 
 ## 关联代码
 

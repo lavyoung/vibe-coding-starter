@@ -2,12 +2,12 @@
   "task_type": "code_change",
   "goal": "给管理端补上设备图片 URL 上传能力，并同步接口、SQL 资产、升级说明和测试。",
   "scope": [
-    "docs/requirements/V1.2.0-device-image-upload.md",
-    "docs/design/V1.2.0-device-image-upload.md",
-    "docs/api/device-admin-api.md",
-    "docs/sql/device-schema.md",
-    "docs/upgrade/V1.2.0-device-image-upload.md",
-    "docs/tasks/V1.2.0-device-image-upload.md",
+    "docs/requirements/v1.2.0/device-image-upload.md",
+    "docs/design/v1.2.0/device-image-upload.md",
+    "docs/api/v1.2.0/device-admin-api.yaml",
+    "docs/sql/v1.2.0/device-schema.md",
+    "docs/upgrade/v1.2.0/device-image-upload.md",
+    "docs/tasks/v1.2.0/device-image-upload.md",
     "src/main/java/com/example/devicecenter/controller/DeviceAdminController.java",
     "src/main/java/com/example/devicecenter/service/DefaultDeviceService.java",
     "src/test/java/com/example/devicecenter/controller/DeviceAdminControllerTest.java"
@@ -21,12 +21,12 @@
   "related_docs": [
     "AGENTS.md",
     "docs/evolution/INDEX.md",
-    "docs/requirements/V1.2.0-device-image-upload.md",
-    "docs/design/V1.2.0-device-image-upload.md",
-    "docs/api/device-admin-api.md",
-    "docs/sql/device-schema.md",
-    "docs/upgrade/V1.2.0-device-image-upload.md",
-    "docs/tasks/V1.2.0-device-image-upload.md"
+    "docs/requirements/v1.2.0/device-image-upload.md",
+    "docs/design/v1.2.0/device-image-upload.md",
+    "docs/api/v1.2.0/device-admin-api.yaml",
+    "docs/sql/v1.2.0/device-schema.md",
+    "docs/upgrade/v1.2.0/device-image-upload.md",
+    "docs/tasks/v1.2.0/device-image-upload.md"
   ],
   "expected_output": [
     "设备图片上传相关文档齐全且状态一致",

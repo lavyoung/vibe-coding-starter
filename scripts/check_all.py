@@ -576,8 +576,8 @@ def collect_example_workflow_assets(repo_root: Path) -> list[CheckResult]:
             workflow_issues.append(f"- {example_label}: missing docs/tasks/")
             continue
 
-        task_entry_files = sorted(tasks_dir.glob(f"*{EXAMPLE_TASK_ENTRY_SUFFIX}"))
-        handoff_files = sorted(tasks_dir.glob(f"*{EXAMPLE_HANDOFF_SUFFIX}"))
+        task_entry_files = sorted(tasks_dir.glob(f"**/*{EXAMPLE_TASK_ENTRY_SUFFIX}"))
+        handoff_files = sorted(tasks_dir.glob(f"**/*{EXAMPLE_HANDOFF_SUFFIX}"))
 
         if not task_entry_files:
             workflow_issues.append(

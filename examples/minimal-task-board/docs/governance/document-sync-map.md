@@ -11,8 +11,8 @@
 
 | 代码模块 | 必须同步的文档 | 同步动作 |
 |---|---|---|
-| `src/server.js` | `docs/api/task-api.md` + `docs/design/V1.2.0-task-attachment-upload.md` | 接口行为变化时同步 API 和设计 |
-| `src/task-store.js` | `docs/design/V1.2.0-task-attachment-upload.md` + `docs/tasks/V1.2.0-task-attachment-upload.md` | 领域规则变化时同步设计和任务状态 |
+| `src/server.js` | `docs/api/v1.2.0/task-api.yaml` + `docs/design/v1.2.0/task-attachment-upload.md` | 接口行为变化时同步 API 和设计 |
+| `src/task-store.js` | `docs/design/v1.2.0/task-attachment-upload.md` + `docs/tasks/v1.2.0/task-attachment-upload.md` | 领域规则变化时同步设计和任务状态 |
 
 ## 自动化补充
 

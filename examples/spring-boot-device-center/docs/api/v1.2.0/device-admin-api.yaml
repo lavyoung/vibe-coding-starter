@@ -1,0 +1,159 @@
+# 设备管理 API 契约（管示例接口契约，联调和核对行为时先查）
+# 随 docs/design/v1.2.0/device-image-upload.md 生成；可导入 swagger-ui / redoc / openapi-generator。
+# 变更契约时必须同步 docs/governance/document-sync-map.md 的同步矩阵。
+
+openapi: 3.1.0
+info:
+  title: Device Admin API
+  version: v1.2.0
+  description: |
+    设备管理接口契约（spring-boot-device-center 示例）。
+    图片为 URL 追加方式，不引入真实文件存储；单台设备最多 3 张图片。
+servers:
+  - url: http://localhost:8080
+    description: 本地示例服务
+paths:
+  /admin/devices:
+    post:
+      operationId: createDevice
+      summary: 创建设备
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDeviceRequest'
+            example:
+              name: Front Desk Printer
+      responses:
+        "200":
+          description: 创建成功，返回设备详情
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceResponse'
+  /admin/devices/{deviceId}:
+    get:
+      operationId: getDevice
+      summary: 查询设备详情
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          description: 设备 ID
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      responses:
+        "200":
+          description: 设备详情
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceResponse'
+        "404":
+          description: 设备不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+    post:
+      operationId: uploadDeviceImage
+      summary: 上传设备图片 URL
+      description: |
+        追加图片 URL；单台设备最多 3 张图片，超限返回 409。
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          description: 设备 ID
+          schema:
+            type: integer
+            format: int64
+            example: 1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadDeviceImageRequest'
+            example:
+              imageUrl: https://cdn.example.com/device-1.png
+      responses:
+        "200":
+          description: 上传成功，返回更新后的设备详情
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceResponse'
+        "404":
+          description: 设备不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+        "409":
+          description: 图片数量超过 3 张上限
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+components:
+  schemas:
+    CreateDeviceRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: 设备名称
+          example: Front Desk Printer
+    UploadDeviceImageRequest:
+      type: object
+      required:
+        - imageUrl
+      properties:
+        imageUrl:
+          type: string
+          format: uri
+          minLength: 1
+          maxLength: 512
+          description: 图片 URL
+          example: https://cdn.example.com/device-1.png
+    DeviceResponse:
+      type: object
+      required:
+        - id
+        - name
+        - imageUrls
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: 设备 ID
+          example: 1
+        name:
+          type: string
+          description: 设备名称
+          example: Front Desk Printer
+        imageUrls:
+          type: array
+          description: 图片 URL 列表，单台设备最多 3 张
+          items:
+            type: string
+            format: uri
+          example:
+            - https://cdn.example.com/device-1.png
+    ErrorResp:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: 错误信息
+          example: device not found

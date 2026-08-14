@@ -35,22 +35,22 @@
 ### 示例一：最小 Node.js 闭环
 
 1. 结构化任务入口
-   [docs/tasks/V1.2.0-task-attachment-upload-task-entry.json](examples/minimal-task-board/docs/tasks/V1.2.0-task-attachment-upload-task-entry.json)
+   [docs/tasks/v1.2.0/task-attachment-upload-task-entry.json](examples/minimal-task-board/docs/tasks/v1.2.0/task-attachment-upload-task-entry.json)
 
 2. 需求来源
-   [docs/requirements/V1.2.0-task-attachment-upload.md](examples/minimal-task-board/docs/requirements/V1.2.0-task-attachment-upload.md)
+   [docs/requirements/v1.2.0/task-attachment-upload.md](examples/minimal-task-board/docs/requirements/v1.2.0/task-attachment-upload.md)
 
 3. 设计收敛
-   [docs/design/V1.2.0-task-attachment-upload.md](examples/minimal-task-board/docs/design/V1.2.0-task-attachment-upload.md)
+   [docs/design/v1.2.0/task-attachment-upload.md](examples/minimal-task-board/docs/design/v1.2.0/task-attachment-upload.md)
 
 4. UI 场景说明
    [docs/ui/screens/task-detail-attachment-upload.md](examples/minimal-task-board/docs/ui/screens/task-detail-attachment-upload.md)
 
 5. API 事实
-   [docs/api/task-api.md](examples/minimal-task-board/docs/api/task-api.md)
+   [docs/api/v1.2.0/task-api.yaml](examples/minimal-task-board/docs/api/v1.2.0/task-api.yaml)
 
 6. 任务推进记录
-   [docs/tasks/V1.2.0-task-attachment-upload.md](examples/minimal-task-board/docs/tasks/V1.2.0-task-attachment-upload.md)
+   [docs/tasks/v1.2.0/task-attachment-upload.md](examples/minimal-task-board/docs/tasks/v1.2.0/task-attachment-upload.md)
 
 7. 代码实现
    [src/server.js](examples/minimal-task-board/src/server.js)  
@@ -60,32 +60,32 @@
    [.doc-sync.json](examples/minimal-task-board/.doc-sync.json)
 
 9. 如需跨 agent 交接
-   可直接看示例内的 [docs/tasks/V1.2.0-task-attachment-upload-handoff.md](examples/minimal-task-board/docs/tasks/V1.2.0-task-attachment-upload-handoff.md)
+   可直接看示例内的 [docs/tasks/v1.2.0/task-attachment-upload-handoff.md](examples/minimal-task-board/docs/tasks/v1.2.0/task-attachment-upload-handoff.md)
    同时对照根目录的 [docs/governance/project-handoff-checklist.md](docs/governance/project-handoff-checklist.md)
    与 [contracts/examples/handoff-summary.example.json](contracts/examples/handoff-summary.example.json)
 
 ### 示例二：Spring Boot 后端闭环
 
 1. 结构化任务入口
-   [docs/tasks/V1.2.0-device-image-upload-task-entry.json](examples/spring-boot-device-center/docs/tasks/V1.2.0-device-image-upload-task-entry.json)
+   [docs/tasks/v1.2.0/device-image-upload-task-entry.json](examples/spring-boot-device-center/docs/tasks/v1.2.0/device-image-upload-task-entry.json)
 
 2. 需求来源
-   [docs/requirements/V1.2.0-device-image-upload.md](examples/spring-boot-device-center/docs/requirements/V1.2.0-device-image-upload.md)
+   [docs/requirements/v1.2.0/device-image-upload.md](examples/spring-boot-device-center/docs/requirements/v1.2.0/device-image-upload.md)
 
 3. 设计收敛
-   [docs/design/V1.2.0-device-image-upload.md](examples/spring-boot-device-center/docs/design/V1.2.0-device-image-upload.md)
+   [docs/design/v1.2.0/device-image-upload.md](examples/spring-boot-device-center/docs/design/v1.2.0/device-image-upload.md)
 
 4. API 事实
-   [docs/api/device-admin-api.md](examples/spring-boot-device-center/docs/api/device-admin-api.md)
+   [docs/api/v1.2.0/device-admin-api.yaml](examples/spring-boot-device-center/docs/api/v1.2.0/device-admin-api.yaml)
 
 5. 表结构事实
-   [docs/sql/device-schema.md](examples/spring-boot-device-center/docs/sql/device-schema.md)
+   [docs/sql/v1.2.0/device-schema.md](examples/spring-boot-device-center/docs/sql/v1.2.0/device-schema.md)
 
 6. 升级说明
-   [docs/upgrade/V1.2.0-device-image-upload.md](examples/spring-boot-device-center/docs/upgrade/V1.2.0-device-image-upload.md)
+   [docs/upgrade/v1.2.0/device-image-upload.md](examples/spring-boot-device-center/docs/upgrade/v1.2.0/device-image-upload.md)
 
 7. 任务推进记录
-   [docs/tasks/V1.2.0-device-image-upload.md](examples/spring-boot-device-center/docs/tasks/V1.2.0-device-image-upload.md)
+   [docs/tasks/v1.2.0/device-image-upload.md](examples/spring-boot-device-center/docs/tasks/v1.2.0/device-image-upload.md)
 
 8. 代码实现
    [src/main/java/com/example/devicecenter/controller/DeviceAdminController.java](examples/spring-boot-device-center/src/main/java/com/example/devicecenter/controller/DeviceAdminController.java)  
@@ -101,7 +101,7 @@
    [.doc-sync.json](examples/spring-boot-device-center/.doc-sync.json)
 
 11. 如需跨 agent 交接
-   可直接看示例内的 [docs/tasks/V1.2.0-device-image-upload-handoff.md](examples/spring-boot-device-center/docs/tasks/V1.2.0-device-image-upload-handoff.md)
+   可直接看示例内的 [docs/tasks/v1.2.0/device-image-upload-handoff.md](examples/spring-boot-device-center/docs/tasks/v1.2.0/device-image-upload-handoff.md)
    同时对照根目录的 [docs/governance/project-handoff-checklist.md](docs/governance/project-handoff-checklist.md)
    与 [contracts/examples/handoff-summary.example.json](contracts/examples/handoff-summary.example.json)
 

@@ -1,0 +1,156 @@
+# Task API 契约（管示例项目对外接口，联调或核对接口时先查）
+# 随 docs/design/v1.2.0/task-attachment-upload.md 生成；可导入 swagger-ui / redoc / openapi-generator。
+# 变更契约时必须同步 docs/governance/document-sync-map.md 的同步矩阵。
+
+openapi: 3.1.0
+info:
+  title: Task API
+  version: v1.2.0
+  description: |
+    任务接口契约（minimal-task-board 示例）。
+    附件为 URL 录入方式，不涉及二进制上传；单任务最多 3 个附件。
+servers:
+  - url: http://localhost:3000
+    description: 本地示例服务
+paths:
+  /tasks/{taskId}:
+    get:
+      operationId: getTask
+      summary: 查询任务
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          description: 任务 ID
+          schema:
+            type: string
+            example: task-1
+      responses:
+        "200":
+          description: 任务详情（含附件列表）
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        "404":
+          description: 任务不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+              example:
+                message: 任务不存在
+  /tasks/{taskId}/attachments:
+    post:
+      operationId: addAttachment
+      summary: 新增任务附件
+      description: |
+        录入附件 URL；filename 与 url 都不能为空，单任务最多 3 个附件。
+      parameters:
+        - name: taskId
+          in: path
+          required: true
+          description: 任务 ID
+          schema:
+            type: string
+            example: task-1
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AttachmentInput'
+            example:
+              filename: spec.png
+              url: https://cdn.example.com/spec.png
+      responses:
+        "201":
+          description: 新增成功，返回更新后的任务
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        "400":
+          description: filename / url 为空、附件超限或请求体非法
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+              example:
+                message: 每个任务最多上传 3 个附件
+        "404":
+          description: 任务不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResp'
+              example:
+                message: 任务不存在
+components:
+  schemas:
+    Attachment:
+      type: object
+      required:
+        - id
+        - filename
+        - url
+      properties:
+        id:
+          type: string
+          description: 附件 ID
+          example: att-1
+        filename:
+          type: string
+          description: 附件显示名
+          example: spec.png
+        url:
+          type: string
+          format: uri
+          description: 附件访问地址
+          example: https://cdn.example.com/spec.png
+    AttachmentInput:
+      type: object
+      required:
+        - filename
+        - url
+      properties:
+        filename:
+          type: string
+          minLength: 1
+          description: 附件显示名
+          example: spec.png
+        url:
+          type: string
+          format: uri
+          minLength: 1
+          description: 附件访问地址
+          example: https://cdn.example.com/spec.png
+    Task:
+      type: object
+      required:
+        - id
+        - title
+        - attachments
+      properties:
+        id:
+          type: string
+          description: 任务 ID
+          example: task-1
+        title:
+          type: string
+          description: 任务标题
+          example: 整理 starter 文档
+        attachments:
+          type: array
+          description: 附件列表，单任务最多 3 个
+          items:
+            $ref: '#/components/schemas/Attachment'
+    ErrorResp:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: 错误信息
+          example: 任务不存在

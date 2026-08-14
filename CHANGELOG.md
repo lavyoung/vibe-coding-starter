@@ -18,6 +18,7 @@
 - 新增**版本演进约束**：交付物型目录（`requirements/`、`design/`、`tasks/`、`upgrade/`、`api/`、`sql/`）必须按版本子目录 `vX.Y.Z/` 组织，版本目录之下才是真正的文件；目录根只保留 README 与跨版本模板；事实源型目录（`architecture/`、`governance/`、`rfcs/`、`explanation/adr/`、`evolution/`、`ui/`）持续根级演进。同步更新 `docs/README.md`、`docs/index.md`、`docs/governance/document-sync-map.md`、六个交付物目录 README、`docs/design/DESIGN_TEMPLATE.md`、`docs/evolution/current-snapshot.md`、`docs/governance/prompt-workflow-playbook.md` 与 `QUICKSTART.md`；示例契约移至 `docs/api/v1.0.0/task-api.yaml`。
 - skill 体系优化：清除 `java-spring-openapi-doc-generator` 与 `java-error-code-i18n` 中的项目特定符号残留；`AGENTS.md` 新增 0.3 专项 skill 强制门禁（分布式锁、MyBatis、Controller / OpenAPI、错误码 / i18n、异步、防腐层、测试、编码规范等 9 个区域）；为 `java-service-structure`、`java-transaction-boundary`、`safe-code-change` 补齐 `agents/openai.yaml`；`task-router` 与 `post-change-check` 衔接 `java-*` skill 路由与收口复核。
 - skill 语言统一：`java-coding-standards`、`java-interface-javadoc`、`java-spring-openapi-doc-generator`、`java-unit-test-designer`、`java-mybatis-query`、`java-distributed-lock` 六个 skill 正文由英文统一为中文；frontmatter `description` 保留英文供工具链语义匹配，代码符号与示例保持原文。
+- 示例资产同步新规则：`minimal-task-board` 与 `spring-boot-device-center` 的交付物文档迁移到 `v1.2.0/` 版本目录（requirements / design / tasks / upgrade / sql），API 契约由 Markdown 改写为可导入 OpenAPI YAML（`docs/api/v1.2.0/*.yaml`，与实际代码行为对齐）；`check_all.py` 示例 task-entry / handoff 查找改为递归以支持版本目录；根仓库与两个示例的 `.doc-sync.json` `docGlobs` 加深一层覆盖版本目录三层路径；同步更新示例 README / index / INDEX / document-sync-map / handoff / task-entry 与根 `DEMO.md` 的全部引用。
 
 ## [v0.4.1] - 2026-06-23
 

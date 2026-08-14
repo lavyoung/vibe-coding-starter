@@ -36,10 +36,10 @@
 
 ## 3. 对应迁移脚本
 
-- [../../src/main/resources/db/migration/V1__create_devices_table.sql](../../src/main/resources/db/migration/V1__create_devices_table.sql)
-- [../../src/main/resources/db/migration/V2__create_device_images_table.sql](../../src/main/resources/db/migration/V2__create_device_images_table.sql)
+- [../../../src/main/resources/db/migration/V1__create_devices_table.sql](../../../src/main/resources/db/migration/V1__create_devices_table.sql)
+- [../../../src/main/resources/db/migration/V2__create_device_images_table.sql](../../../src/main/resources/db/migration/V2__create_device_images_table.sql)
 
 ## 关联代码
 
-- [../../src/main/java/com/example/devicecenter/model/Device.java](../../src/main/java/com/example/devicecenter/model/Device.java)
-- [../../src/main/java/com/example/devicecenter/repository/InMemoryDeviceRepository.java](../../src/main/java/com/example/devicecenter/repository/InMemoryDeviceRepository.java)
+- [../../../src/main/java/com/example/devicecenter/model/Device.java](../../../src/main/java/com/example/devicecenter/model/Device.java)
+- [../../../src/main/java/com/example/devicecenter/repository/InMemoryDeviceRepository.java](../../../src/main/java/com/example/devicecenter/repository/InMemoryDeviceRepository.java)

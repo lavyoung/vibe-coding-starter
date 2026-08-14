@@ -34,7 +34,7 @@
 ### 文档与代码范围
 
 - 代码：`src/server.js`、`src/task-store.js`
-- 文档：`docs/requirements/V1.2.0-task-attachment-upload.md`、`docs/design/V1.2.0-task-attachment-upload.md`、`docs/ui/screens/task-detail-attachment-upload.md`、`docs/api/task-api.md`、`docs/tasks/V1.2.0-task-attachment-upload.md`
+- 文档：`docs/requirements/v1.2.0/task-attachment-upload.md`、`docs/design/v1.2.0/task-attachment-upload.md`、`docs/ui/screens/task-detail-attachment-upload.md`、`docs/api/v1.2.0/task-api.yaml`、`docs/tasks/v1.2.0/task-attachment-upload.md`
 - 无需更新但已检查：`docs/governance/document-sync-map.md`
 
 ### 验证结果
@@ -44,5 +44,5 @@
 
 ## 关联代码
 
-- [../../src/server.js](../../src/server.js)
-- [../../src/task-store.js](../../src/task-store.js)
+- [../../../src/server.js](../../../src/server.js)
+- [../../../src/task-store.js](../../../src/task-store.js)
