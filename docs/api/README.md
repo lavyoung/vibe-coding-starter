@@ -13,11 +13,13 @@
 - 默认不再以 Markdown 作为接口契约输出；人读说明可由工具从 YAML 渲染，或按需补一份 `*-notes.md` 作为 YAML 无法表达的人类补充说明（如业务规则、错误语义、联调注意点），它不是契约本体。
 - OpenAPI YAML 必须能被主流工具导入解析：swagger-ui / redoc / openapi-generator / 各语言 client 生成器。
 
-## 命名规则
+## 文件位置与命名规则
 
-- 按业务域命名：`<domain>-api.yaml`（如 `task-api.yaml`）。
-- 涉及版本演进时使用版本前缀：`<version>-<domain>-api.yaml`（如 `v1.2.0-device-admin-api.yaml`）。
-- 同一契约存在多版本时保留版本号，禁止用 `latest`、`final` 等含糊后缀覆盖旧版本。
+- 契约文件按版本目录组织（版本演进约束见 [docs/README.md](../README.md)）：`docs/api/vX.Y.Z/<domain>-api.yaml`，如 `docs/api/v1.1.1/task-api.yaml`。
+- 文件名按业务域命名（`<domain>-api.yaml`），版本体现在目录名，不在文件名里重复。
+- 同一版本内存在多份契约时按业务域拆分多个文件。
+- 禁止把契约文件直接放在 `docs/api/` 根；根只保留本 README 与可选的 `*-notes.md` 目录说明。
+- 最新版本目录是当前契约事实源，历史版本目录仅作追溯。
 
 ## 最小结构约定
 
@@ -50,8 +52,8 @@ components:
 
 ## 完整示例
 
-- 可直接导入的完整契约示例见 [task-api.yaml](task-api.yaml)（任务域 CRUD：分页查询、创建、详情、CAS 更新、逻辑删除，含枚举、`$ref` 复用与统一返回包装）。
-- 新项目复制该文件并按业务域改写，作为本目录的第一个契约文件。
+- 可直接导入的完整契约示例见 [v1.0.0/task-api.yaml](v1.0.0/task-api.yaml)（任务域 CRUD：分页查询、创建、详情、CAS 更新、逻辑删除，含枚举、`$ref` 复用与统一返回包装）。
+- 新项目复制该文件到 `docs/api/vX.Y.Z/` 并按业务域改写，作为该版本的第一个契约文件。
 
 ## 建议规则
 

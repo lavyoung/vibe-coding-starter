@@ -58,11 +58,11 @@
 | `docs/rfcs/README.md` / `RFC_TEMPLATE.md` | 提案规则与模板 | 新技术方案设计时 |
 | `docs/explanation/adr/README.md` / `ADR_TEMPLATE.md` | 决策记录规则与模板 | 方案已接受时 |
 | `docs/ui/README.md` / `page-map.md` / `interaction-patterns.md` / `screens/*.md` | 页面、弹窗和交互事实源 | 项目存在前端 / 管理端界面时 |
-| `<docs/design/...>` | 已接受的领域设计 | 改对应领域代码时 |
-| `<docs/tasks/...>` | 领域任务拆分和进度 | 实施推进和交接时 |
-| `<docs/upgrade/...>` | 升级说明和脚本 | 上线和发布时 |
-| `<docs/api/...>` | 对外接口契约（可导入 OpenAPI YAML，随设计文档生成） | 联调和对接时 |
-| `<docs/sql/...>` | 表结构和 SQL 脚本 | 排查表结构和升级时 |
+| `<docs/design/vX.Y.Z/...>` | 已接受的领域设计（按版本目录演进） | 改对应领域代码时 |
+| `<docs/tasks/vX.Y.Z/...>` | 领域任务拆分和进度 | 实施推进和交接时 |
+| `<docs/upgrade/vX.Y.Z/...>` | 升级说明和脚本 | 上线和发布时 |
+| `<docs/api/vX.Y.Z/...>` | 对外接口契约（可导入 OpenAPI YAML，随设计文档生成） | 联调和对接时 |
+| `<docs/sql/vX.Y.Z/...>` | 表结构和 SQL 脚本 | 排查表结构和升级时 |
 
 ## 3. 代码 -> 文档同步矩阵模板
 
@@ -70,12 +70,12 @@
 
 | 代码模块 | 必须同步的文档 | 同步动作 |
 |---|---|---|
-| `<controller/...>` | `<docs/api/*.yaml>` + `<docs/design/...>` | 新增 / 修改 / 废弃端点同步契约（OpenAPI YAML）和设计 |
-| `<service/...>` | `<docs/design/...>` + `<docs/tasks/...>` | 重大逻辑变化同步设计和任务状态 |
-| `<dataobject / entity / schema>` | `<docs/sql/...>` + `<docs/upgrade/...>` + `<docs/design/...>` | 字段 / 索引 / DDL / 升级说明同步 |
-| `<config / properties / env>` | `<docs/upgrade/...>` + `<docs/architecture/...>` | 配置项和基线变化同步 |
-| `<job / worker / scheduler>` | `<docs/upgrade/...>` + `<docs/design/...>` | 任务入口和执行约束同步 |
-| `<frontend/pages / routes / views>` | `<docs/ui/screens/...>` + `<docs/ui/page-map.md>` + `<docs/design/...>` | 页面结构、交互规则、导航入口同步 |
+| `<controller/...>` | `<docs/api/vX.Y.Z/*.yaml>` + `<docs/design/vX.Y.Z/...>` | 新增 / 修改 / 废弃端点同步契约（OpenAPI YAML）和设计 |
+| `<service/...>` | `<docs/design/vX.Y.Z/...>` + `<docs/tasks/vX.Y.Z/...>` | 重大逻辑变化同步设计和任务状态 |
+| `<dataobject / entity / schema>` | `<docs/sql/vX.Y.Z/...>` + `<docs/upgrade/vX.Y.Z/...>` + `<docs/design/vX.Y.Z/...>` | 字段 / 索引 / DDL / 升级说明同步 |
+| `<config / properties / env>` | `<docs/upgrade/vX.Y.Z/...>` + `<docs/architecture/...>` | 配置项和基线变化同步 |
+| `<job / worker / scheduler>` | `<docs/upgrade/vX.Y.Z/...>` + `<docs/design/vX.Y.Z/...>` | 任务入口和执行约束同步 |
+| `<frontend/pages / routes / views>` | `<docs/ui/screens/...>` + `<docs/ui/page-map.md>` + `<docs/design/vX.Y.Z/...>` | 页面结构、交互规则、导航入口同步 |
 | `<frontend/components / hooks>` | `<docs/ui/interaction-patterns.md>` + `<docs/ui/screens/...>` | 通用交互和单页特例同步 |
 | 跨域架构调整 | `docs/architecture/current-architecture.md` + `docs/rfcs/*.md` / `docs/explanation/adr/*.md` | 先更新架构基线，再补提案或决策 |
 
@@ -83,10 +83,10 @@
 
 | 文档 | 必须先确认的代码 | 不允许凭空写 |
 |---|---|---|
-| `<docs/design/...>` | 先 grep 代码现状，再写 | 禁止写“将来会做但代码没有”的内容 |
-| `<docs/api/*.yaml>` | 必须基于当前接口生成可导入的 OpenAPI YAML | 禁止保留无效路径、禁止用 md 替代 YAML 作为契约本体 |
-| `<docs/sql/...>` | 必须与实体 / DO / schema 一致 | 禁止写不存在的字段 |
-| `<docs/upgrade/...>` | 必须基于当前代码和脚本生成 | 禁止把未落地能力写成已完成 |
+| `<docs/design/vX.Y.Z/...>` | 先 grep 代码现状，再写 | 禁止写“将来会做但代码没有”的内容 |
+| `<docs/api/vX.Y.Z/*.yaml>` | 必须基于当前接口生成可导入的 OpenAPI YAML | 禁止保留无效路径、禁止用 md 替代 YAML 作为契约本体 |
+| `<docs/sql/vX.Y.Z/...>` | 必须与实体 / DO / schema 一致 | 禁止写不存在的字段 |
+| `<docs/upgrade/vX.Y.Z/...>` | 必须基于当前代码和脚本生成 | 禁止把未落地能力写成已完成 |
 | `<docs/ui/screens/...>` | 必须先确认当前页面、组件、接口约束 | 禁止把草图或未实现交互写成现状 |
 | `<docs/ui/interaction-patterns.md>` | 必须先确认通用组件和现有交互 | 禁止把单页特例误写成全局规则 |
 | `docs/architecture/current-architecture.md` | 必须基于实际模块、依赖和分层生成 | 禁止凭空描述系统边界 |

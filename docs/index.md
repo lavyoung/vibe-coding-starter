@@ -41,8 +41,7 @@
 | `architecture/` | 当前系统整体长什么样 | 跨域基线变化 |
 | `upgrade/` | 上线或升级需要做什么 | 配置、DDL、脚本变化 |
 | `api/` / `sql/` | 稳定事实是什么 | 接口契约（OpenAPI YAML）和结构事实 |
-| `ui/` | 页面、弹窗和交互规则是什么 | 项目存在前端 / 管理端界面时 |
-| `governance/` | 文档规则、同步矩阵、状态闸门是什么 | 需要治理和同步时 |
+| `ui/` | 页面、弹窗和交互规则是什么 | 项目存在前端 / 管理端界面时 || `governance/` | 文档规则、同步矩阵、状态闸门是什么 | 需要治理和同步时 |
 | `project-profile.md` | 项目技术、验证和架构事实是什么 | 初始化、接手或启用专项 skill 时 |
 | `governance/ai-collaboration-best-practices.md` | 人类 + AI 协作节奏怎么走 | 需要统一会话与 review 方式时 |
 | `governance/prompt-workflow-playbook.md` | 常见任务场景里 prompts 应该按什么顺序用 | 不想自己判断 prompt 串联顺序时 |
@@ -50,6 +49,8 @@
 | `governance/project-handoff-checklist.md` | 一次工作结束后要交接什么 | 跨人接力、阶段收口、新会话续做 |
 | `evolution/current-snapshot.md` | 当前阶段最值得先看的单点快照 | 新会话、新人接手、阶段交接 |
 | `evolution/` | 当前演进主线是什么 | 需要维护阶段总览时 |
+
+版本演进约束：`requirements/`、`design/`、`tasks/`、`upgrade/`、`api/`、`sql/` 等交付物型目录按版本子目录 `vX.Y.Z/` 组织，版本目录之下才是真正的文件；最新版本目录是当前事实源（权威规则见 [docs/README.md](README.md)）。
 
 ## 4. 统一状态口径
 

@@ -5,7 +5,7 @@
 openapi: 3.1.0
 info:
   title: Task API
-  version: v1.0
+  version: v1.0.0
   description: |
     任务管理对外接口契约（完整示例）。
     统一返回包装：{ "code": 0, "data": ..., "message": "success" }；code 非 0 表示业务失败。

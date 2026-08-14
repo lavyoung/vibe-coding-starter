@@ -23,7 +23,7 @@
 
 ## 6. 接口 / 数据 / 模型建议
 
-涉及对外接口时，本设计文档应随附生成**可导入的 OpenAPI YAML** 契约到 `docs/api/`（默认产出，OpenAPI 3.x，结构约定见 [docs/api/README.md](../api/README.md)）；Markdown 不再作为默认接口契约输出。接口未定稿时不得写入正式 YAML。
+涉及对外接口时，本设计文档应随附生成**可导入的 OpenAPI YAML** 契约到 `docs/api/vX.Y.Z/`（版本目录，默认产出，OpenAPI 3.x，结构约定见 [docs/api/README.md](../api/README.md)）；Markdown 不再作为默认接口契约输出。接口未定稿时不得写入正式 YAML。
 
 ## 7. 实施影响面
 

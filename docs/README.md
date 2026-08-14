@@ -33,11 +33,18 @@ docs/
 ├── explanation/
 │   └── adr/
 ├── requirements/
+│   └── v1.1.1/          (版本目录，之下才是真正的文件)
 ├── design/
+│   └── v1.1.1/
 ├── tasks/
+│   └── v1.1.1/
 ├── upgrade/
+│   └── v1.1.1/
 ├── api/
+│   ├── v1.1.1/          (契约本体按版本目录存放)
+│   └── README.md
 ├── sql/
+│   └── v1.1.1/
 ├── ui/                (可选)
 └── README.md
 ```
@@ -59,6 +66,17 @@ docs/
 - `governance/prompt-workflow-playbook.md`：按真实场景组织的提示词使用顺序说明
 - `governance/agent-collaboration-protocol.md`：多 agent 之间共享任务入口与交接摘要时的最小协作协议
 - `evolution/`：当前主线入口与单点快照
+
+## 版本演进约束
+
+文档元数据虽然带有"版本"字段，但目录组织也必须按版本演进：
+
+- **交付物型目录**（`requirements/`、`design/`、`tasks/`、`upgrade/`、`api/`、`sql/`）必须先在分类目录下创建版本目录 `vX.Y.Z/`（语义化版本，如 `v1.1.1`），**版本目录之下才是真正的文件**；禁止把版本交付物直接散落在分类目录根。
+- 版本目录名与文档元数据的"版本"字段保持一致；新版本开始演进时新建版本目录，同一版本内的修订原地更新，不重复建目录。
+- 版本目录内再按业务域组织：如 `docs/design/v1.1.1/<domain>/`、`docs/tasks/v1.1.1/<domain>/`；单文件可直接放版本目录内。
+- 分类目录根只保留目录职责说明（`README.md`）与跨版本模板（如 `DESIGN_TEMPLATE.md`、`TASK_TEMPLATE.md`），不放任何版本交付物。
+- **事实源型目录**（`architecture/`、`governance/`、`rfcs/`、`explanation/adr/`、`evolution/`、`ui/` 的全局规则文件）不按版本目录组织，持续根级演进；`ui/screens/` 按页面组织。
+- 改代码时以"当前有效版本目录"为准：最新版本目录是当前契约与设计的事实源，历史版本目录仅作追溯。
 
 ## 关联代码
 

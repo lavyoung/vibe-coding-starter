@@ -9,8 +9,9 @@
 
 ## 使用方式
 
-- 业务域任务文档放在 `docs/tasks/<domain>/`
+- 按版本演进约束（见 [docs/README.md](../README.md)）组织：业务域任务文档放在 `docs/tasks/vX.Y.Z/<domain>/`，如 `docs/tasks/v1.1.1/task/`；单文件任务可直接放 `docs/tasks/vX.Y.Z/`
 - 初始任务可复制 [TASK_TEMPLATE.md](TASK_TEMPLATE.md)
+- 最新版本目录是当前任务事实源，历史版本目录仅作追溯
 
 ## 关联代码
 

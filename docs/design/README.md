@@ -9,9 +9,10 @@
 
 ## 使用方式
 
-- 业务域级设计文档放在 `docs/design/<domain>/`
+- 按版本演进约束（见 [docs/README.md](../README.md)）组织：业务域级设计文档放在 `docs/design/vX.Y.Z/<domain>/`，如 `docs/design/v1.1.1/task/`；单文件设计可直接放 `docs/design/vX.Y.Z/`
 - 单独方案较小时，也可以先复制 [DESIGN_TEMPLATE.md](DESIGN_TEMPLATE.md)
 - 设计未被接受前，状态应保持为 `草案` 或 `评审中`
+- 最新版本目录是当前设计事实源，历史版本目录仅作追溯
 
 ## 关联代码
 
