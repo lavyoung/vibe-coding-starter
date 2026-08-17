@@ -222,7 +222,9 @@ def run_git_status(repo_root: Path) -> list[str]:
         check=False,
     )
     if result.returncode != 0:
-        raise RuntimeError(result.stderr.strip() or "git status failed")
+        # 非 git 仓库（如从 zip 解压的模板副本）视为无增量变更，
+        # 全量检查（--scan-docs / links / assets / examples）仍可正常工作。
+        return []
 
     changed_files: list[str] = []
     for line in result.stdout.splitlines():

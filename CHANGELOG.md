@@ -37,6 +37,7 @@
 - 初始化技术栈感知：`init_starter` 在 `--tech-stack` 非 Java 系（不含 `java` / `spring`）时自动删除 `tools/skills/java-*`，并同步精简 `AGENTS.md` 0.3 门禁与 0.2 Java 条目、`docs/project-profile.md` §4 Java 条目、README / 技能库说明中的 Java 清单；新增 `tests/test_init_starter.py`（3 个用例）覆盖判定与裁剪；QUICKSTART 与 `tools/skills/README.md` 补充自动裁剪说明。
 - 评审记录证据链：`RFC_TEMPLATE.md` 与 `ADR_TEMPLATE.md` 新增“评审记录”章节（日期 / 评审人 / 结论表格）；`doc_sync_check.py` 校验 `rfc` / `adr` 类型文档推进到 `已接受` 及以上状态时必须包含“## 评审记录”章节（草案 / 评审中不要求）；`document-sync-map.md` §1.2 补充评审记录口径；`tests/test_doc_sync_check.py` 增加 3 个评审记录用例。
 - OpenAPI 契约一致性示例：`spring-boot-device-center` 新增 `OpenApiContractConsistencyTest`——把运行时路由（`RequestMappingHandlerMapping`）与 `docs/api/v1.2.0/device-admin-api.yaml` 双向对比（契约登记 vs 运行时实现），作为“契约与实现内容对齐”的机器化参考实现；顺带修复既有契约-实现不一致（上传图片端点在契约中误挂 `/admin/devices/{deviceId}`，修正为 `/admin/devices/{deviceId}/images` 与代码一致）；示例 README 补充测试说明。
+- 初始化端到端验证：新增 `tests/test_init_e2e.py`（复制真实仓库 → 真实 `init_starter` → 真实 `check_all --scan-docs`，覆盖非 Java 裁剪后全绿与 Java 保留后全绿两种场景）；`check_all.py` 在非 git 仓库（如 zip 解压副本）不再崩溃，降级为“无增量变更”，全量检查仍可用；CI 补充 `pip install pyyaml`（`--scan-docs` 全量校验 OpenAPI YAML 需要）。
 - `README.md`、`QUICKSTART.md`、`contracts/README.md`、`CLAUDE.md` 与 `scripts/check_all.py` 收口为“`CLAUDE.md` 与 `contracts/` 按需启用”的口径，不再把它们当成默认必带能力。
 - `tests/test_check_all.py` 补充“缺少 `CLAUDE.md` 或 `contracts/` 仍可通过基础检查”的回归用例，避免后续把可选能力重新写回强依赖。
 
