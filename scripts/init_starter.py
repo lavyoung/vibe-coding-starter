@@ -39,6 +39,9 @@ PLACEHOLDER_KEYS = {
     "<BUSINESS_DOMAINS>",
 }
 
+# 命中即视为 Java 系技术栈，初始化时保留 Java 专项技能
+JAVA_STACK_HINTS = ("java", "spring")
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -173,6 +176,130 @@ def disable_ui_module(repo_root: Path) -> list[Path]:
     return changed_files
 
 
+def is_java_stack(tech_stack: str | None) -> bool:
+    """技术栈描述命中 Java / Spring 关键词时视为 Java 系，保留技能库。"""
+    if not tech_stack:
+        return False
+    lowered = tech_stack.lower()
+    return any(hint in lowered for hint in JAVA_STACK_HINTS)
+
+
+def trim_java_skills(repo_root: Path) -> list[Path]:
+    """非 Java 技术栈初始化时裁剪 Java 系技能与对应门禁、清单，返回改动的文件。"""
+    changed_files: list[Path] = []
+
+    skills_dir = repo_root / "tools" / "skills"
+    if skills_dir.is_dir():
+        removed = False
+        for skill_dir in sorted(skills_dir.glob("java-*")):
+            if skill_dir.is_dir():
+                shutil.rmtree(skill_dir)
+                removed = True
+        if removed:
+            print("- removed: tools/skills/java-*")
+
+    # AGENTS.md：删除 0.2 中 Java 相关行与 0.3 整节门禁
+    agents_path = repo_root / "AGENTS.md"
+    if agents_path.exists():
+        original = agents_path.read_text(encoding="utf-8")
+        lines = original.splitlines()
+        new_lines: list[str] = []
+        in_gate = False
+        for line in lines:
+            if line.strip() == "### 0.3 专项 skill 强制门禁":
+                in_gate = True
+                continue
+            if in_gate:
+                if line.startswith("## "):
+                    in_gate = False
+                else:
+                    continue
+            if "java-service-structure" in line or line.startswith(
+                "- 仅当项目技术栈为 Java 系"
+            ):
+                continue
+            new_lines.append(line)
+        updated = "\n".join(new_lines)
+        if original.endswith("\n"):
+            updated += "\n"
+        if updated != original:
+            agents_path.write_text(updated, encoding="utf-8")
+            changed_files.append(agents_path)
+            print("- AGENTS.md: 移除 Java 专项门禁")
+
+    # docs/project-profile.md：删除 Java 条目行，引言行改为通用口径
+    profile_path = repo_root / "docs" / "project-profile.md"
+    if profile_path.exists():
+        original = profile_path.read_text(encoding="utf-8")
+        new_lines: list[str] = []
+        for line in original.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("- ") and "tools/skills/java-" in line:
+                continue
+            if stripped.startswith("> 本节以 Java 系技能库为示例"):
+                new_lines.append("> 本节按项目技术栈维护专项 skill 启用条件。")
+                continue
+            new_lines.append(line)
+        updated = "\n".join(new_lines)
+        if original.endswith("\n"):
+            updated += "\n"
+        if updated != original:
+            profile_path.write_text(updated, encoding="utf-8")
+            changed_files.append(profile_path)
+            print("- docs/project-profile.md: 移除 Java 专项条目")
+
+    # tools/skills/README.md：移除 Java 系示例说明
+    skills_readme = skills_dir / "README.md"
+    if skills_readme.exists():
+        original = skills_readme.read_text(encoding="utf-8")
+        new_lines: list[str] = []
+        for line in original.splitlines():
+            if line.startswith("> 本模板以 Java 系为示例栈"):
+                continue
+            if "12 个 `java-*`" in line and "|" in line:
+                new_lines.append(
+                    "| 栈绑定技能 | 规则深度依赖某技术栈 / 框架语感 "
+                    "| （本项目未启用；需要时用 `tools/skills/_template/` 补写本栈专项技能） |"
+                )
+                continue
+            new_lines.append(line)
+        updated = "\n".join(new_lines)
+        if original.endswith("\n"):
+            updated += "\n"
+        if updated != original:
+            skills_readme.write_text(updated, encoding="utf-8")
+            changed_files.append(skills_readme)
+            print("- tools/skills/README.md: 移除 Java 系示例说明")
+
+    # README.md：技能清单与数字声明同步为裁剪后事实
+    readme_path = repo_root / "README.md"
+    if readme_path.exists():
+        original = readme_path.read_text(encoding="utf-8")
+        new_lines: list[str] = []
+        for line in original.splitlines():
+            stripped = line.strip()
+            if stripped.startswith("- Java 专项（栈绑定）") or stripped.startswith(
+                "- 注：`java-*`"
+            ):
+                continue
+            line = (
+                line.replace("17 个可复用 skills", "可复用 skills")
+                .replace("17 个可复用 skill：", "skill 库：")
+                .replace("17 个可复用 skill", "可复用 skill")
+                .replace("**17 个 skill**", "**skill 库**")
+            )
+            new_lines.append(line)
+        updated = "\n".join(new_lines)
+        if original.endswith("\n"):
+            updated += "\n"
+        if updated != original:
+            readme_path.write_text(updated, encoding="utf-8")
+            changed_files.append(readme_path)
+            print("- README.md: 技能清单同步为裁剪后事实")
+
+    return changed_files
+
+
 def find_remaining_placeholders(repo_root: Path) -> dict[str, list[str]]:
     findings: dict[str, list[str]] = {}
     for path in iter_text_files(repo_root):
@@ -197,6 +324,9 @@ def main() -> int:
 
     changed_files = replace_placeholders(repo_root, replacements)
 
+    if args.tech_stack and not is_java_stack(args.tech_stack):
+        changed_files.extend(trim_java_skills(repo_root))
+
     if args.disable_ui:
         changed_files.extend(disable_ui_module(repo_root))
 
@@ -208,6 +338,12 @@ def main() -> int:
         print("ui-module: disabled")
     else:
         print("ui-module: kept")
+    if args.tech_stack and is_java_stack(args.tech_stack):
+        print("java-skills: kept (Java / Spring stack)")
+    elif args.tech_stack:
+        print("java-skills: trimmed")
+    else:
+        print("java-skills: kept (tech stack not provided)")
 
     if remaining:
         print("remaining-placeholders:")

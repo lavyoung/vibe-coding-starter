@@ -21,7 +21,7 @@ skill 分两类：
 ## 2. 非 Java 项目：3 步裁剪
 
 1. **删除栈绑定技能目录**：`Remove-Item tools/skills/java-* -Recurse`（bash：`rm -rf tools/skills/java-*`）。
-2. **精简引用**：删除 `AGENTS.md` 0.2 / 0.3 与 `docs/project-profile.md` §4 中的 Java 条目。若把 `docs/project-profile.md` 的“技术栈”字段改为非 Java，则 `AGENTS.md` 0.3 门禁自动失效，只需再删 0.2 中的 `java-*` 匹配说明。
+2. **精简引用**：删除 `AGENTS.md` 0.2 / 0.3 与 `docs/project-profile.md` §4 中的 Java 条目。若把 `docs/project-profile.md` 的“技术栈”字段改为非 Java，则 `AGENTS.md` 0.3 门禁自动失效，只需再删 0.2 中的 `java-*` 匹配说明。使用 `init_starter --tech-stack <非 Java 栈>` 初始化时可自动完成第 1、2 步与第 3 步的清单同步。
 3. **补位**：用 [`tools/skills/_template/SKILL.md`](_template/SKILL.md) 写自己栈的专项 skill，命名用 `<栈名>-<主题>`，并按需在 `AGENTS.md` 0.3 登记强制门禁。
 
 ## 3. 新增 skill 规范

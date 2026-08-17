@@ -84,6 +84,8 @@ bash scripts/init_starter.sh \
   --business-domains "用户,订单"
 ```
 
+> **技能库自动裁剪**：`--tech-stack` 命中 `java` / `spring` 关键词时保留 12 个 Java 专项 skill；其他技术栈（如 `Go 1.22`、`Python 3.12`、`Node.js 20`）初始化时会自动删除 `tools/skills/java-*`，并同步精简 `AGENTS.md` 门禁、`docs/project-profile.md` §4 与 README / 技能库说明中的 Java 清单；未提供 `--tech-stack` 时不裁剪。
+
 如果当前项目暂时没有界面层文档，可以改为：
 
 ```bash
