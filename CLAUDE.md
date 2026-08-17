@@ -7,15 +7,16 @@
 
 ## 0. 开始前先做什么
 
-1. 先扫描 [`tools/skills`](tools/skills/)。
-2. 先读 [AGENTS.md](AGENTS.md)。
-3. 再按顺序读：
+1. 若 `docs/project-profile.md` 的"技术栈"字段仍是 `<TECH_STACK>` 占位（项目尚未初始化），先自动运行一次 `scripts/init_starter.py`（`--project-name`、`--tech-stack` 必填），完成占位符替换与技术栈裁剪。
+2. 先扫描 [`tools/skills`](tools/skills/)。
+3. 先读 [AGENTS.md](AGENTS.md)。
+4. 再按顺序读：
    - [docs/index.md](docs/index.md)
    - [docs/onboarding.md](docs/onboarding.md)
    - [docs/evolution/INDEX.md](docs/evolution/INDEX.md)
    - [docs/governance/document-sync-map.md](docs/governance/document-sync-map.md)
-4. 只有 `已接受`、`已生效`、`已落地` 的文档，才能作为实现依据。
-5. 动手前先确认当前模块、相邻模块、脚本、组件和文档里是否已有可复用路径。
+5. 只有 `已接受`、`已生效`、`已落地` 的文档，才能作为实现依据。
+6. 动手前先确认当前模块、相邻模块、脚本、组件和文档里是否已有可复用路径。
 
 ## 1. 项目事实
 

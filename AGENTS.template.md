@@ -5,6 +5,12 @@
 
 ## 0. Skill 扫描规则
 
+### 0.0 首次初始化（自动执行一次）
+
+- 若 `docs/project-profile.md` 的"技术栈"字段仍是 `<TECH_STACK>` 占位（项目尚未初始化），必须先自动运行一次 `scripts/init_starter.py`（`--project-name` 与 `--tech-stack` 必填；`init_starter.ps1` / `.sh` 为同参数跨平台入口），完成占位符替换与技术栈裁剪，再进入任何实现、修改、测试、评审任务。
+- 初始化会自动：替换占位符；技术栈非 Java 系时删除 `tools/skills/java-*` 并精简 `AGENTS.md` 门禁、`docs/project-profile.md` §4 与技能库清单。
+- 已完成初始化的项目跳过本节；`check_all` 的 `starter initialized` 检查会提示未初始化状态（提示不阻断）。
+
 ### 0.1 执行顺序
 
 在处理本项目任何实现、修改、测试、评审类任务前，先扫描 [`tools/skills`](tools/skills/)。

@@ -253,6 +253,8 @@ bash scripts/init_starter.sh
 ./scripts/init_starter.ps1
 ```
 
+> **技术栈感知裁剪**：`--tech-stack` 命中 `java` / `spring` 关键词时保留 12 个 Java 专项 skill；其他技术栈（如 `Go 1.22`、`Python 3.12`、`Node.js 20`）初始化时会自动删除 `tools/skills/java-*`，并同步精简 `AGENTS.md` 门禁与 `docs/project-profile.md` §4；未提供 `--tech-stack` 时不裁剪。完整参数与用法见 [QUICKSTART.md](QUICKSTART.md) §2。
+
 - [scripts/check_all.py](scripts/check_all.py)：统一检查的 Python 主实现
 - [scripts/check_all.ps1](scripts/check_all.ps1)：Windows PowerShell 入口
 - [scripts/check_all.sh](scripts/check_all.sh)：macOS / Linux shell 入口

@@ -38,6 +38,7 @@
 - 评审记录证据链：`RFC_TEMPLATE.md` 与 `ADR_TEMPLATE.md` 新增“评审记录”章节（日期 / 评审人 / 结论表格）；`doc_sync_check.py` 校验 `rfc` / `adr` 类型文档推进到 `已接受` 及以上状态时必须包含“## 评审记录”章节（草案 / 评审中不要求）；`document-sync-map.md` §1.2 补充评审记录口径；`tests/test_doc_sync_check.py` 增加 3 个评审记录用例。
 - OpenAPI 契约一致性示例：`spring-boot-device-center` 新增 `OpenApiContractConsistencyTest`——把运行时路由（`RequestMappingHandlerMapping`）与 `docs/api/v1.2.0/device-admin-api.yaml` 双向对比（契约登记 vs 运行时实现），作为“契约与实现内容对齐”的机器化参考实现；顺带修复既有契约-实现不一致（上传图片端点在契约中误挂 `/admin/devices/{deviceId}`，修正为 `/admin/devices/{deviceId}/images` 与代码一致）；示例 README 补充测试说明。
 - 初始化端到端验证：新增 `tests/test_init_e2e.py`（复制真实仓库 → 真实 `init_starter` → 真实 `check_all --scan-docs`，覆盖非 Java 裁剪后全绿与 Java 保留后全绿两种场景）；`check_all.py` 在非 git 仓库（如 zip 解压副本）不再崩溃，降级为“无增量变更”，全量检查仍可用；CI 补充 `pip install pyyaml`（`--scan-docs` 全量校验 OpenAPI YAML 需要）。
+- 初始化自动执行规则：`AGENTS.md`（与 `AGENTS.template.md`）新增 0.0“首次初始化（自动执行一次）”——项目技术栈仍是 `<TECH_STACK>` 占位时，AI 必须先自动运行一次 `init_starter`（`--project-name`、`--tech-stack` 必填）再进入任务；`CLAUDE.md` 与 `task-router` 同步同一入口；`check_all.py` 新增 `starter initialized` 提示检查（检测占位符残留并引导运行 `init_starter`，提示不阻断，模板源仓库保持全绿）；`tests/test_check_all.py` 增加 2 个初始化检测用例。
 - `README.md`、`QUICKSTART.md`、`contracts/README.md`、`CLAUDE.md` 与 `scripts/check_all.py` 收口为“`CLAUDE.md` 与 `contracts/` 按需启用”的口径，不再把它们当成默认必带能力。
 - `tests/test_check_all.py` 补充“缺少 `CLAUDE.md` 或 `contracts/` 仍可通过基础检查”的回归用例，避免后续把可选能力重新写回强依赖。
 

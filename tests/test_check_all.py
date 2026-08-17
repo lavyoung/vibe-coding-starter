@@ -83,6 +83,34 @@ class CheckAllTests(unittest.TestCase):
             self.assertIn("scripts/check_all.ps1", target.detail or "")
             self.assertIn("scripts/check_all.sh", target.detail or "")
 
+    def test_validate_starter_initialized_hints_placeholder_residue(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            repo_root = Path(temp_dir)
+            write_file(
+                repo_root / "docs" / "project-profile.md",
+                "- 技术栈：<TECH_STACK>\n",
+            )
+
+            result = CHECK_ALL.validate_starter_initialized(repo_root)
+
+            self.assertEqual(result.status, "passed")
+            self.assertIn("init_starter", result.detail or "")
+            self.assertIn("docs/project-profile.md", result.detail or "")
+
+    def test_validate_starter_initialized_passes_when_initialized(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            repo_root = Path(temp_dir)
+            write_file(
+                repo_root / "docs" / "project-profile.md",
+                "- 技术栈：Go 1.22\n",
+            )
+            write_file(repo_root / "AGENTS.md", "# Demo 项目\n")
+
+            result = CHECK_ALL.validate_starter_initialized(repo_root)
+
+            self.assertEqual(result.status, "passed")
+            self.assertIsNone(result.detail)
+
     def test_collect_example_workflow_assets_requires_matching_handoff(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             repo_root = Path(temp_dir)

@@ -26,6 +26,7 @@ description: 在 docs-first 仓库里先做任务分流与入口判断。适用�
 
 优先按下面顺序读取：
 
+0. 若 `docs/project-profile.md` 的技术栈字段仍是 `<TECH_STACK>` 占位（项目尚未初始化），先自动运行一次 `scripts/init_starter.py`（`--project-name`、`--tech-stack` 必填）完成初始化与技能库裁剪，再继续。
 1. `AGENTS.md`
 2. `docs/index.md`
 3. `docs/project-profile.md`

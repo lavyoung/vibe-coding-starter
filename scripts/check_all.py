@@ -54,6 +54,9 @@ SYNC_REVIEW_TRIGGER_PREFIXES = (
     "tools/skills/",
     "docs/governance/",
 )
+# 模板未初始化标记：AI 接手项目时应先自动运行一次 init_starter（见 AGENTS.md 0.0）
+STARTER_PLACEHOLDER_TOKENS = ("<PROJECT_NAME>", "<TECH_STACK>")
+STARTER_INIT_TARGETS = ("docs/project-profile.md", "AGENTS.md")
 SYNC_REVIEW_COMPANION_FILES = {
     "docs/evolution/current-snapshot.md",
     "docs/governance/project-handoff-checklist.md",
@@ -474,6 +477,37 @@ def validate_skill_list_sync(repo_root: Path) -> CheckResult:
     )
 
 
+def validate_starter_initialized(repo_root: Path) -> CheckResult:
+    """模板未初始化（占位符残留）时给出提示，但不阻断：
+    模板源仓库本身未初始化，必须保持 CI 全绿；提示用于引导 AI 先自动执行 init_starter。"""
+    uninitialized = [
+        target
+        for target in STARTER_INIT_TARGETS
+        if (repo_root / target).exists()
+        and any(
+            token in (repo_root / target).read_text(encoding="utf-8")
+            for token in STARTER_PLACEHOLDER_TOKENS
+        )
+    ]
+    if uninitialized:
+        return CheckResult(
+            group="starter-assets",
+            title="starter initialized",
+            status="passed",
+            detail=(
+                "检测到模板占位符（" + ", ".join(uninitialized) + "）：项目尚未初始化。"
+                "按 AGENTS.md 0.0，AI 接手时应先自动运行一次 "
+                "scripts/init_starter.py（--project-name、--tech-stack 必填）"
+                "完成占位符替换与技术栈裁剪。"
+            ),
+        )
+    return CheckResult(
+        group="starter-assets",
+        title="starter initialized",
+        status="passed",
+    )
+
+
 def validate_starter_assets(
     repo_root: Path,
     changed_files: Sequence[str],
@@ -663,6 +697,7 @@ def validate_starter_assets(
 
     results.append(validate_skill_library(repo_root))
     results.append(validate_skill_list_sync(repo_root))
+    results.append(validate_starter_initialized(repo_root))
 
     return results
 
