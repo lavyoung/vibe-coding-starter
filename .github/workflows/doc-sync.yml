@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - dev
   workflow_dispatch:
 
 permissions:
@@ -47,3 +48,8 @@ jobs:
           else
             python scripts/check_all.py --base "$BASE_SHA" --head "$HEAD_SHA"
           fi
+
+      - name: Run full doc governance scan
+        if: github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main'
+        shell: bash
+        run: python scripts/check_all.py --scan-docs

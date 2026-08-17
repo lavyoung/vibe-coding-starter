@@ -15,6 +15,7 @@ from typing import Sequence
 
 
 MARKDOWN_LINK_RE = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
+BACKTICK_TOKEN_RE = re.compile(r"`([^`\n]+)`")
 SKIP_DIRS = {".git", ".idea", ".vscode", "node_modules", "__pycache__", "target"}
 REQUIRED_STARTER_FILES = {
     "prompts/task-entry.txt": "统一任务入口 prompt",
@@ -426,6 +427,51 @@ def validate_skill_library(repo_root: Path) -> CheckResult:
     )
 
 
+def validate_skill_list_sync(repo_root: Path) -> CheckResult:
+    """README 技能清单（- 通用： / - Java 专项 行）与 tools/skills/ 实际目录对账，
+    防止加删 skill 后文档与事实漂移。"""
+    readme = repo_root / "README.md"
+    skills_dir = repo_root / "tools" / "skills"
+    if not readme.exists() or not skills_dir.is_dir():
+        return CheckResult(
+            group="starter-assets",
+            title="skill list sync",
+            status="passed",
+        )
+    listed: set[str] = set()
+    for line in readme.read_text(encoding="utf-8").splitlines():
+        stripped = line.strip()
+        if not (
+            stripped.startswith("- 通用：") or stripped.startswith("- Java 专项")
+        ):
+            continue
+        for token in BACKTICK_TOKEN_RE.findall(line):
+            if "/" not in token and "*" not in token:
+                listed.add(token)
+    actual = {
+        entry.name
+        for entry in skills_dir.iterdir()
+        if entry.is_dir() and entry.name not in SKILL_DIRS_SKIP
+    }
+    issues: list[str] = []
+    for name in sorted(actual - listed):
+        issues.append(f"- README 技能清单缺少 {name}")
+    for name in sorted(listed - actual):
+        issues.append(f"- README 技能清单包含不存在的 {name}")
+    if issues:
+        return CheckResult(
+            group="starter-assets",
+            title="skill list sync",
+            status="failed",
+            detail="\n".join(issues),
+        )
+    return CheckResult(
+        group="starter-assets",
+        title="skill list sync",
+        status="passed",
+    )
+
+
 def validate_starter_assets(
     repo_root: Path,
     changed_files: Sequence[str],
@@ -614,6 +660,7 @@ def validate_starter_assets(
         )
 
     results.append(validate_skill_library(repo_root))
+    results.append(validate_skill_list_sync(repo_root))
 
     return results
 
@@ -758,8 +805,40 @@ def collect_example_workflow_assets(repo_root: Path) -> list[CheckResult]:
     return results
 
 
+def run_example_doc_sync_checks(repo_root: Path) -> list[CheckResult]:
+    """对每个带 .doc-sync.json 的示例跑全量 doc-sync 治理校验，
+    防止示例文档与根治理规则（状态枚举 / 证据链 / 版本布局）漂移。"""
+    checks: list[CheckResult] = []
+    examples_root = repo_root / "examples"
+    if not examples_root.is_dir():
+        return checks
+    for example_dir in sorted(examples_root.iterdir()):
+        if not example_dir.is_dir():
+            continue
+        if not (example_dir / ".doc-sync.json").exists():
+            continue
+        checks.append(
+            run_command(
+                [
+                    sys.executable,
+                    "scripts/doc_sync_check.py",
+                    "--repo-root",
+                    str(example_dir),
+                    "--config",
+                    ".doc-sync.json",
+                    "--scan-all",
+                ],
+                repo_root,
+                "examples",
+                f"{example_dir.name} doc-sync governance",
+            )
+        )
+    return checks
+
+
 def run_example_checks(repo_root: Path) -> list[CheckResult]:
     checks = collect_example_workflow_assets(repo_root)
+    checks.extend(run_example_doc_sync_checks(repo_root))
 
     node = shutil.which("node")
     if node:

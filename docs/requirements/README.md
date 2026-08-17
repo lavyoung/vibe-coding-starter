@@ -9,7 +9,8 @@
 
 ## 建议规则
 
-- 按版本演进约束（见 [docs/README.md](../README.md)）组织：每个版本一个目录 `docs/requirements/vX.Y.Z/`（如 `v1.1.1/`），版本目录之下才是真正的需求文件；目录根只保留本 README
+- 按版本演进约束（见 [docs/README.md](../README.md)）组织：每个版本一个目录 `docs/requirements/vX.Y.Z/`（如 `v1.1.1/`），版本目录之下才是真正的需求文件；目录根只保留本 README 与模板
+- 新增需求文档时复制 [REQUIREMENTS_TEMPLATE.md](REQUIREMENTS_TEMPLATE.md)
 - 需求文档只回答“业务要什么”，不直接承担设计细节
 - 设计和实现冲突时，必须显式标出差异并补设计文档
 

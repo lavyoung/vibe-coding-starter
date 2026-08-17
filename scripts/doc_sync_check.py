@@ -19,6 +19,7 @@ VALID_DOC_STATUSES = ("草案", "评审中", "已接受", "已生效", "已落�
 STATUS_PREFIX = "- 当前状态："
 LINKED_CODE_HEADING = "## 关联代码"
 BACKTICK_REF_RE = re.compile(r"`([^`\n]+)`")
+MARKDOWN_LINK_REF_RE = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
 # 反引号引用中属于模板占位符 / URL / 非仓库路径的特征
 PLACEHOLDER_MARKERS = ("<", ">", "...", "vX.Y.Z")
 # 状态推进证据链：已生效 / 已落地 必须携带真实日期（YYYY-MM-DD）
@@ -140,13 +141,22 @@ def is_ignored_ref(ref: str) -> bool:
     return any(marker in ref for marker in PLACEHOLDER_MARKERS)
 
 
+def iter_code_refs(section: str):
+    """提取“关联代码”章节中的路径引用：反引号 `path` 与 Markdown 链接 [text](path) 两种写法。"""
+    for match in BACKTICK_REF_RE.finditer(section):
+        yield match.group(1)
+    for match in MARKDOWN_LINK_REF_RE.finditer(section):
+        yield match.group(1)
+
+
 def validate_linked_code_paths(
     repo_root: Path, doc_path: str
 ) -> tuple[list[str], list[str]]:
-    """校验“## 关联代码”章节中反引号包裹的仓库内路径真实存在。
+    """校验“## 关联代码”章节中的仓库内路径真实存在。
 
-    同时支持两种写法：相对本文档目录（Markdown 链接语义）与相对仓库根。
-    返回 (issues, 找到的代码路径)；代码路径指非 docs/ 开头的引用。
+    同时支持两种写法：相对本文档目录（Markdown 链接语义）与相对仓库根；
+    引用形式支持反引号与 Markdown 链接。返回 (issues, 找到的代码路径)；
+    代码路径指非 docs/ 开头的引用。
     """
     full_path = repo_root / doc_path
     content = full_path.read_text(encoding="utf-8")
@@ -155,9 +165,16 @@ def validate_linked_code_paths(
     issues: list[str] = []
     code_paths: list[str] = []
     checked: set[str] = set()
-    for match in BACKTICK_REF_RE.finditer(section):
-        ref = match.group(1).strip().split("#", 1)[0].strip()
-        if ref in checked or is_ignored_ref(ref):
+    for raw_ref in iter_code_refs(section):
+        stripped = raw_ref.strip()
+        # 占位符判断必须在剥尖括号之前：<path/to/code> 这类模板示意不能当路径解析
+        if is_ignored_ref(stripped):
+            continue
+        ref = stripped
+        if ref.startswith("<") and ref.endswith(">"):
+            ref = ref[1:-1]
+        ref = ref.split("#", 1)[0].strip()
+        if ref in checked:
             continue
         checked.add(ref)
         resolved = (full_path.parent / ref).resolve()
@@ -228,6 +245,25 @@ def validate_doc_file(repo_root: Path, doc_path: str) -> list[str]:
     return issues
 
 
+OPERATION_KEYS = ("get", "put", "post", "delete", "patch", "options", "head", "trace")
+SCHEMAS_REF_PREFIX = "#/components/schemas/"
+
+
+def collect_refs(node: object) -> list[str]:
+    """递归收集 JSON / YAML 结构中所有 $ref 字符串。"""
+    refs: list[str] = []
+    if isinstance(node, dict):
+        for key, value in node.items():
+            if key == "$ref" and isinstance(value, str):
+                refs.append(value)
+            else:
+                refs.extend(collect_refs(value))
+    elif isinstance(node, list):
+        for item in node:
+            refs.extend(collect_refs(item))
+    return refs
+
+
 def validate_openapi_yaml(path: Path, doc_path: str) -> list[str]:
     """OpenAPI YAML 契约按自身结构校验，不套用 Markdown 文档模板。"""
     issues: list[str] = []
@@ -253,8 +289,39 @@ def validate_openapi_yaml(path: Path, doc_path: str) -> list[str]:
         issues.append(f"{doc_path}: OpenAPI YAML 缺少顶层 openapi 版本字段（如 openapi: 3.1.0）。")
     if not isinstance(data.get("info"), dict):
         issues.append(f"{doc_path}: OpenAPI YAML 缺少 info 节点（title / version）。")
-    if not isinstance(data.get("paths"), dict):
+
+    paths = data.get("paths")
+    if not isinstance(paths, dict):
         issues.append(f"{doc_path}: OpenAPI YAML 缺少 paths 节点。")
+    else:
+        for path_key, path_item in paths.items():
+            if not isinstance(path_item, dict):
+                issues.append(f"{doc_path}: path {path_key} 必须是 operation 映射。")
+                continue
+            ops = [key for key in path_item if key in OPERATION_KEYS]
+            if not ops:
+                issues.append(
+                    f"{doc_path}: path {path_key} 缺少任何 HTTP operation"
+                    f"（{'/'.join(OPERATION_KEYS)}）。"
+                )
+            for op_key in ops:
+                operation = path_item[op_key]
+                if not isinstance(operation, dict):
+                    issues.append(f"{doc_path}: {path_key} {op_key.upper()} 必须是 operation 对象。")
+                    continue
+                responses = operation.get("responses")
+                if not isinstance(responses, dict) or not responses:
+                    issues.append(f"{doc_path}: {path_key} {op_key.upper()} 缺少非空 responses。")
+
+    # $ref 悬空检查：本地 schema 引用必须能在 components.schemas 中找到
+    components = data.get("components")
+    schemas = components.get("schemas") if isinstance(components, dict) else None
+    if isinstance(schemas, dict):
+        for ref in collect_refs(data):
+            if ref.startswith(SCHEMAS_REF_PREFIX):
+                schema_name = ref[len(SCHEMAS_REF_PREFIX):]
+                if schema_name not in schemas:
+                    issues.append(f"{doc_path}: $ref 指向不存在的 schema：{ref}")
     return issues
 
 

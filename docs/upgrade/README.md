@@ -10,6 +10,7 @@
 ## 建议规则
 
 - 按版本演进约束（见 [docs/README.md](../README.md)）组织：每个版本一个目录 `docs/upgrade/vX.Y.Z/`（如 `v1.1.1/`），版本目录之下才是真正的升级文件
+- 新增升级文档时复制 [UPGRADE_TEMPLATE.md](UPGRADE_TEMPLATE.md)
 - 每个版本目录至少包含：`upgrade.md`、`upgrade.sql`
 - 若接口变化明显，补 API 变更说明，并同步 `docs/api/vX.Y.Z/` 契约
 - 最新版本目录是当前升级事实源，历史版本目录仅作追溯
