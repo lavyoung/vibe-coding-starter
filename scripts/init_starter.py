@@ -107,12 +107,24 @@ def update_readme_title(text: str, project_name: str) -> str:
         text = "\n".join(lines)
         if not text.endswith("\n"):
             text += "\n"
-    template_notice = (
+    template_notice_zh = (
         "如果你是通过模板创建了一个新项目，请先把本文件标题、首段简介和仓库描述替换成你自己的项目信息；"
         "`vibe-coding-starter` 只是上游模板名。"
     )
-    initialized_notice = "本仓库已基于模板完成初始化；仍需根据项目实际情况继续补全文档事实。"
-    return text.replace(template_notice, initialized_notice)
+    initialized_notice_zh = "本仓库已基于模板完成初始化；仍需根据项目实际情况继续补全文档事实。"
+    template_notice_en = (
+        "If you created a new project from this template, replace this file's title, "
+        "intro, and repository description with your own project info; "
+        "`vibe-coding-starter` is just the upstream template name."
+    )
+    initialized_notice_en = (
+        "This repository has been initialized from the template; "
+        "keep completing the documentation facts for the actual project."
+    )
+    return (
+        text.replace(template_notice_zh, initialized_notice_zh)
+        .replace(template_notice_en, initialized_notice_en)
+    )
 
 
 def replace_placeholders(repo_root: Path, replacements: dict[str, str]) -> list[Path]:
@@ -122,7 +134,7 @@ def replace_placeholders(repo_root: Path, replacements: dict[str, str]) -> list[
         updated = original
         for source, target in replacements.items():
             updated = updated.replace(source, target)
-        if path == repo_root / "README.md":
+        if path in (repo_root / "README.md", repo_root / "README_ZH.md"):
             updated = update_readme_title(updated, replacements["<PROJECT_NAME>"])
         if updated != original:
             path.write_text(updated, encoding="utf-8")
@@ -271,15 +283,20 @@ def trim_java_skills(repo_root: Path) -> list[Path]:
             changed_files.append(skills_readme)
             print("- tools/skills/README.md: 移除 Java 系示例说明")
 
-    # README.md：技能清单与数字声明同步为裁剪后事实
-    readme_path = repo_root / "README.md"
-    if readme_path.exists():
+    # README.md / README_ZH.md：技能清单与数字声明同步为裁剪后事实（支持中英文行）
+    for readme_name in ("README.md", "README_ZH.md"):
+        readme_path = repo_root / readme_name
+        if not readme_path.exists():
+            continue
         original = readme_path.read_text(encoding="utf-8")
         new_lines: list[str] = []
         for line in original.splitlines():
             stripped = line.strip()
-            if stripped.startswith("- Java 专项（栈绑定）") or stripped.startswith(
-                "- 注：`java-*`"
+            if (
+                stripped.startswith("- Java 专项（栈绑定）")
+                or stripped.startswith("- Java-specific")
+                or stripped.startswith("- 注：`java-*`")
+                or stripped.startswith("- Note: `java-*`")
             ):
                 continue
             line = (
@@ -287,6 +304,9 @@ def trim_java_skills(repo_root: Path) -> list[Path]:
                 .replace("17 个可复用 skill：", "skill 库：")
                 .replace("17 个可复用 skill", "可复用 skill")
                 .replace("**17 个 skill**", "**skill 库**")
+                .replace("17 reusable skills:", "Skills:")
+                .replace("17 reusable skills", "reusable skills")
+                .replace("**17 skills**", "**Skills**")
             )
             new_lines.append(line)
         updated = "\n".join(new_lines)
@@ -295,7 +315,7 @@ def trim_java_skills(repo_root: Path) -> list[Path]:
         if updated != original:
             readme_path.write_text(updated, encoding="utf-8")
             changed_files.append(readme_path)
-            print("- README.md: 技能清单同步为裁剪后事实")
+            print(f"- {readme_name}: 技能清单同步为裁剪后事实")
 
     return changed_files
 

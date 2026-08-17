@@ -83,6 +83,42 @@ class CheckAllTests(unittest.TestCase):
             self.assertIn("scripts/check_all.ps1", target.detail or "")
             self.assertIn("scripts/check_all.sh", target.detail or "")
 
+    def test_validate_skill_list_sync_supports_english_readme(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            repo_root = Path(temp_dir)
+            write_file(
+                repo_root / "README.md",
+                "# t\n\n"
+                "  - Generic: `task-router`, `safe-code-change`\n"
+                "  - Java-specific (stack-bound): `java-service-structure`\n",
+            )
+            for name in ("task-router", "safe-code-change", "java-service-structure"):
+                write_file(repo_root / "tools" / "skills" / name / "SKILL.md", "# s\n")
+
+            result = CHECK_ALL.validate_skill_list_sync(repo_root)
+
+            self.assertEqual(result.status, "passed")
+
+    def test_validate_skill_list_sync_detects_missing_english_entry(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            repo_root = Path(temp_dir)
+            write_file(
+                repo_root / "README.md",
+                "  - Generic: `task-router`\n",
+            )
+            write_file(
+                repo_root / "tools" / "skills" / "task-router" / "SKILL.md", "# s\n"
+            )
+            write_file(
+                repo_root / "tools" / "skills" / "java-distributed-lock" / "SKILL.md",
+                "# s\n",
+            )
+
+            result = CHECK_ALL.validate_skill_list_sync(repo_root)
+
+            self.assertEqual(result.status, "failed")
+            self.assertIn("java-distributed-lock", result.detail or "")
+
     def test_validate_starter_initialized_hints_placeholder_residue(self) -> None:
         with tempfile.TemporaryDirectory() as temp_dir:
             repo_root = Path(temp_dir)

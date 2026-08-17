@@ -433,8 +433,8 @@ def validate_skill_library(repo_root: Path) -> CheckResult:
 
 
 def validate_skill_list_sync(repo_root: Path) -> CheckResult:
-    """README 技能清单（- 通用： / - Java 专项 行）与 tools/skills/ 实际目录对账，
-    防止加删 skill 后文档与事实漂移。"""
+    """README 技能清单（- 通用： / - Java 专项，或英文 - Generic: / - Java-specific 行）
+    与 tools/skills/ 实际目录对账，防止加删 skill 后文档与事实漂移。"""
     readme = repo_root / "README.md"
     skills_dir = repo_root / "tools" / "skills"
     if not readme.exists() or not skills_dir.is_dir():
@@ -443,11 +443,14 @@ def validate_skill_list_sync(repo_root: Path) -> CheckResult:
             title="skill list sync",
             status="passed",
         )
+    generic_prefixes = ("- 通用：", "- Generic:")
+    java_prefixes = ("- Java 专项", "- Java-specific")
     listed: set[str] = set()
     for line in readme.read_text(encoding="utf-8").splitlines():
         stripped = line.strip()
         if not (
-            stripped.startswith("- 通用：") or stripped.startswith("- Java 专项")
+            stripped.startswith(generic_prefixes)
+            or stripped.startswith(java_prefixes)
         ):
             continue
         for token in BACKTICK_TOKEN_RE.findall(line):
