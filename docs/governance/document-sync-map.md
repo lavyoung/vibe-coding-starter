@@ -60,6 +60,7 @@
 | `docs/rfcs/README.md` / `RFC_TEMPLATE.md` | 提案规则与模板 | 新技术方案设计时 |
 | `docs/explanation/adr/README.md` / `ADR_TEMPLATE.md` | 决策记录规则与模板 | 方案已接受时 |
 | `docs/ui/README.md` / `page-map.md` / `interaction-patterns.md` / `screens/*.md` | 页面、弹窗和交互事实源 | 项目存在前端 / 管理端界面时 |
+| `<docs/requirements/vX.Y.Z/...>` | 业务诉求和版本需求来源（模板见 `REQUIREMENTS_TEMPLATE.md`） | 开始设计前、变更评估时 |
 | `<docs/design/vX.Y.Z/...>` | 已接受的领域设计（按版本目录演进） | 改对应领域代码时 |
 | `<docs/tasks/vX.Y.Z/...>` | 领域任务拆分和进度 | 实施推进和交接时 |
 | `<docs/upgrade/vX.Y.Z/...>` | 升级说明和脚本 | 上线和发布时 |

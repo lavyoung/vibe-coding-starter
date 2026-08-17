@@ -77,6 +77,7 @@ docs/
 - 分类目录根只保留目录职责说明（`README.md`）与跨版本模板（如 `DESIGN_TEMPLATE.md`、`TASK_TEMPLATE.md`），不放任何版本交付物。
 - **事实源型目录**（`architecture/`、`governance/`、`rfcs/`、`explanation/adr/`、`evolution/`、`ui/` 的全局规则文件）不按版本目录组织，持续根级演进；`ui/screens/` 按页面组织。
 - 改代码时以"当前有效版本目录"为准：最新版本目录是当前契约与设计的事实源，历史版本目录仅作追溯。
+- `api/` 契约的版本策略：契约版本目录与设计版本一致；已发布的版本目录保持冻结（仅修复性修订可原地更新并升 patch 版本），破坏性变更必须开新版本目录，并在 `docs/upgrade/vX.Y.Z/` 补迁移说明。
 
 ## 关联代码
 

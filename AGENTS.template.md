@@ -13,6 +13,7 @@
 
 - 若存在与当前任务匹配的 skill，优先读取对应 `SKILL.md`，并按其中约束执行。
 - 若多个 skill 同时匹配，按“最小覆盖原则”选择必要 skill 组合。
+- 技能库结构、栈绑定技能裁剪与新增 skill 规范见 [tools/skills/README.md](tools/skills/README.md)。
 - 若当前任务与已有 skill 均不匹配，再回退到本 `AGENTS.md` 与全局规则继续执行。
 
 ## 1. 项目事实
