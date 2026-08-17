@@ -48,6 +48,11 @@ mvn spring-boot:run
 mvn test
 ```
 
+包含一个**契约一致性测试**（`OpenApiContractConsistencyTest`）：把运行时路由与
+`docs/api/v1.2.0/device-admin-api.yaml` 双向对比——契约已登记但代码没有的端点、
+代码已实现但契约未登记的端点都会失败。这是 docs-first 体系里"契约与实现内容对齐"
+的机器化参考实现：改接口时代码与契约必须同步改，否则 `mvn test` 直接拦截。
+
 ## 示例请求
 
 创建设备：

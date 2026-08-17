@@ -58,6 +58,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResp'
+  /admin/devices/{deviceId}/images:
     post:
       operationId: uploadDeviceImage
       summary: 上传设备图片 URL
