@@ -35,6 +35,7 @@ VALID_DOC = """# 测试文档
 
 ## 文档元数据
 
+- 文档类型：design
 - 当前状态：已生效
 - 最近更新：2026-08-17
 
@@ -192,6 +193,34 @@ class DocSyncCheckTests(unittest.TestCase):
         issues = DOC_SYNC.validate_openapi_yaml(path, "docs/api/v1.0.0/test-api.yaml")
         self.assertTrue(any("缺少任何 HTTP operation" in issue for issue in issues))
         self.assertTrue(any("$ref 指向不存在" in issue for issue in issues))
+
+    # ---- 评审记录证据链 ----
+
+    def test_validate_doc_file_requires_review_log_for_accepted_rfc(self) -> None:
+        doc = VALID_DOC.replace("- 当前状态：已生效", "- 当前状态：已接受").replace(
+            "- 文档类型：design", "- 文档类型：rfc"
+        )
+        write_file(self.repo_root / "docs" / "index.md", doc)
+        issues = DOC_SYNC.validate_doc_file(self.repo_root, "docs/index.md")
+        self.assertTrue(any("评审记录" in issue for issue in issues))
+
+    def test_validate_doc_file_accepts_accepted_rfc_with_review_log(self) -> None:
+        doc = (
+            VALID_DOC.replace("- 当前状态：已生效", "- 当前状态：已接受")
+            .replace("- 文档类型：design", "- 文档类型：rfc")
+            .replace("## 关联代码", "## 评审记录\n\n| 日期 | 评审人 | 结论 |\n|---|---|---|\n\n## 关联代码")
+        )
+        write_file(self.repo_root / "docs" / "index.md", doc)
+        issues = DOC_SYNC.validate_doc_file(self.repo_root, "docs/index.md")
+        self.assertEqual(issues, [])
+
+    def test_validate_doc_file_skips_review_log_for_draft_rfc(self) -> None:
+        doc = VALID_DOC.replace("- 当前状态：已生效", "- 当前状态：草案").replace(
+            "- 文档类型：design", "- 文档类型：rfc"
+        )
+        write_file(self.repo_root / "docs" / "index.md", doc)
+        issues = DOC_SYNC.validate_doc_file(self.repo_root, "docs/index.md")
+        self.assertEqual(issues, [])
 
     # ---- scan_all_docs ----
 

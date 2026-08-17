@@ -231,6 +231,23 @@ def validate_doc_file(repo_root: Path, doc_path: str) -> list[str]:
                         f"（当前 {update_value!r}，应为 YYYY-MM-DD）。"
                     )
 
+    # 评审记录证据链：rfc / adr 类型文档推进到 已接受 及以上状态前必须登记评审记录
+    doc_type_line = next(
+        (line for line in lines if line.startswith("- 文档类型：")), None
+    )
+    doc_type = ""
+    if doc_type_line is not None:
+        doc_type = doc_type_line[len("- 文档类型："):].strip()
+    if (
+        doc_type in ("rfc", "adr")
+        and status in ("已接受", "已生效", "已落地")
+        and "## 评审记录" not in content
+    ):
+        issues.append(
+            f"{doc_path}: 类型为 {doc_type} 且状态为 {status}，"
+            "缺少“## 评审记录”章节（状态推进到已接受前必须登记评审记录）。"
+        )
+
     if LINKED_CODE_HEADING not in content:
         issues.append(f"{doc_path}: 缺少“{LINKED_CODE_HEADING}”章节。")
     else:

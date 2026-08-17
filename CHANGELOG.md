@@ -35,6 +35,7 @@
 - 治理覆盖补齐：`doc_sync_check.py` 的“关联代码”引用解析支持反引号与 Markdown 链接两种写法（修复链接格式引用被漏检的问题）；OpenAPI YAML 深度结构校验（每个 path 至少一个 HTTP operation、每个 operation 有非空 `responses`、`$ref` 指向的 schema 必须存在）；`check_all.py` 新增 README 技能清单与 `tools/skills/` 目录对账，并把每个示例项目纳入 doc-sync 全量治理（防示例与根规则漂移）；CI 的 push 覆盖 `dev` 分支，main / 手动触发时追加 `--scan-docs` 全量治理步骤；新增 `docs/requirements/REQUIREMENTS_TEMPLATE.md` 与 `docs/upgrade/UPGRADE_TEMPLATE.md` 模板。
 - 测试与事实修正：新增 `tests/test_doc_sync_check.py`（18 个用例覆盖状态枚举、日期证据链、已落地代码路径、链接两种格式、占位符过滤、版本布局、OpenAPI 深度校验、scan-all），CI 增加 `python -m unittest discover -s tests` 步骤；修正 README 脚本入口数字（14 → 9，3 组 × 3 平台）；`AGENTS.template.md` 补技能库裁剪指引；`document-sync-map.md` §2 文档清单补 `requirements` 行；`docs/README.md` 版本演进约束补 `api/` 契约冻结与破坏性变更开新版本目录的策略。
 - 初始化技术栈感知：`init_starter` 在 `--tech-stack` 非 Java 系（不含 `java` / `spring`）时自动删除 `tools/skills/java-*`，并同步精简 `AGENTS.md` 0.3 门禁与 0.2 Java 条目、`docs/project-profile.md` §4 Java 条目、README / 技能库说明中的 Java 清单；新增 `tests/test_init_starter.py`（3 个用例）覆盖判定与裁剪；QUICKSTART 与 `tools/skills/README.md` 补充自动裁剪说明。
+- 评审记录证据链：`RFC_TEMPLATE.md` 与 `ADR_TEMPLATE.md` 新增“评审记录”章节（日期 / 评审人 / 结论表格）；`doc_sync_check.py` 校验 `rfc` / `adr` 类型文档推进到 `已接受` 及以上状态时必须包含“## 评审记录”章节（草案 / 评审中不要求）；`document-sync-map.md` §1.2 补充评审记录口径；`tests/test_doc_sync_check.py` 增加 3 个评审记录用例。
 - `README.md`、`QUICKSTART.md`、`contracts/README.md`、`CLAUDE.md` 与 `scripts/check_all.py` 收口为“`CLAUDE.md` 与 `contracts/` 按需启用”的口径，不再把它们当成默认必带能力。
 - `tests/test_check_all.py` 补充“缺少 `CLAUDE.md` 或 `contracts/` 仍可通过基础检查”的回归用例，避免后续把可选能力重新写回强依赖。
 
